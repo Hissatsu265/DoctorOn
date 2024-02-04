@@ -129,7 +129,7 @@ class Signup : AppCompatActivity() {
         if(kt){
             progressDialog = ProgressDialog(this)
             progressDialog.setCancelable(false)
-            progressDialog.setMessage("")
+            progressDialog.setMessage("Loading...")
             progressDialog.show()
             // đăng kí tài khoản
             firebaseAuth.createUserWithEmailAndPassword(gmail, pass)
@@ -146,8 +146,8 @@ class Signup : AppCompatActivity() {
                                     Toast.makeText(applicationContext,"Đã gửi email xác thực",Toast.LENGTH_SHORT).show()
                                     val intent=Intent(applicationContext,Confirm_email::class.java)
                                     // them pass,gmail
-//                                    intent.putExtra("gmail",pass)
-//                                    intent.putExtra("pass",pass)
+                                    intent.putExtra("gmail",gmail)
+                                    intent.putExtra("pass",pass)
                                     //----------------------
                                     startActivity(intent)
                                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)

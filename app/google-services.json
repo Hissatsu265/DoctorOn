@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "168853893637",
+    "project_id": "appdacn-1b69f",
+    "storage_bucket": "appdacn-1b69f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:168853893637:android:8aef402b3762cf7d2d226c",
+        "android_client_info": {
+          "package_name": "com.example.doctoron"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlekvhm84KIJelnmGNg_EWrHqCE-Bb1v0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

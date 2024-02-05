@@ -14,6 +14,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import com.example.doctoron.Objects.User
 import com.example.doctoron.R
 import com.google.firebase.auth.FirebaseAuth
 
@@ -110,12 +111,12 @@ class Signup : AppCompatActivity() {
             kt=false
         }
         // check mật khẩu
-//        if (!isValidPassword(pass)){
-//            edt_pass.setText("Mật khẩu không đạt chuẩn")
-//            edt_pass.setTextColor(Color.RED)
-//            edt_pass_again.setText("")
-//            kt=false
-//        }
+        if (!isValidPassword(pass)){
+            edt_pass.setText("Mật khẩu không đạt chuẩn")
+            edt_pass.setTextColor(Color.RED)
+            edt_pass_again.setText("")
+            kt=false
+        }
 
         if(!isValidEmail(gmail)){
             edt_email.setText("Gmail không hợp lệ")
@@ -141,7 +142,7 @@ class Signup : AppCompatActivity() {
                             ?.addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     // lưu thông tin đăng kí
-                                    SaveInfo(pass,gmail)
+                                    SaveInfo(pass,gmail,edt_name.text.toString())
                                     progressDialog.dismiss()
                                     Toast.makeText(applicationContext,"Đã gửi email xác thực",Toast.LENGTH_SHORT).show()
                                     val intent=Intent(applicationContext,Confirm_email::class.java)
@@ -161,8 +162,9 @@ class Signup : AppCompatActivity() {
                 }
         }
     }
-    fun SaveInfo(gmail:String,pass:String){
-
+    fun SaveInfo(gmail:String,pass:String,name:String){
+        val new_user = User(name,pass,gmail)
+        new_user.SendtoFirebase()
     }
     //------------------------------------------------------------------------------------
 }

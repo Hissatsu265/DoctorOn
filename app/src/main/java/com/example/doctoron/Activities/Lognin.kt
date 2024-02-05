@@ -1,9 +1,15 @@
 package com.example.doctoron.Activities
 
+
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
+import android.util.Log
+import android.view.LayoutInflater
+import android.view.View
 import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.TextView
@@ -103,7 +109,35 @@ class Lognin : AppCompatActivity() {
         }
     }
     fun ForgotPass(){
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@Lognin)
+        builder.setTitle("Đặt lại mật khẩu")
 
+        // Inflate layout
+        val view: View =
+            LayoutInflater.from(applicationContext).inflate(R.layout.dialog_forgotpass, null)
+        builder.setView(view)
+
+        val Emailresetpass: EditText = view.findViewById(R.id.etEmail)
+
+        builder.setNegativeButton("Reset",
+            DialogInterface.OnClickListener { dialog, which ->
+                FirebaseAuth.getInstance().sendPasswordResetEmail(Emailresetpass.text.toString())
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Email đã được gửi đi, thông báo cho người dùng.
+                            Toast.makeText(
+                                applicationContext,
+                                "Email đã được gửi để đặt lại mật khẩu",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            // Có lỗi xảy ra, thông báo cho người dùng.
+                            Log.e("ResetPassword", "Failed")
+                        }
+                    }
+            })
+
+        builder.create().show()
     }
 
 }

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="2dp"
+    android:backgroundTint="@color/primary"
+    app:cardCornerRadius="20dp"
+    android:layout_marginEnd="10dp">
+    <LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingTop="16dp"
+    android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingBottom="8dp">
+    <ImageView
+        android:id="@+id/imageView_avatardoctor"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/img_profile" />
+    <TextView
+        android:layout_marginTop="7dp"
+        android:id="@+id/textView_Name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Item Name"
+        android:textStyle="bold"
+        android:maxLines = "1"
+        android:ellipsize = "end"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_gravity="center"
+        />
+    <TextView
+        android:id="@+id/textView_CN"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Chuyên ngành"
+        android:textSize="11dp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="horizontal">
+        <TextView
+
+            android:id="@+id/textView_Ranking"
+            android:layout_width="15dp"
+            android:layout_height="30dp"
+            android:text="5"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="center"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/img_star_rank"
+            android:scaleType="fitXY"/>
+    </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

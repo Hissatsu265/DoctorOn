@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+    tools:context=".Fragments.DashboardFragment">
+    <LinearLayout android:id="@+id/linearLearnMore"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical">
+        <androidx.core.widget.NestedScrollView
+            android:clipToPadding="false" android:fillViewport="true"
+            android:gravity="center_horizontal"
+            android:id="@+id/scrollViewScrollView"
+            android:layout_height="0dp" android:layout_weight="1" android:layout_width="match_parent">
+            <LinearLayout android:id="@+id/linearDashboard"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent" android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/teal_200"
+                    android:background="@drawable/round_bottomconner">
+                    <TextView android:id="@+id/txtFindYourDesire"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="Chào buổi chiều! \nLê Minh Toàn"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        android:layout_marginStart="@dimen/_26pxh"
+                        android:layout_marginTop="5dp"
+                        android:textColor="@color/primary"
+                        android:paddingBottom="5dp"
+                        />
+                </LinearLayout>
+                <LinearLayout android:gravity="start"
+                    android:id="@+id/linearOfferBanner"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/_12pxv"
+                    android:paddingEnd="@dimen/_26pxh"
+                    android:paddingStart="@dimen/_26pxh"
+                    android:paddingTop="@dimen/_12pxv"
+                    >
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        >
+                        <androidx.cardview.widget.CardView
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            app:cardBackgroundColor="@color/teal_200"
+                            app:cardElevation="3dp"
+                            app:cardCornerRadius="20dp">
+                            <com.denzcoskun.imageslider.ImageSlider
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:id="@+id/imageSlider"
+                                app:iss_auto_cycle="true"
+                                app:iss_period="1999"
+                                app:iss_delay="1999"
+                                app:iss_corner_radius="20"
+                                app:iss_title_background="@drawable/gradient"
+                                />
+                        </androidx.cardview.widget.CardView>
+
+                    </RelativeLayout>
+                </LinearLayout>
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_18pxv"
+                    app:cardCornerRadius="20dp"
+                    app:cardElevation="8dp">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Tính năng nổi bật"
+                        android:textSize="20dp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="12dp"
+                        android:layout_marginStart="12dp"
+                        android:layout_marginEnd="12dp"
+                        />
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp">
+                        <TableRow
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:id="@+id/tableRow1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:orientation="vertical"
+                                android:background="@drawable/khungbaoquanh">
+                                <ImageButton
+                                    android:backgroundTint="@color/primary"
+                                    android:id="@+id/button4"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_button1"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gọi cho bác sĩ"
+                                    android:layout_gravity="center"
+                                    android:paddingBottom="8dp"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+
+                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:orientation="vertical"
+                                android:background="@drawable/khungbaoquanh">
+                                <ImageButton
+                                    android:backgroundTint="@color/primary"
+                                    android:id="@+id/button5"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_button1"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gọi cho bác sĩ"
+                                    android:layout_gravity="center"
+                                    android:paddingBottom="8dp"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:orientation="vertical"
+                                android:background="@drawable/khungbaoquanh">
+                                <ImageButton
+                                    android:backgroundTint="@color/primary"
+                                    android:id="@+id/button6"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_button1"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gọi cho bác sĩ"
+                                    android:layout_gravity="center"
+                                    android:paddingBottom="8dp"/>
+                            </LinearLayout>
+                        </TableRow>
+                        <TableRow
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:id="@+id/tableRow2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <LinearLayout
+                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:orientation="vertical"
+                                android:background="@drawable/khungbaoquanh">
+                                <ImageButton
+                                    android:backgroundTint="@color/primary"
+                                    android:id="@+id/button1"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_button1"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gọi cho bác sĩ"
+                                    android:layout_gravity="center"
+                                    android:paddingBottom="8dp"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+
+                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:layout_marginStart="20dp"
+                                android:layout_marginEnd="20dp"
+                                android:orientation="vertical"
+                                android:background="@drawable/khungbaoquanh">
+                                <ImageButton
+                                    android:backgroundTint="@color/primary"
+                                    android:id="@+id/button2"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_button1"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gọi cho bác sĩ"
+                                    android:layout_gravity="center"
+                                    android:paddingBottom="8dp"
+                                    />
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_height="wrap_content"
+                                android:layout_width="100dp"
+                                android:orientation="vertical"
+                                android:background="@drawable/khungbaoquanh">
+                                <ImageButton
+                                    android:backgroundTint="@color/primary"
+                                    android:id="@+id/button3"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_button1"
+                                    android:gravity="center"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Gọi cho bác sĩ"
+                                    android:layout_gravity="center"
+                                    android:paddingBottom="8dp"/>
+                            </LinearLayout>
+                        </TableRow>
+                    </TableLayout>
+                    </LinearLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout android:gravity="start"
+                    android:id="@+id/linearOfferBanner1"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:orientation="vertical"
+                    android:background="@color/teal_200"
+                    android:paddingBottom="@dimen/_16pxv"
+                    android:layout_marginBottom="150dp"
+                    >
+                    <TextView android:id="@+id/txtEarlyProtection1"
+                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:text="Bác sĩ nổi bật"
+                        android:textStyle="bold"
+                        android:textSize="20dp"
+                        android:layout_marginStart="@dimen/_26pxh"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        />
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_topdoctor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"/>
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
+</FrameLayout>

@@ -1,0 +1,8 @@
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+    <solid android:color="@color/teal_300" /> <!-- Màu nền của FloatingActionButton -->
+    <stroke
+        android:width="5dp"
+        android:color="@color/white"/> <!-- Màu của viền -->
+</shape>

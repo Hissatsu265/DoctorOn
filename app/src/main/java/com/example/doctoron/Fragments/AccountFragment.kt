@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.example.doctoron.R
 import com.google.firebase.auth.FirebaseAuth
@@ -32,7 +33,11 @@ class AccountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    //---------------------sau dùng phương thức khác để truyển vào--------------------
+
     private var userId:String= "vtnB0tljUVnbTZLCqgPD"
+
+    //------------------------------------------------------------------------------
     private val PICK_IMAGE_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,8 +53,9 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view= inflater.inflate(R.layout.fragment_account, container, false)
-
+        var tv_name_user:TextView=view.findViewById(R.id.tv_name_account)
         var img_avatar:ImageView=view.findViewById(R.id.user_avatar)
+
         img_avatar.setOnClickListener{
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
@@ -67,6 +73,8 @@ class AccountFragment : Fragment() {
         userRef.addSnapshotListener { snapshot, _ ->
             if (snapshot != null && snapshot.exists()) {
                 val avatarUrl = snapshot.getString("avatarUrl")
+                val name_user= snapshot.getString("name")
+                tv_name_user.setText(name_user)
                 if (!avatarUrl.isNullOrEmpty()) {
                     Glide.with(requireContext())
                         .load(avatarUrl)
@@ -109,9 +117,9 @@ class AccountFragment : Fragment() {
                     storageRef.downloadUrl.addOnSuccessListener { uri ->
                         val imageUrl = uri.toString()
 //------------------------------để tạm sau này truyền vào sau-------------------------------------------------------------------------
+
 //                    val user = FirebaseAuth.getInstance().currentUser
 //                    val userId = user?.uid
-
 
 //----------------------------------------------------------------------------------------------------------
                         val firestore = FirebaseFirestore.getInstance()

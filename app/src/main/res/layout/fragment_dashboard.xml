@@ -9,7 +9,8 @@
     <LinearLayout android:id="@+id/linearLearnMore"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/primary">
         <androidx.core.widget.NestedScrollView
             android:clipToPadding="false" android:fillViewport="true"
             android:gravity="center_horizontal"
@@ -40,21 +41,18 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/_12pxv"
+                    android:paddingBottom="@dimen/_1pxv"
                     android:paddingEnd="@dimen/_26pxh"
                     android:paddingStart="@dimen/_26pxh"
                     android:paddingTop="@dimen/_12pxv"
                     >
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="150dp"
-                        >
                         <androidx.cardview.widget.CardView
                             android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            app:cardBackgroundColor="@color/teal_200"
-                            app:cardElevation="3dp"
-                            app:cardCornerRadius="20dp">
+                            android:layout_height="180dp"
+                            app:cardUseCompatPadding="true"
+                            app:cardCornerRadius="20dp"
+                            app:cardElevation="6dp"
+                            >
                             <com.denzcoskun.imageslider.ImageSlider
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
@@ -67,7 +65,6 @@
                                 />
                         </androidx.cardview.widget.CardView>
 
-                    </RelativeLayout>
                 </LinearLayout>
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"

@@ -4,12 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Fragments.AccountFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:paddingTop="18dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:background="@color/teal_300"/>
+        android:orientation="vertical"
+        android:background="@color/teal_200">
+        <LinearLayout
+            android:padding="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/round_avatar">
+        <ImageView
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:id="@+id/user_avatar"
+            android:scaleType="fitXY"
+            android:src="@drawable/img_profile"
+
+            android:background="@drawable/round_avatar"
+            />
+        </LinearLayout>
+    </LinearLayout>
+
 
 </FrameLayout>

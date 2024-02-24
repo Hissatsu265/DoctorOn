@@ -1,11 +1,22 @@
 package com.example.doctoron.Fragments
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
 import com.example.doctoron.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +32,8 @@ class AccountFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var userId:String= "vtnB0tljUVnbTZLCqgPD"
+    private val PICK_IMAGE_REQUEST = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +47,36 @@ class AccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false)
+        val view= inflater.inflate(R.layout.fragment_account, container, false)
+
+        var img_avatar:ImageView=view.findViewById(R.id.user_avatar)
+        img_avatar.setOnClickListener{
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+        //------------------------------Load avatar-------------------------------------
+        val user = FirebaseAuth.getInstance().currentUser
+//        -----------------------------------------------------------------------------
+//        val userId = user?.uid
+        val userId:String= "vtnB0tljUVnbTZLCqgPD"
+//        --------------------------------------------------------------
+        val firestore = FirebaseFirestore.getInstance()
+        val userRef = firestore.collection("users").document(userId!!)
+
+        userRef.addSnapshotListener { snapshot, _ ->
+            if (snapshot != null && snapshot.exists()) {
+                val avatarUrl = snapshot.getString("avatarUrl")
+                if (!avatarUrl.isNullOrEmpty()) {
+                    Glide.with(requireContext())
+                        .load(avatarUrl)
+                        .apply(RequestOptions.circleCropTransform())
+                        .into(img_avatar)
+                }
+            }
+        }
+        //-------------------------------------------------------------------
+        return view
     }
 
     companion object {
@@ -57,4 +98,36 @@ class AccountFragment : Fragment() {
                 }
             }
     }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.data != null) {
+            val selectedImageUri: Uri = data.data!!
+            val path: String="avatars/"+userId+".jpg"
+            val storageRef = FirebaseStorage.getInstance().reference.child(path)
+            storageRef.putFile(selectedImageUri)
+                .addOnSuccessListener { taskSnapshot ->
+                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                        val imageUrl = uri.toString()
+//------------------------------để tạm sau này truyền vào sau-------------------------------------------------------------------------
+//                    val user = FirebaseAuth.getInstance().currentUser
+//                    val userId = user?.uid
+
+
+//----------------------------------------------------------------------------------------------------------
+                        val firestore = FirebaseFirestore.getInstance()
+                        val userRef = firestore.collection("users").document(userId!!)
+                        userRef.update("avatarUrl", imageUrl)
+                            .addOnSuccessListener {
+                                // Upload và lưu thành công
+                            }
+                            .addOnFailureListener { e ->
+                                // Xử lý khi gặp lỗi
+                            }
+                }
+                .addOnFailureListener { e ->
+
+                }
+        }
+    }
+}
 }

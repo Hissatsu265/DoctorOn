@@ -1,0 +1,14 @@
+
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24.0"
+    android:viewportHeight="24.0">
+
+    <!-- Đường dẫn cho biểu tượng đăng xuất -->
+    <path
+        android:pathData="M21.889,15.896H17.841C15.944,15.896 14.4,14.353 14.399,12.457C14.399,10.559 15.943,9.015 17.841,9.014H21.889C22.303,9.014 22.639,9.35 22.639,9.764C22.639,10.178 22.303,10.514 21.889,10.514H17.841C16.77,10.515 15.899,11.386 15.899,12.456C15.899,13.525 16.771,14.396 17.841,14.396H21.889C22.303,14.396 22.639,14.732 22.639,15.146C22.639,15.56 22.303,15.896 21.889,15.896Z"
+        android:fillColor="#52D1C6" />
+
+
+</vector>

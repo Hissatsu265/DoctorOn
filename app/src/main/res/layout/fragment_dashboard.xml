@@ -132,12 +132,12 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/img_button1"
+                                    android:src="@drawable/img_news"
                                     android:gravity="center"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Gọi cho bác sĩ"
+                                    android:text="News"
                                     android:layout_gravity="center"
                                     android:paddingBottom="8dp"
                                     />
@@ -153,12 +153,12 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/img_button1"
+                                    android:src="@drawable/img_ai"
                                     android:gravity="center"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Gọi cho bác sĩ"
+                                    android:text="Dự đoán"
                                     android:layout_gravity="center"
                                     android:paddingBottom="8dp"/>
                             </LinearLayout>
@@ -181,12 +181,12 @@
                                     android:layout_width="100dp"
                                     android:layout_height="100dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/img_button1"
+                                    android:src="@drawable/img_medicine"
                                     android:gravity="center"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Gọi cho bác sĩ"
+                                    android:text="Thuốc"
                                     android:layout_gravity="center"
                                     android:paddingBottom="8dp"
                                     />

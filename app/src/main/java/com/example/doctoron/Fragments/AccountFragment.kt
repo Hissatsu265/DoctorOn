@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import com.example.doctoron.R
@@ -53,13 +54,18 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view= inflater.inflate(R.layout.fragment_account, container, false)
+        //-------------------------------------------------------------------------------
+        var ll_help:LinearLayout=view.findViewById(R.id.help_account)
         var tv_name_user:TextView=view.findViewById(R.id.tv_name_account)
         var img_avatar:ImageView=view.findViewById(R.id.user_avatar)
-
+        //-------------------------------------------------------------------------------
         img_avatar.setOnClickListener{
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+        ll_help.setOnClickListener{
+            // chuyển đến help activity
         }
         //------------------------------Load avatar-------------------------------------
         val user = FirebaseAuth.getInstance().currentUser

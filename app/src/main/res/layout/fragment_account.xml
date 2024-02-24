@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Name"
-            android:textSize="20dp"
+            android:textSize="25dp"
             android:textStyle="bold"
             android:textColor="@color/primary"
             android:textAlignment="center"/>
@@ -127,11 +127,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Hỗ trợ"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:layout_marginStart="20dp"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginBottom="@dimen/_8pxh"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/help_account">
                     <ImageView
                         android:layout_height="45dp"
                         android:layout_width="45dp"
@@ -157,7 +166,45 @@
                         android:layout_marginEnd="8dp"
                         />
                 </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginBottom="@dimen/_8pxh"
+                    android:orientation="horizontal">
+                    <ImageView
+                        android:layout_height="45dp"
+                        android:layout_width="45dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_help"
+                        android:layout_marginStart="40dp"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Liên hệ"
+                        android:layout_marginStart="30dp"
+                        android:textStyle="bold"
+                        android:textSize="25dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/baseline_arrow_forward_ios_24"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Cài đặt"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -188,6 +235,45 @@
                         android:layout_marginEnd="8dp"
                         />
                 </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/_8pxh">
+                    <ImageView
+                        android:layout_height="45dp"
+                        android:layout_width="45dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_lock_teal"
+                        android:layout_marginStart="40dp"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Đăng xuất"
+                        android:layout_marginStart="30dp"
+                        android:textStyle="bold"
+                        android:textSize="25dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/baseline_arrow_forward_ios_24"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tiện ích"
+                    android:textStyle="bold"
+                    android:textSize="25dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    />
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
@@ -248,6 +334,63 @@
                         android:layout_marginEnd="8dp"
                         />
                 </LinearLayout>
+                <TextView
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="20dp"
+                    android:text="Kết nối với chúng tôi"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:orientation="horizontal">
+                    <ImageButton
+                        android:layout_width="80dp"
+                        android:layout_height="65dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_facebook"
+                        android:backgroundTint="@color/primary"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                    <ImageButton
+                        android:layout_width="80dp"
+                        android:layout_height="65dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_instagram1"
+                        android:backgroundTint="@color/primary"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                    <ImageButton
+                        android:layout_width="80dp"
+                        android:layout_height="65dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/img_youtube"
+                        android:backgroundTint="@color/primary"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                </LinearLayout>
+                <TextView
+                    android:layout_marginTop="12dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="App thuộc quyền sở hữu của ông Lê Toàn và Nguyễn Hưng đã được kiểm định và chấp thuận."
+                    android:textSize="18dp"
+                    android:layout_gravity="center"/>
+                <TextView
+                    android:layout_marginBottom="150dp"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:text="Mọi thông tin chỉ có tính chất tự cá nhân nghĩ ra nên đừng quá tin tưởng."
+                    android:textSize="18dp"
+                    android:layout_gravity="center"/>
+
             </LinearLayout>
         </ScrollView>
     </LinearLayout>

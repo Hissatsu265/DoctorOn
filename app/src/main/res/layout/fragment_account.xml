@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/teal_200">
+        android:background="@color/cyan_300">
         <LinearLayout
             android:padding="5dp"
             android:layout_width="wrap_content"
@@ -170,18 +170,19 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:layout_marginBottom="@dimen/_8pxh"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:id="@+id/help_account1">
                     <ImageView
                         android:layout_height="45dp"
                         android:layout_width="45dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_help"
+                        android:src="@drawable/img_help1"
                         android:layout_marginStart="40dp"
                         />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Liên hệ"
+                        android:text="Câu hỏi thường gặp"
                         android:layout_marginStart="30dp"
                         android:textStyle="bold"
                         android:textSize="25dp"
@@ -244,7 +245,7 @@
                         android:layout_height="45dp"
                         android:layout_width="45dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_lock_teal"
+                        android:src="@drawable/img_logout"
                         android:layout_marginStart="40dp"
                         />
                     <TextView
@@ -254,6 +255,7 @@
                         android:layout_marginStart="30dp"
                         android:textStyle="bold"
                         android:textSize="25dp"
+                        android:textColor="#FF5C5C"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         />
@@ -278,6 +280,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="45dp"
                     android:orientation="horizontal"
+                    android:id="@+id/ll_chiso"
                     android:layout_marginBottom="@dimen/_8pxh">
                     <ImageView
                         android:layout_height="45dp"
@@ -320,6 +323,36 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Dự đoán sức khỏe"
+                        android:layout_marginStart="30dp"
+                        android:textStyle="bold"
+                        android:textSize="25dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        />
+                    <ImageView
+                        android:layout_width="35dp"
+                        android:layout_height="25dp"
+                        android:src="@drawable/baseline_arrow_forward_ios_24"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="8dp"
+                        />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal"
+                    android:layout_marginBottom="@dimen/_8pxh">
+                    <ImageView
+                        android:layout_height="45dp"
+                        android:layout_width="45dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_edit"
+                        android:layout_marginStart="40dp"
+                        />
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:text="Chỉnh sửa thông tin"
                         android:layout_marginStart="30dp"
                         android:textStyle="bold"
                         android:textSize="25dp"

@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:orientation="vertical"
-        android:background="@color/primary">
+        >
         <androidx.core.widget.NestedScrollView
             android:clipToPadding="false" android:fillViewport="true"
             android:gravity="center_horizontal"

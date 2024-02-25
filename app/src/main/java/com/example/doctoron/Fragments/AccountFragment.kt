@@ -13,12 +13,15 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityOptionsCompat
 import com.example.doctoron.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.doctoron.Activities.Chiso_bmi_hr_calo
+import com.example.doctoron.Activities.Setting_account
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -56,6 +59,8 @@ class AccountFragment : Fragment() {
         val view= inflater.inflate(R.layout.fragment_account, container, false)
         //-------------------------------------------------------------------------------
         var ll_help:LinearLayout=view.findViewById(R.id.help_account)
+        var ll_help1:LinearLayout=view.findViewById(R.id.help_account1)
+        var ll_chiso:LinearLayout=view.findViewById(R.id.ll_chiso)
         var tv_name_user:TextView=view.findViewById(R.id.tv_name_account)
         var img_avatar:ImageView=view.findViewById(R.id.user_avatar)
         //-------------------------------------------------------------------------------
@@ -65,7 +70,16 @@ class AccountFragment : Fragment() {
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
         }
         ll_help.setOnClickListener{
-            // chuyển đến help activity
+            val intent = Intent(activity, Setting_account::class.java)
+            startActivity(intent)
+        }
+        ll_help1.setOnClickListener{
+            val intent = Intent(activity, Setting_account::class.java)
+            startActivity(intent)
+        }
+        ll_chiso.setOnClickListener {
+            val intent = Intent(activity, Chiso_bmi_hr_calo::class.java)
+            startActivity(intent)
         }
         //------------------------------Load avatar-------------------------------------
         val user = FirebaseAuth.getInstance().currentUser

@@ -12,6 +12,7 @@ import com.jjoe64.graphview.series.LineGraphSeries
 class Chiso_bmi_hr_calo : AppCompatActivity() {
 
     lateinit var lineGraphView: GraphView
+    lateinit var lineGraphView1: GraphView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chiso_bmi_hr_calo)
@@ -20,47 +21,50 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         btn_back.setOnClickListener {
             finish()
         }
-        //---------------------------------------------------------------------
-        lineGraphView = findViewById(R.id.idGraphView_heartrace)
-
-        val series: LineGraphSeries<DataPoint> = LineGraphSeries(
-            arrayOf(
-                DataPoint( 1.0,18.0),
-                DataPoint( 2.0,18.2),
-                DataPoint( 3.0,19.0),
-                DataPoint( 4.0,18.5),
-                DataPoint( 5.0,23.1),
-                DataPoint( 6.0,18.2),
-                DataPoint( 7.0,18.2),
-                DataPoint( 8.0,19.0),
-                DataPoint( 9.0,21.1)
-            )
-        )
-        series.color=R.color.cyan_300
-        series.thickness = 20
-        lineGraphView.addSeries(series)
-        //----------------------------------------------------------------
-
-        val series1: LineGraphSeries<DataPoint> = LineGraphSeries(
-            arrayOf(
-                DataPoint( 1.0,81.0),
-                DataPoint( 2.0,81.2),
-                DataPoint( 3.0,91.0),
-                DataPoint( 4.0,81.5),
-                DataPoint( 5.0,83.1),
-                DataPoint( 6.0,88.2),
-                DataPoint( 7.0,88.2),
-                DataPoint( 8.0,99.0),
-                DataPoint( 9.0,81.1)
-            )
-        )
-        series1.color = ContextCompat.getColor(this, R.color.purple_500)
-        series1.thickness = 10
-        lineGraphView.addSeries(series1)
+        //--------------------Khai báo------------------------------------------------
+        lineGraphView = findViewById(R.id.idGraphView_month)
+        lineGraphView1 = findViewById(R.id.idGraphView_year)
         lineGraphView.animate()
         lineGraphView.viewport.isScrollable = true
         lineGraphView.viewport.isScalable = true
         lineGraphView.viewport.setScalableY(true)
         lineGraphView.viewport.setScrollableY(true)
+        lineGraphView1.animate()
+        lineGraphView1.viewport.isScrollable = true
+        lineGraphView1.viewport.isScalable = true
+        lineGraphView1.viewport.setScalableY(true)
+        lineGraphView1.viewport.setScrollableY(true)
+        //-------------------------------------------------------------------
+        var month_bmi:ArrayList<DataPoint> = ArrayList()
+        for (i in 0 until 30) {
+            month_bmi.add(DataPoint(i.toDouble(), 20.0))
+        }
+
+        var month_heartrace:ArrayList<DataPoint> = ArrayList()
+        for (i in 0 until 30) {
+            month_heartrace.add(DataPoint(i.toDouble(), 89.0))
+        }
+        AddSeries(month_bmi,0,0)
+        AddSeries(month_heartrace,1,0)
+
+        var year_heartrace:ArrayList<DataPoint> = ArrayList()
+        for (i in 0 until 30) {
+            year_heartrace.add(DataPoint(i.toDouble(), 91.0))
+        }
+        AddSeries(year_heartrace,1,1)
+        //--------------------------------------------------------------------------------------
+    }
+    fun AddSeries(a:ArrayList<DataPoint>,color:Int,type:Int){
+        val series: LineGraphSeries<DataPoint> = LineGraphSeries(a.toTypedArray())
+        when (color){
+            0 -> series.color=ContextCompat.getColor(this, R.color.cyan_300)
+            1 -> series.color=ContextCompat.getColor(this, R.color.purple_500)
+            2 -> series.color=ContextCompat.getColor(this, R.color.primaryContainer)
+        }
+        series.thickness=20
+        when(type){
+            0 -> lineGraphView.addSeries(series)
+            1 -> lineGraphView1.addSeries(series)
+        }
     }
 }

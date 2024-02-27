@@ -55,6 +55,7 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         lineGraphView1.viewport.setScrollableY(true)
         //-------------------------------------------------------------------
         Capnhapchiso()
+        Capnhapchisonam()
         //--------------------------------------------------------------------------------------
         chisotb_bmi1=findViewById(R.id.chisotb_bmi)
         chisotb_calo1=findViewById(R.id.chisotb_calo)
@@ -187,5 +188,42 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
 //               arrayList.set()
 //            }
 //        }
+    }
+    fun Capnhapchisonam(){
+        db.collection("Chiso")
+            .document(userid)
+            .get()
+            .addOnSuccessListener { document ->
+                run {
+                    if (document != null) {
+                        val bmi : ArrayList<Double> = ArrayList()
+                        val calo : ArrayList<Double> = ArrayList()
+                        val heartrace : ArrayList<Double> = ArrayList()
+
+                        for (i in 1 ..12 ){
+                            val bmi1 = document.get("bmi_$i") as? ArrayList<Double>
+                            val calo1 = document.get("calo_$i") as? ArrayList<Double>
+                            val heartrace1 = document.get("heartrace_$i") as? ArrayList<Double>
+                            if (bmi1 != null){
+                                bmi.add(TinhchisoTB(bmi1).toDouble())
+                            }
+                            if (calo1 != null){
+                                calo.add(TinhchisoTB(calo1).toDouble())
+                            }
+                            if (heartrace1 != null){
+                                heartrace.add(TinhchisoTB(heartrace1).toDouble())
+                            }
+                        }
+                        try{
+                            AddSeries(bmi, 0, 1)
+                            AddSeries(calo, 1, 1)
+                            AddSeries(heartrace, 2, 1)
+                        }
+                        catch (e:Exception){
+                            Log.d("huhuhu",e.message.toString())
+                        }
+                    }
+                }
+            }
     }
 }

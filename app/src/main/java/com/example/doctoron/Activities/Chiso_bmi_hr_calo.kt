@@ -1,15 +1,12 @@
 package com.example.doctoron.Activities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,7 +15,6 @@ import com.jjoe64.graphview.series.DataPoint
 import com.jjoe64.graphview.series.LineGraphSeries
 import java.text.DecimalFormat
 import java.util.Calendar
-import kotlin.math.log
 
 
 class Chiso_bmi_hr_calo : AppCompatActivity() {
@@ -146,7 +142,9 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
 
         if (a != null) {
             for (i in a ){
-                tb+=i
+                if(i>1.0){
+                    tb+=i
+                }
             }
             tb=tb/a.size
 
@@ -160,7 +158,7 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         var mangchiso:ArrayList<DataPoint> = ArrayList()
         if (a != null) {
             for(i in a){
-                if ( i > 0.0){
+                if ( i > 1.0){
                     mangchiso.add(DataPoint(index.toDouble(),i.toDouble()))
                     index=index+1
                 }
@@ -179,15 +177,25 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         }
     }
     fun Updatechiso(a:ArrayList<Double>?,b:Double){
-//        val calendar = Calendar.getInstance()
-//        val day = calendar.get(Calendar.DAY_OF_MONTH)
-//        val arrayList: ArrayList<Double> = List(31) { 0.0 }.toMutableList() as ArrayList<Double>
-//
-//        if (a!=null){
-//            for (i in a){
-//               arrayList.set()
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val db = FirebaseFirestore.getInstance()
+//        val data = hashMapOf(
+//            "bmi_1" to listOf(21.1, 25.1, 20.89,18.23, 19.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
+//            "bmi_2" to listOf(22.23, 22.56, 21.89,23.23, 18.56, 0.1,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
+//            "calo_2" to listOf(21.23, 20.56, 20.89,20.23, 20.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
+//            "calo_1" to listOf(20.23, 20.56, 20.89,20.23, 20.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
+//            "heartrace_2" to listOf(8.23, 9.56, 9.89,9.23, 9.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
+//            "heartrace_1" to listOf(9.23, 8.56, 8.89,8.23, 8.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
+//        )
+//        db.collection("Chiso").document("vtnB0tljUVnbTZLCqgPD")
+//            .set(data)
+//            .addOnSuccessListener {
+//                // Ghi dữ liệu thành công
 //            }
-//        }
+//            .addOnFailureListener { e ->
+//                // Xử lý khi ghi dữ liệu thất bại
+//            }
     }
     fun Capnhapchisonam(){
         db.collection("Chiso")

@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.doctoron.R
@@ -78,8 +79,8 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         }
         btn_update1.setOnClickListener {
             val so1:Double=edt_bmi.text.toString().toDouble()
-            val so2=edt_calo.text.toString().toDouble()
-            val so3=edt_hr.text.toString().toDouble()
+            val so2=edt_calo.text.toString().toDouble()/100
+            val so3=edt_hr.text.toString().toDouble()/10
             val month1=getCurrentDate()
             db.collection("Chiso")
                 .document(userid)
@@ -91,9 +92,9 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
                             val calo = document.get("calo_$month1") as? ArrayList<Double>
                             val heartrace = document.get("heartrace_$month1") as? ArrayList<Double>
 
-                            Updatechiso(bmi,so1)
-                            Updatechiso(calo,so2)
-                            Updatechiso(heartrace,so3)
+                            Updatechiso(bmi,so1,"bmi_")
+                            Updatechiso(calo,so2,"calo_")
+                            Updatechiso(heartrace,so3,"heartrace_")
                         }
                     }
                 }
@@ -139,15 +140,15 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
 
     fun TinhchisoTB(a:ArrayList<Double>?):String{
         var tb:Double=0.0
-
+        var size:Int=0
         if (a != null) {
             for (i in a ){
                 if(i>1.0){
                     tb+=i
+                    size+=1
                 }
             }
-            tb=tb/a.size
-
+            tb=tb/size
         }
         val decimalFormat = DecimalFormat("#.###")
         val formattedNumber = decimalFormat.format(tb)
@@ -176,26 +177,25 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
             1 -> lineGraphView1.addSeries(series)
         }
     }
-    fun Updatechiso(a:ArrayList<Double>?,b:Double){
+    fun Updatechiso(a:ArrayList<Double>?,b:Double,type:String){
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
+        if (a != null) {
+            a.set(day,b)
+        }
+        val path : String = type+getCurrentDate()
         val db = FirebaseFirestore.getInstance()
-//        val data = hashMapOf(
-//            "bmi_1" to listOf(21.1, 25.1, 20.89,18.23, 19.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
-//            "bmi_2" to listOf(22.23, 22.56, 21.89,23.23, 18.56, 0.1,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
-//            "calo_2" to listOf(21.23, 20.56, 20.89,20.23, 20.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
-//            "calo_1" to listOf(20.23, 20.56, 20.89,20.23, 20.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
-//            "heartrace_2" to listOf(8.23, 9.56, 9.89,9.23, 9.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
-//            "heartrace_1" to listOf(9.23, 8.56, 8.89,8.23, 8.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89,0.23, 0.56, 0.89),
-//        )
-//        db.collection("Chiso").document("vtnB0tljUVnbTZLCqgPD")
-//            .set(data)
-//            .addOnSuccessListener {
-//                // Ghi dữ liệu thành công
-//            }
-//            .addOnFailureListener { e ->
-//                // Xử lý khi ghi dữ liệu thất bại
-//            }
+        val data = hashMapOf(
+            path to a
+        )
+        db.collection("Chiso").document(userid)
+            .update(data as Map<String, Any>)
+            .addOnSuccessListener {
+                Toast.makeText(this,"Update dữ liệu thành công",Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this,"Uopss có lỗi rồi",Toast.LENGTH_SHORT).show()
+            }
     }
     fun Capnhapchisonam(){
         db.collection("Chiso")

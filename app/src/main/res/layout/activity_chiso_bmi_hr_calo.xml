@@ -7,6 +7,7 @@
     android:orientation="vertical"
     android:background="@color/primary"
     tools:context=".Activities.Chiso_bmi_hr_calo">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +35,7 @@
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -42,29 +44,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tháng"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:textAlignment="textEnd"
+                    android:layout_weight="1"/>
+                <EditText
+                    android:id="@+id/month"
+                    android:layout_marginStart="8dp"
+                    android:layout_width="50dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:textSize="20dp"
+                    android:textAlignment="center"
+                    android:textStyle="bold"/>
+                <Button
+                    android:id="@+id/btn_kt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xem"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginStart="8dp"
+                    />
+            </LinearLayout>
             <androidx.cardview.widget.CardView
                 android:layout_margin="12dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="8dp">
-                <LinearLayout
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/idGraphView_month"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bảng chỉ số theo tháng"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:textAlignment="center"/>
-                    <com.jjoe64.graphview.GraphView
-                        android:id="@+id/idGraphView_month"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        />
-                </LinearLayout>
-
+                    android:layout_height="200dp"
+                    />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -72,23 +94,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:cardElevation="8dp">
-                <LinearLayout
+                <com.jjoe64.graphview.GraphView
+                    android:id="@+id/idGraphView_year"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Bảng chỉ số theo năm"
-                        android:textSize="18dp"
-                        android:textStyle="bold"
-                        android:textAlignment="center"/>
-                    <com.jjoe64.graphview.GraphView
-                        android:id="@+id/idGraphView_year"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        />
-                </LinearLayout>
+                    android:layout_height="200dp"
+                    />
             </androidx.cardview.widget.CardView>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -116,7 +126,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Calories (1:100)"
+                    android:text="Calories"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:textSize="20dp"
@@ -136,14 +146,13 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nhịp tim (1:10)"
+                    android:text="Nhịp tim"
                     android:textAlignment="center"
                     android:layout_gravity="center"
                     android:textSize="20dp"
                     android:layout_marginStart="8dp"
                     />
             </LinearLayout>
-
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -156,7 +165,7 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Chỉ số trung bình"
+                        android:text="Chỉ số trung bình tháng"
                         android:textSize="20dp"
                         android:textAlignment="center"
                         android:textStyle="bold"
@@ -167,33 +176,22 @@
                         android:orientation="horizontal"
                         android:layout_margin="@dimen/_8pxh">
                         <ImageView
+                            android:layout_marginStart="30dp"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/img_help1"
                             android:scaleType="fitXY"
                             />
                         <TextView
+                            android:id="@+id/chisotb_bmi"
                             android:layout_marginStart="@dimen/_8pxh"
                             android:layout_marginEnd="@dimen/_8pxh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="20dp"
-                            android:text="21.65/tháng"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="21.65"
+                            android:gravity="center"
                             android:textStyle="bold"
-                            android:textAlignment="center"
-                            />
-                        <TextView
-                            android:layout_marginStart="@dimen/_8pxh"
-                            android:layout_marginEnd="@dimen/_8pxh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="20dp"
-                            android:layout_weight="1"
-                            android:text="22.65/năm"
-                            android:textStyle="bold"
+                            android:textSize="25dp"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -202,33 +200,22 @@
                         android:orientation="horizontal"
                         android:layout_margin="@dimen/_8pxh">
                         <ImageView
+                            android:layout_marginStart="30dp"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/img_calories"
                             android:scaleType="fitXY"
                             />
                         <TextView
+                            android:id="@+id/chisotb_calo"
                             android:layout_marginStart="@dimen/_8pxh"
                             android:layout_marginEnd="@dimen/_8pxh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="20dp"
-                            android:text="2100.65/tháng"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="2100.65"
+                            android:gravity="center"
                             android:textStyle="bold"
-                            android:textAlignment="center"
-                            />
-                        <TextView
-                            android:layout_marginStart="@dimen/_8pxh"
-                            android:layout_marginEnd="@dimen/_8pxh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="20dp"
-                            android:layout_weight="1"
-                            android:text="2108.41/năm"
-                            android:textStyle="bold"
+                            android:textSize="25dp"
                             />
                     </LinearLayout>
                     <LinearLayout
@@ -237,33 +224,22 @@
                         android:orientation="horizontal"
                         android:layout_margin="@dimen/_8pxh">
                         <ImageView
+                            android:layout_marginStart="30dp"
                             android:layout_width="50dp"
                             android:layout_height="50dp"
                             android:src="@drawable/img_favorite"
                             android:scaleType="fitXY"
                             />
                         <TextView
+                            android:id="@+id/chisotb_hr"
                             android:layout_marginStart="@dimen/_8pxh"
                             android:layout_marginEnd="@dimen/_8pxh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="20dp"
-                            android:text="84.65/tháng"
-                            android:layout_weight="1"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="87.65"
+                            android:gravity="center"
                             android:textStyle="bold"
-                            android:textAlignment="center"
-                            />
-                        <TextView
-                            android:layout_marginStart="@dimen/_8pxh"
-                            android:layout_marginEnd="@dimen/_8pxh"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:textSize="20dp"
-                            android:layout_weight="1"
-                            android:text="87.65/năm"
-                            android:textStyle="bold"
+                            android:textSize="25dp"
                             />
                     </LinearLayout>
 
@@ -299,6 +275,7 @@
                             android:scaleType="fitXY"
                             />
                         <EditText
+                            android:id="@+id/update_bmi"
                             android:layout_marginStart="@dimen/_8pxh"
                             android:layout_marginEnd="@dimen/_8pxh"
                             android:layout_width="match_parent"
@@ -318,6 +295,7 @@
                             android:scaleType="fitXY"
                             />
                         <EditText
+                            android:id="@+id/update_calo"
                             android:layout_marginStart="@dimen/_8pxh"
                             android:layout_marginEnd="@dimen/_8pxh"
                             android:layout_width="match_parent"
@@ -337,6 +315,7 @@
                             android:scaleType="fitXY"
                             />
                         <EditText
+                            android:id="@+id/update_hr"
                             android:layout_marginStart="@dimen/_8pxh"
                             android:layout_marginEnd="@dimen/_8pxh"
                             android:layout_width="match_parent"
@@ -345,6 +324,7 @@
                             />
                     </LinearLayout>
                     <Button
+                        android:id="@+id/btn_update"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Cập nhập"

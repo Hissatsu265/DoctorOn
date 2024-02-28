@@ -13,9 +13,8 @@ class User(private var name:String="",private var pass:String="",private var gma
         sex=sex
     }
     // gửi dữ liệu lên firebase
-    fun SendtoFirebase(){
+    fun SendtoFirebase(id:String){
         val db = FirebaseFirestore.getInstance()
-        // Tham chiếu đến collection trong Firestore
         val collectionRef = db.collection("users")
         val user = hashMapOf(
             "name" to name,
@@ -23,14 +22,30 @@ class User(private var name:String="",private var pass:String="",private var gma
             "pass" to pass,
             "gmail" to gmail,
             "DoB" to DoB,
-            "sex" to sex
+            "sex" to sex,
+            "address" to ""
         )
-        collectionRef.add(user)
-            .addOnSuccessListener { documentReference ->
-                // xử lí thành công
+        db.collection("users")
+            .document(id)
+            .set(user)
+            .addOnSuccessListener {
             }
-            .addOnFailureListener { e ->
-                //xữ lí thất  bại
+            .addOnFailureListener {
+            }
+        val ar= DoubleArray(31) { 0.5 }.toList()
+        val data = hashMapOf<String, List<Double>>()
+
+        for (i in 1..12) {
+            data["bmi_$i"] = ar
+            data["calo_$i"] = ar
+            data["heartrace_$i"] = ar
+        }
+        db.collection("Chiso")
+            .document(id)
+            .set(data)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener {
             }
     }
 

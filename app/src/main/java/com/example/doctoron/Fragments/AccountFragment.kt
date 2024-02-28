@@ -20,7 +20,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.doctoron.Activities.Chinh_sua_thong_tin_ca_nhan
 import com.example.doctoron.Activities.Chiso_bmi_hr_calo
+import com.example.doctoron.Activities.Lognin
 import com.example.doctoron.Activities.Setting_account
 
 // TODO: Rename parameter arguments, choose names that match
@@ -56,11 +58,18 @@ class AccountFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        userId = arguments?.getString("user_ID").toString()
+        Log.d("id4", userId)
         val view= inflater.inflate(R.layout.fragment_account, container, false)
         //-------------------------------------------------------------------------------
         var ll_help:LinearLayout=view.findViewById(R.id.help_account)
         var ll_help1:LinearLayout=view.findViewById(R.id.help_account1)
         var ll_chiso:LinearLayout=view.findViewById(R.id.ll_chiso)
+
+        var ll_changepass:LinearLayout=view.findViewById(R.id.changepass)
+        var ll_chinhtt:LinearLayout=view.findViewById(R.id.chinhsuatt)
+        var ll_logout:LinearLayout=view.findViewById(R.id.logout)
+
         var tv_name_user:TextView=view.findViewById(R.id.tv_name_account)
         var img_avatar:ImageView=view.findViewById(R.id.user_avatar)
         //-------------------------------------------------------------------------------
@@ -79,13 +88,50 @@ class AccountFragment : Fragment() {
         }
         ll_chiso.setOnClickListener {
             val intent = Intent(activity, Chiso_bmi_hr_calo::class.java)
+            intent.putExtra("user_ID",userId)
             startActivity(intent)
         }
+        ll_logout.setOnClickListener {
+            val intent = Intent(activity, Lognin::class.java)
+            startActivity(intent)
+            activity?.finish()
+        }
+        ll_chinhtt.setOnClickListener {
+            val intent = Intent(activity, Chinh_sua_thong_tin_ca_nhan::class.java)
+            intent.putExtra("user_ID",userId)
+            startActivity(intent)
+        }
+        ll_changepass.setOnClickListener{
+            val db1=FirebaseFirestore.getInstance()
+            var Emailresetpass:String=""
+            db1.collection("users")
+                .document(userId)
+                .get()
+                .addOnSuccessListener { document ->
+                    run {
+                        if (document != null) {
+                            Emailresetpass=document.get("gmail").toString()
+                        }
+                    }
+                }
+
+            FirebaseAuth.getInstance().sendPasswordResetEmail(Emailresetpass)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        // Email đã được gửi đi, thông báo cho người dùng.
+                        Toast.makeText(
+                            activity,
+                            "Email đã được gửi để đặt lại mật khẩu",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Log.e("ResetPassword", "Failed")
+                    }
+                }
+        }
         //------------------------------Load avatar-------------------------------------
-        val user = FirebaseAuth.getInstance().currentUser
-//        -----------------------------------------------------------------------------
-//        val userId = user?.uid
-        val userId:String= "vtnB0tljUVnbTZLCqgPD"
+
+//        val userId:String= "vtnB0tljUVnbTZLCqgPD"
 //        --------------------------------------------------------------
         val firestore = FirebaseFirestore.getInstance()
         val userRef = firestore.collection("users").document(userId!!)

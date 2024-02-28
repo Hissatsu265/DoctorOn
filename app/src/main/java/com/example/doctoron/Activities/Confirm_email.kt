@@ -34,8 +34,11 @@ class Confirm_email : AppCompatActivity() {
                                 if (firebaseUser != null) {
                                     if(firebaseUser.isEmailVerified) {
                                         Toast.makeText(applicationContext, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-                                        val intent = Intent(applicationContext, Home::class.java)
-                                        startActivity(intent)
+                                        val intent1 = Intent(applicationContext, MainActivity::class.java)
+                                        val user_ID = intent.getStringExtra("user_ID")
+                                        intent1.putExtra("user_ID", user_ID)
+                                        Log.d("id1", "onCreate: "+user_ID)
+                                        startActivity(intent1)
                                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
                                     }else{
                                         Toast.makeText(applicationContext, "Bạn chưa xác thực tài khoản hãy check lại mail", Toast.LENGTH_SHORT).show()

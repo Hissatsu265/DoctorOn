@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
 import com.example.doctoron.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 
 class Lognin : AppCompatActivity() {
@@ -89,7 +90,14 @@ class Lognin : AppCompatActivity() {
                             if (firebaseUser != null) {
                                 if(firebaseUser.isEmailVerified) {
                                     Toast.makeText(applicationContext, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(applicationContext, Home::class.java)
+                                    // Cập nhap mk đề phòng đổi mk, quên mk
+                                    val user = FirebaseAuth.getInstance().currentUser
+                                    val userId = user?.uid
+                                    Log.d("kkk", userId.toString())
+                                    Capnhapmatkhau(gmail,pass,userId.toString())
+                                    // chuyển hướng đến app
+                                    val intent = Intent(applicationContext, MainActivity::class.java)
+                                    intent.putExtra("user_ID",userId.toString())
                                     startActivity(intent)
                                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
                                 }else{
@@ -138,6 +146,21 @@ class Lognin : AppCompatActivity() {
             })
 
         builder.create().show()
+    }
+    fun Capnhapmatkhau(gmail:String,pass:String,id:String){
+        val db = FirebaseFirestore.getInstance()
+        val data = hashMapOf(
+            "gmail" to gmail,
+            "pass" to pass
+        )
+        if (id != null) {
+            db.collection("users").document(id)
+                .update(data as Map<String, Any>)
+                .addOnSuccessListener {
+                }
+                .addOnFailureListener { e ->
+                }
+        }
     }
 
 }

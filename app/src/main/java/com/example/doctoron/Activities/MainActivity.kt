@@ -29,8 +29,11 @@ import com.google.android.material.navigation.NavigationView
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var drawerLayout: androidx.drawerlayout.widget.DrawerLayout
+    var user_ID:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         try {
+            user_ID=intent.getStringExtra("user_ID").toString()
+            Log.d("id3", "onCreate: " + user_ID)
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
 
@@ -88,6 +91,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
     private fun openFragment(fragment: Fragment){
+
+        val bundle = Bundle()
+        bundle.putString("user_ID", user_ID)
+        fragment.arguments=bundle
+
         val fragmentTransaction:FragmentTransaction= fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container,fragment)
         fragmentTransaction.commit()

@@ -30,6 +30,7 @@ class DashboardFragment : Fragment() , OnItemClickListener {
     private var param2: String? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var doctors: ArrayList<Doctor>
+    private var userId:String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,7 @@ class DashboardFragment : Fragment() , OnItemClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        userId = arguments?.getString("user_ID").toString()
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
         //-------------------------------Image slider ------------------------------------------------
         var slideModels:ArrayList<SlideModel> = ArrayList()

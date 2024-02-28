@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 
 import android.text.InputType
+import android.util.Log
 
 import android.widget.CheckBox
 import android.widget.EditText
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.example.doctoron.Objects.User
 import com.example.doctoron.R
 import com.google.firebase.auth.FirebaseAuth
+import kotlin.math.log
 
 
 class Signup : AppCompatActivity() {
@@ -142,11 +144,14 @@ class Signup : AppCompatActivity() {
                             ?.addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     // lưu thông tin đăng kí
-                                    SaveInfo(pass,gmail,edt_name.text.toString())
+                                    SaveInfo(gmail,pass,edt_name.text.toString(),user?.uid.toString())
+                                    //-----------------------------------------------------------------------------
                                     progressDialog.dismiss()
                                     Toast.makeText(applicationContext,"Đã gửi email xác thực",Toast.LENGTH_SHORT).show()
                                     val intent=Intent(applicationContext,Confirm_email::class.java)
-                                    // them pass,gmail
+
+                                    intent.putExtra("user_ID", user?.uid.toString())
+                                    Log.d("id2", "HandsignCLick: "+ user?.uid.toString())
                                     intent.putExtra("gmail",gmail)
                                     intent.putExtra("pass",pass)
                                     //----------------------
@@ -162,9 +167,9 @@ class Signup : AppCompatActivity() {
                 }
         }
     }
-    fun SaveInfo(gmail:String,pass:String,name:String){
+    fun SaveInfo(gmail:String,pass:String,name:String,id:String){
         val new_user = User(name,pass,gmail)
-        new_user.SendtoFirebase()
+        new_user.SendtoFirebase(id)
     }
     //------------------------------------------------------------------------------------
 }

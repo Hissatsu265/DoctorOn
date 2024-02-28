@@ -29,7 +29,7 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
     lateinit var chisotb_calo1:TextView
     lateinit var chisotb_hr1:TextView
 
-    val userid : String = "vtnB0tljUVnbTZLCqgPD"
+    val userid : String = intent.getStringExtra("user_ID").toString()
     val db = FirebaseFirestore.getInstance()
     //-----------------------------------------------------------
     override fun onCreate(savedInstanceState: Bundle?) {

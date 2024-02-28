@@ -29,13 +29,13 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
     lateinit var chisotb_calo1:TextView
     lateinit var chisotb_hr1:TextView
 
-    val userid : String = intent.getStringExtra("user_ID").toString()
+    var userid : String = ""
     val db = FirebaseFirestore.getInstance()
     //-----------------------------------------------------------
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_chiso_bmi_hr_calo)
-
+        userid=intent.getStringExtra("user_ID").toString()
         //--------------------Khai báo------------------------------------------------
         lineGraphView = findViewById(R.id.idGraphView_month)
         lineGraphView1 = findViewById(R.id.idGraphView_year)

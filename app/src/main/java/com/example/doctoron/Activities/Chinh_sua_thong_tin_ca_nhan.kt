@@ -12,10 +12,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 class Chinh_sua_thong_tin_ca_nhan : AppCompatActivity() {
 
 
-    val userid : String = intent.getStringExtra("user_ID").toString()
+    var userid : String = ""
     val db = FirebaseFirestore.getInstance()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userid=intent.getStringExtra("user_ID").toString()
         setContentView(R.layout.activity_chinh_sua_thong_tin_ca_nhan)
 
         val btn_back=findViewById<ImageView>(R.id.back_btn)

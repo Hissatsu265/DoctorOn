@@ -103,31 +103,36 @@ class AccountFragment : Fragment() {
         }
         ll_changepass.setOnClickListener{
             val db1=FirebaseFirestore.getInstance()
-            var Emailresetpass:String=""
-            db1.collection("users")
-                .document(userId)
-                .get()
-                .addOnSuccessListener { document ->
-                    run {
-                        if (document != null) {
-                            Emailresetpass=document.get("gmail").toString()
+            try {
+
+                db1.collection("users")
+                    .document(userId)
+                    .get()
+                    .addOnSuccessListener { document ->
+                        run {
+                            if (document != null) {
+                                val Emailresetpass=document.get("gmail").toString()
+                                FirebaseAuth.getInstance().sendPasswordResetEmail(Emailresetpass)
+                                    .addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            // Email đã được gửi đi, thông báo cho người dùng.
+                                            Toast.makeText(
+                                                activity,
+                                                "Email đã được gửi để đặt lại mật khẩu",
+                                                Toast.LENGTH_SHORT
+                                            ).show()
+                                        } else {
+                                            Log.e("ResetPassword", "Failed")
+                                        }
+                                    }
+                            }
                         }
                     }
-                }
+            }
+            catch (e:Exception){
+                Log.e("loiiiii", e.message.toString() )
+            }
 
-            FirebaseAuth.getInstance().sendPasswordResetEmail(Emailresetpass)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Email đã được gửi đi, thông báo cho người dùng.
-                        Toast.makeText(
-                            activity,
-                            "Email đã được gửi để đặt lại mật khẩu",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        Log.e("ResetPassword", "Failed")
-                    }
-                }
         }
         //------------------------------Load avatar-------------------------------------
 

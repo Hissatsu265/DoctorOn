@@ -38,13 +38,13 @@
             android:name=".Activities.Home"
             android:exported="false" />
         <activity
-            android:name=".Activities.Lognin"
+            android:name=".Activities.MainActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Signup"
             android:exported="false" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.Lognin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatButton
+import com.example.doctoron.Objects.SessionManager
 import com.example.doctoron.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,9 +29,9 @@ class Lognin : AppCompatActivity() {
     lateinit var edt_mail: EditText
     lateinit var edt_pass: EditText
     lateinit var cb_showpass: CheckBox
+    lateinit var sessionManager:SessionManager
+
     private lateinit var progressDialog: ProgressDialog
-
-
     private lateinit var firebaseAuth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,13 +41,21 @@ class Lognin : AppCompatActivity() {
         btnlogin=findViewById<AppCompatButton>(R.id.btnSignIn)
         txt_nothaveacc=findViewById<TextView>(R.id.txtConfirmation)
         txt_forgotpass=findViewById<TextView>(R.id.txtForgotPassword)
+
         edt_mail=findViewById(R.id.etEmail)
         edt_pass=findViewById(R.id.etPassword)
         firebaseAuth = FirebaseAuth.getInstance()
 
         cb_showpass=findViewById<CheckBox>(R.id.showpass)
         edt_pass.inputType= InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
-        //---------------------------------------------------------------------------
+        //------------------------------Luu dang nhap-------------------------------------------
+        sessionManager = SessionManager(this)
+        if (sessionManager.getSavedPassword()!=null)
+        {
+            edt_pass.setText(sessionManager.getSavedPassword())
+            edt_mail.setText(sessionManager.getSavedUsername())
+        }
+        //--------------------------------------------------------------------------
         txt_nothaveacc.setOnClickListener {
             val intent= Intent (applicationContext,Signup::class.java)
             startActivity(intent)
@@ -69,6 +78,7 @@ class Lognin : AppCompatActivity() {
         }
     }
     fun SignIN(){
+
         val gmail: String =  edt_mail.text.toString()
         val pass: String = edt_pass.text.toString()
 
@@ -90,6 +100,8 @@ class Lognin : AppCompatActivity() {
                             if (firebaseUser != null) {
                                 if(firebaseUser.isEmailVerified) {
                                     Toast.makeText(applicationContext, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+                                    //Luu dăng nhap
+                                    sessionManager.saveLoginDetails(gmail, pass)
                                     // Cập nhap mk đề phòng đổi mk, quên mk
                                     val user = FirebaseAuth.getInstance().currentUser
                                     val userId = user?.uid

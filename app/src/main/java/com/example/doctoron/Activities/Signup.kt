@@ -15,6 +15,7 @@ import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatButton
+import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.Objects.User
 import com.example.doctoron.R
 import com.google.firebase.auth.FirebaseAuth
@@ -31,12 +32,16 @@ class Signup : AppCompatActivity() {
     lateinit var cb_showpass: CheckBox
     lateinit var tv_confirm: TextView
 
+    var Collection:String=""
+
     private lateinit var progressDialog: ProgressDialog
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_up)
+        //--------------lay collection------------------------------
+        Collection=intent.getStringExtra("Collection").toString()
         //----------------------init---------------------------------
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -168,8 +173,14 @@ class Signup : AppCompatActivity() {
         }
     }
     fun SaveInfo(gmail:String,pass:String,name:String,id:String){
-        val new_user = User(name,pass,gmail)
-        new_user.SendtoFirebase(id)
+        if (Collection=="users"){
+            val new_user = User(name,pass,gmail)
+            new_user.SendtoFirebase(id)
+        }
+        else{
+            val new_doctor = Doctor(name,pass,gmail)
+            new_doctor.SendtoFirebase(id)
+        }
     }
     //------------------------------------------------------------------------------------
 }

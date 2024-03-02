@@ -18,8 +18,6 @@ class Confirm_email : AppCompatActivity() {
         setContentView(R.layout.activity_confirm_email)
         val pass = intent.getStringExtra("pass")
         val gmail = intent.getStringExtra("gmail")
-        Log.d("hus", pass.toString())
-        Log.d("hus", gmail.toString())
 
         val button = findViewById<AppCompatButton>(R.id.btn_next)
 
@@ -37,7 +35,8 @@ class Confirm_email : AppCompatActivity() {
                                         val intent1 = Intent(applicationContext, MainActivity::class.java)
                                         val user_ID = intent.getStringExtra("user_ID")
                                         intent1.putExtra("user_ID", user_ID)
-                                        Log.d("id1", "onCreate: "+user_ID)
+
+//                                        Log.d("id1", "onCreate: "+user_ID)
                                         startActivity(intent1)
                                         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
                                     }else{

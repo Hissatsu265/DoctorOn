@@ -2,8 +2,8 @@ package com.example.doctoron.Objects
 
 import com.google.firebase.firestore.FirebaseFirestore
 
-class User(private var name:String="",private var pass:String="",private var gmail:String="",
-           private var age:Int=0,private var DoB:String="",private var sex:Int=0) {
+open class User(private var name:String="", private var pass:String="", private var gmail:String="",
+                private var age:Int=0, private var DoB:String="", private var sex:Int=0) {
     init{
         name=name
         age=age
@@ -12,8 +12,11 @@ class User(private var name:String="",private var pass:String="",private var gma
         DoB=DoB
         sex=sex
     }
+    open fun getName():String{
+        return name
+    }
     // gửi dữ liệu lên firebase
-    fun SendtoFirebase(id:String){
+    open fun SendtoFirebase(id:String){
         val db = FirebaseFirestore.getInstance()
         val collectionRef = db.collection("users")
         val user = hashMapOf(
@@ -23,7 +26,8 @@ class User(private var name:String="",private var pass:String="",private var gma
             "gmail" to gmail,
             "DoB" to DoB,
             "sex" to sex,
-            "address" to ""
+            "address" to "",
+            "isDoctor" to ""
         )
         db.collection("users")
             .document(id)
@@ -48,5 +52,6 @@ class User(private var name:String="",private var pass:String="",private var gma
             .addOnFailureListener {
             }
     }
+
 
 }

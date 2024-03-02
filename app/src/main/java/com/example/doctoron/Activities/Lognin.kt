@@ -36,6 +36,7 @@ class Lognin : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_lognin)
+        //-----------------lay collection------------------------
 
         //----------------init------------------
         btnlogin=findViewById<AppCompatButton>(R.id.btnSignIn)
@@ -110,6 +111,7 @@ class Lognin : AppCompatActivity() {
                                     // chuyển hướng đến app
                                     val intent = Intent(applicationContext, MainActivity::class.java)
                                     intent.putExtra("user_ID",userId.toString())
+
                                     startActivity(intent)
                                     overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
                                 }else{

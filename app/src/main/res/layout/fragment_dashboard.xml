@@ -91,8 +91,8 @@
                         android:layout_height="wrap_content"
                         android:layout_margin="8dp">
                         <TableRow
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="0dp"
                             android:gravity="center"
                             android:id="@+id/tableRow1"
                             android:layout_width="match_parent"
@@ -164,8 +164,8 @@
                             </LinearLayout>
                         </TableRow>
                         <TableRow
-                            android:layout_marginTop="10dp"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginTop="0dp"
+                            android:layout_marginBottom="5dp"
                             android:gravity="center"
                             android:id="@+id/tableRow2"
                             android:layout_width="match_parent"
@@ -245,20 +245,38 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:background="@color/teal_200"
+                    android:background="@color/teal_50"
                     android:paddingBottom="@dimen/_16pxv"
                     android:layout_marginBottom="150dp"
                     >
-                    <TextView android:id="@+id/txtEarlyProtection1"
-                        android:layout_height="wrap_content"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:text="Bác sĩ nổi bật"
-                        android:textStyle="bold"
-                        android:textSize="20dp"
-                        android:layout_marginStart="@dimen/_26pxh"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginBottom="5dp"
-                        />
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        >
+                        <TextView android:id="@+id/txtEarlyProtection1"
+                            android:layout_height="wrap_content"
+                            android:layout_width="match_parent"
+                            android:text="Bác sĩ nổi bật"
+                            android:textStyle="bold"
+                            android:textSize="20dp"
+                            android:layout_marginStart="@dimen/_26pxh"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="5dp"
+                            android:layout_weight="1"
+                            />
+                        <TextView
+                            android:id="@+id/tv_listdoctor_xt"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Xem thêm >>"
+                            android:textColor="@color/black"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="20dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@color/teal_50"/>
+                    </LinearLayout>
+
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_topdoctor"
                         android:layout_width="match_parent"

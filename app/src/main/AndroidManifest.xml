@@ -17,6 +17,12 @@
         android:theme="@style/Theme.DoctorOn"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.Doctor_list"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Notification"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Chinh_sua_thong_tin_ca_nhan"
             android:exported="false" />
         <activity
@@ -26,7 +32,7 @@
             android:name=".Activities.Setting_account"
             android:exported="false" />
         <activity
-            android:name=".Activities.Begin"
+            android:name=".Activities.Lognin"
             android:exported="false" />
         <activity
             android:name=".Activities.Startscreen"
@@ -44,7 +50,7 @@
             android:name=".Activities.Signup"
             android:exported="false" />
         <activity
-            android:name=".Activities.Lognin"
+            android:name=".Activities.Begin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

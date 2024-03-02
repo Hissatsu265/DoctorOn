@@ -13,6 +13,15 @@ class Begin : AppCompatActivity() {
         val btn = findViewById<AppCompatButton>(R.id.btn_next)
         btn.setOnClickListener {
             val intent= Intent(applicationContext,Startscreen::class.java)
+            intent.putExtra("Collection","users")
+            startActivity(intent)
+            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
+            finish()
+        }
+        val btn_1 = findViewById<AppCompatButton>(R.id.btn_next1)
+        btn_1.setOnClickListener {
+            val intent= Intent(applicationContext,Startscreen::class.java)
+            intent.putExtra("Collection","Doctors")
             startActivity(intent)
             overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             finish()

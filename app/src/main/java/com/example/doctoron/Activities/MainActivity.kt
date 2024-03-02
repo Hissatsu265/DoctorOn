@@ -1,11 +1,13 @@
 package com.example.doctoron.Activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.PersistableBundle
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
+import android.widget.ImageButton
 import android.widget.Toast
 import android.widget.Toolbar
 import android.window.OnBackInvokedDispatcher
@@ -32,14 +34,23 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     var user_ID:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         try {
+
+            //---------------truyen user id ------------------------
             user_ID=intent.getStringExtra("user_ID").toString()
-            Log.d("id3", "onCreate: " + user_ID)
+            //----------------------------------------------------
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)
-
+            //------------------- tool bar -----------------------------------------------
             val toolbar = findViewById<androidx.appcompat.widget.Toolbar>(R.id.toolbar)
             setSupportActionBar(toolbar)
-
+            //----------------------------Notification --------------------------------------
+            val btn_notification=findViewById<ImageButton>(R.id.btn_notification)
+            btn_notification.setOnClickListener{
+                val intent=Intent(this, Notification::class.java)
+                startActivity(intent)
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
+            }
+            //---------------------------------------------------------------------------
             // Tìm các thành phần còn lại bằng findViewById nếu cần
             val drawerLayout = findViewById<androidx.drawerlayout.widget.DrawerLayout>(R.id.drawer_layout)
             val bottomNavigationView = findViewById<com.google.android.material.bottomnavigation.BottomNavigationView>(R.id.bottom_navigation)

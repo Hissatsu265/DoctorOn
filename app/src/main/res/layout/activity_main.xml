@@ -12,15 +12,30 @@
         android:id="@+id/reltlo"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <androidx.appcompat.widget.Toolbar
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:id="@+id/toolbar"
-            android:background="@color/teal_300"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-           />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="?attr/actionBarSize"
+                android:id="@+id/toolbar"
+                android:background="@color/teal_300"
+                android:elevation="4dp"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+               />
+            <ImageButton
+                android:id="@+id/btn_notification"
+                android:layout_width="?attr/actionBarSize"
+                android:layout_height="match_parent"
+                android:src="@drawable/img_notification"
+                android:background="@color/teal_300"
+                android:scaleType="fitXY"
+                android:padding="12dp"
+                />
+        </LinearLayout>
         <FrameLayout
             android:layout_marginTop="?attr/actionBarSize"
             android:layout_width="match_parent"

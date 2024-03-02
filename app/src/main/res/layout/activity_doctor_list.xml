@@ -40,9 +40,11 @@
         app:cardElevation="10dp">
         <androidx.appcompat.widget.SearchView
             android:layout_width="match_parent"
+            android:id="@+id/search_view_doctor"
             android:layout_height="40dp"
             android:background="@color/primary"
-            android:hint="Nhập tên bác sĩ bạn muốn tìm" />
+            android:queryHint="Tìm kiếm bác sĩ..."
+            />
     </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

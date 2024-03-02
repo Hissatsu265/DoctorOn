@@ -3,11 +3,21 @@ package com.example.doctoron.Objects
 import com.google.firebase.firestore.FirebaseFirestore
 
 class Doctor(name: String = "", pass: String = "", gmail: String = "",
-             age: Int = 0, DoB: String = "", sex: Int = 0, private var star:Int=0,private var CN: String = "") : User(name, pass, gmail, age, DoB, sex) {
+             age: Int = 0, DoB: String = "", sex: Int = 0, private var star:Int=0,private var CN: String = "",
+             private var iddoctor:String = "",private var Hospital:String="") : User(name, pass, gmail, age, DoB, sex) {
 
-
+    init {
+        CN=CN
+        star=star
+        iddoctor=iddoctor
+        Hospital=Hospital
+    }
+    fun getHospital():String{
+        return Hospital
+    }
     // Ghi đè phương thức SendtoFirebase của lớp cha User
     override fun SendtoFirebase(id: String) {
+        iddoctor=id
         super.SendtoFirebase(id)
 
         val db = FirebaseFirestore.getInstance()
@@ -45,7 +55,9 @@ class Doctor(name: String = "", pass: String = "", gmail: String = "",
     fun getStar():Int{
         return star
     }
-
+    fun getID():String{
+        return iddoctor
+    }
 
 }
 

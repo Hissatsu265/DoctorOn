@@ -41,11 +41,13 @@
         <androidx.appcompat.widget.SearchView
             android:layout_width="match_parent"
             android:id="@+id/search_view_doctor"
-            android:layout_height="40dp"
+            android:layout_height="45dp"
+            app:queryHint="Nhập tên bác sĩ bạn cần tìm..."
             android:background="@color/primary"
-            android:queryHint="Tìm kiếm bác sĩ..."
+            app:iconifiedByDefault="false"
             />
     </androidx.cardview.widget.CardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

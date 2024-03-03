@@ -2,9 +2,12 @@ package com.example.doctoron.Adapters
 
 import android.content.ContentProvider
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.content.ContentProviderCompat.requireContext
@@ -17,7 +20,8 @@ import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
 
 class DoctorList ( private val doctor:ArrayList<Doctor>, private val listener: OnItemClickListener)
-:RecyclerView.Adapter<DoctorList.MyViewHolder_Lisdoctor>() {
+:RecyclerView.Adapter<DoctorList.MyViewHolder_Lisdoctor>()  {
+//    private var filteredDoctorList: ArrayList<Doctor> = ArrayList(doctor)
     class MyViewHolder_Lisdoctor(itemView: View, private val listener: OnItemClickListener): RecyclerView.ViewHolder(itemView),
         View.OnClickListener {
         var tv_Name: TextView =itemView.findViewById(R.id.tv_name)
@@ -41,12 +45,22 @@ class DoctorList ( private val doctor:ArrayList<Doctor>, private val listener: O
 
     override fun onBindViewHolder(holder: MyViewHolder_Lisdoctor, position: Int) {
         val currentitem=doctor[position]
+//        lateinit var currentitem:Doctor
+//        try{
+//             currentitem=filteredDoctorList[position]
+//        }
+//        catch (e:Exception){
+//            Log.d("loii!", "performFiltering: "+e.message.toString())
+//        }
+//        if (position<filteredDoctorList.size){
+//            val currentitem=filteredDoctorList[position]
         holder.tv_Name.setText(currentitem.getName())
         holder.tv_Star.setText(currentitem.getStar().toString())
         holder.tv_CN.setText(currentitem.getCN())
         holder.tv_BV.setText(currentitem.getHospital())
         //----------------------------------------------------------------
         val firestore = FirebaseFirestore.getInstance()
+
         if (currentitem.getID()!=""){
             val userRef = firestore.collection("users").document(currentitem.getID())
             userRef.addSnapshotListener { snapshot, _ ->
@@ -62,9 +76,52 @@ class DoctorList ( private val doctor:ArrayList<Doctor>, private val listener: O
                 }
             }
         }
+//        }
+
     }
 
     override fun getItemCount(): Int {
         return doctor.size
     }
+//    override fun getFilter(): Filter {
+//        return object : Filter() {
+//
+//            override fun performFiltering(constraint: CharSequence?): FilterResults {
+//
+//                val filteredResults = FilterResults()
+//                if (constraint.isNullOrBlank()) {
+//                    try {
+//                        filteredResults.values = doctor
+//                    }
+//                    catch (e:Exception){
+//                        Log.d("loi/!", "performFiltering: "+e.message.toString())
+//                    }
+//                } else {
+//                    try{
+//                        val query = constraint.toString().toLowerCase()
+//                        val filteredList = doctor.filter {
+//                            it.getName().toLowerCase().contains(query)
+//                        }
+//                        filteredResults.values = filteredList
+//                    }
+//                    catch (e:Exception){
+//                        Log.d("loi!", "performFiltering: "+e.message.toString())
+//                    }
+//
+//                }
+//                return filteredResults
+//            }
+//
+//            @Suppress("UNCHECKED_CAST")
+//            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+//                try {
+//                    filteredDoctorList.clear()
+//                    filteredDoctorList.addAll(results?.values as ArrayList<Doctor>)
+//                    notifyDataSetChanged()
+//                } catch (e: Exception) {
+//                    Log.d("loi!!", "publishResults: " + e.message.toString())
+//                }
+//            }
+//        }
+//    }
 }

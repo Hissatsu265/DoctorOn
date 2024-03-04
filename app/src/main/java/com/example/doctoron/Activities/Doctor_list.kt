@@ -1,9 +1,12 @@
 package com.example.doctoron.Activities
 
 import android.content.ContentProvider
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +28,10 @@ class Doctor_list : AppCompatActivity() , OnItemClickListener {
         recyclerView.setHasFixedSize(true)
         var  doctors:ArrayList<Doctor> = ArrayList()
         var  doctors_copy:ArrayList<Doctor> = ArrayList()
+        val btn_back=findViewById<ImageView>(R.id.back_btn)
+        btn_back.setOnClickListener {
+            finish()
+        }
 
         for (i in 1 until 8) {
             val data = Doctor("Minh hy", "", "", 0, "", 0, 5, "Thai sản","","Bệnh viện Thủ Đức")
@@ -66,5 +73,7 @@ class Doctor_list : AppCompatActivity() , OnItemClickListener {
     }
     override fun onItemClick(position: Int) {
         Toast.makeText(this,position.toString(),Toast.LENGTH_SHORT).show()
+        val intent= Intent(this,Doctor_Profile::class.java)
+        startActivity(intent)
     }
 }

@@ -75,5 +75,6 @@ class Doctor_list : AppCompatActivity() , OnItemClickListener {
         Toast.makeText(this,position.toString(),Toast.LENGTH_SHORT).show()
         val intent= Intent(this,Doctor_Profile::class.java)
         startActivity(intent)
+        overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
     }
 }

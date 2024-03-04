@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import android.widget.Toast
 import com.example.doctoron.R
+import com.google.firebase.Firebase
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Doctor_Profile : AppCompatActivity() {
     lateinit var btn_Mon_week:Button
@@ -27,17 +30,52 @@ class Doctor_Profile : AppCompatActivity() {
     lateinit var btn_hour_6pm:Button
     var week:Int=0
     var hour:Int=0
+    var userID:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor_profile)
+        //-------------- sau nhớ mở ra đàng hoàng
+//        userID=intent.getStringExtra("User_ID")
         //----------------quay ve -------------------------------
         val btn_back=findViewById<ImageView>(R.id.back_btn)
         btn_back.setOnClickListener {
             finish()
         }
         //-----------------------set profile-------------------------------
-
-
+        val db=FirebaseFirestore.getInstance()
+        var Name=findViewById<TextView>(R.id.tv_name)
+        var star=findViewById<TextView>(R.id.tv_star)
+        var about=findViewById<TextView>(R.id.tv_about)
+        var CN=findViewById<TextView>(R.id.tv_CN)
+        var BV=findViewById<TextView>(R.id.tv_bv)
+        db.collection("Doctors")
+            .document(userID)
+            .get()
+            .addOnSuccessListener { document ->
+                run {
+                    if (document != null) {
+                        Name.setText(document.get("name").toString())
+                        star.setText(document.get("star").toString())
+                        about.setText(document.get("about").toString())
+                        CN.setText(document.get("CN").toString())
+                        BV.setText(document.get("BV").toString())
+                    }
+                }
+            }
+//        db.collection("users")
+//            .document(userID)
+//            .get()
+//            .addOnSuccessListener { document ->
+//                run {
+//                    if (document != null) {
+//                        Name.setText(document.get("name").toString())
+//                        star.setText(document.get("star").toString())
+//                        about.setText(document.get("about").toString())
+//                        CN.setText(document.get("CN").toString())
+//                        BV.setText(document.get("BV").toString())
+//                    }
+//                }
+//            }
 
         //----------------chon thu-------------------------------------
         btn_Mon_week=findViewById(R.id.btn_mon)

@@ -111,6 +111,7 @@
                 android:textSize="25dp"
                 android:layout_margin="@dimen/_10pxh"/>
             <TextView
+                android:id="@+id/tv_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="mô tả vể bản thân tôi đã có 10 năm kinh niên trong nghề hiện 30 tuổi chưa có ca nào là tôi không chữa được..."

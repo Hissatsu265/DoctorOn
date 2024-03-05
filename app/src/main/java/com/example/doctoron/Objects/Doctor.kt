@@ -19,11 +19,21 @@ class Doctor(name: String = "", pass: String = "", gmail: String = "",
     override fun SendtoFirebase(id: String) {
         iddoctor=id
         super.SendtoFirebase(id)
+        val ar= IntArray(11) { 0 }.toList()
 
         val db = FirebaseFirestore.getInstance()
         val doctorInfo = hashMapOf(
+            "name" to getName(),
             "CN" to CN,
-            "star" to star
+            "about" to "",
+            "star" to star,
+            "week_2" to ar,
+            "week_3" to ar,
+            "week_4" to ar,
+            "week_5" to ar,
+            "week_6" to ar,
+            "week_7" to ar,
+            "BV" to ""
         )
 
         db.collection("Doctors")

@@ -156,7 +156,7 @@ class Signup : AppCompatActivity() {
                                     val intent=Intent(applicationContext,Confirm_email::class.java)
 
                                     intent.putExtra("user_ID", user?.uid.toString())
-                                    Log.d("id2", "HandsignCLick: "+ user?.uid.toString())
+
                                     intent.putExtra("gmail",gmail)
                                     intent.putExtra("pass",pass)
                                     //----------------------

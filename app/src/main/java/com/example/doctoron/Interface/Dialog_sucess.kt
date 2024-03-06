@@ -11,11 +11,9 @@ class Dialog_sucess (context: Context, private val imageDrawable: Drawable) : Al
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
 
-            // Thiết lập giao diện của dialog
             val imageView = ImageView(context)
             imageView.setImageDrawable(imageDrawable)
 
-            // Đặt layout cho ImageView (có thể bạn cần tùy chỉnh kích thước, margins, ... tùy theo nhu cầu)
             val layoutParams = ActionBar.LayoutParams(
                 ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.WRAP_CONTENT

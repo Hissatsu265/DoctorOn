@@ -82,7 +82,7 @@ class Doctor_Profile : AppCompatActivity() {
                        Toast.makeText(this,"Đặt hẹn thành công!",Toast.LENGTH_LONG).show()
                     }
                     .addOnFailureListener {
-                        // Xử lý lỗi
+
                         Toast.makeText(this,"Đặt hẹn thất bại!",Toast.LENGTH_LONG).show()
                     }
 
@@ -95,7 +95,7 @@ class Doctor_Profile : AppCompatActivity() {
                     .addOnSuccessListener {
                     }
                     .addOnFailureListener {
-                        // Xử lý lỗi
+
                     }
             }
         }

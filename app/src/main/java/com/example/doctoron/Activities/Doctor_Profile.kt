@@ -10,6 +10,7 @@ import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.example.doctoron.Interface.Dialog_sucess
 import com.example.doctoron.R
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
@@ -34,7 +35,8 @@ class Doctor_Profile : AppCompatActivity() {
     lateinit var week_copy1:ArrayList<Long>
     var week:Int=0
     var hour:Int=0
-    var userID:String="ggzWTRVO2eZOvyW9X4dPGC0rv7k1"
+    var userID:String="Y4G2Fkx4VKaTpxv7xkwvlTTArsF3"
+    var userID_user:String="gTt4CW1WkAVfIWxVcTJEyQ1Akwi2"
     lateinit var week_2:ArrayList<Long>
     lateinit var week_3:ArrayList<Long>
     lateinit var week_4:ArrayList<Long>
@@ -58,6 +60,7 @@ class Doctor_Profile : AppCompatActivity() {
         week_7=ArrayList()
         //-------------- sau nhớ mở ra đàng hoàng
 //        userID=intent.getStringExtra("User_ID")
+//        userID=intent.getStringExtra("User_ID_user")
         val db=FirebaseFirestore.getInstance()
         //----------------quay ve -------------------------------
         val btn_back=findViewById<ImageView>(R.id.back_btn)
@@ -76,7 +79,20 @@ class Doctor_Profile : AppCompatActivity() {
                     .document(userID)
                     .update(doctorInfo as Map<String, Any>)
                     .addOnSuccessListener {
-                        // Xử lý thành công
+                       Toast.makeText(this,"Đặt hẹn thành công!",Toast.LENGTH_LONG).show()
+                    }
+                    .addOnFailureListener {
+                        // Xử lý lỗi
+                        Toast.makeText(this,"Đặt hẹn thất bại!",Toast.LENGTH_LONG).show()
+                    }
+
+                val userbooking= hashMapOf(
+                    "Calender" to "$week $hour"
+                )
+                db.collection("users")
+                    .document(userID_user)
+                    .update(userbooking as Map<String, Any>)
+                    .addOnSuccessListener {
                     }
                     .addOnFailureListener {
                         // Xử lý lỗi
@@ -212,12 +228,12 @@ class Doctor_Profile : AppCompatActivity() {
     fun CheckFreeinWeek(i:Int):Boolean {
 
         when (week) {
-            2 -> if (week_2 != null ) {
+            2 -> if (week_2 != null && week_2.get(i).toInt() == 0) {
                 setWeek(week_2)
                 return true
             }
 
-            3 -> if ( week_3.get(i).toInt() == 0) {
+            3 -> if (week_3 != null && week_3.get(i).toInt() == 0) {
                 setWeek(week_3)
                 return true
             }
@@ -242,7 +258,6 @@ class Doctor_Profile : AppCompatActivity() {
                 return true
             }
         }
-
         return false
     }
     fun setBacgroundOriginalforHour(i:Int){

@@ -134,7 +134,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Các ngày trong tuần"
+                android:text="Chọn ngày"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:layout_marginStart="12dp"
@@ -213,22 +213,22 @@
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
                 </androidx.cardview.widget.CardView>
-                <androidx.cardview.widget.CardView
-                    android:layout_width="wrap_content"
-                    android:layout_margin="5dp"
-                    android:layout_height="70dp"
-                    android:layout_weight="1"
-                    app:cardCornerRadius="@dimen/_8pxh"
-                    app:cardElevation="@dimen/_8pxh">
-                    <Button
-                        android:textSize="18dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/btn_Fri"
-                        android:text="6"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
-                </androidx.cardview.widget.CardView>
+<!--                <androidx.cardview.widget.CardView-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_margin="5dp"-->
+<!--                    android:layout_height="70dp"-->
+<!--                    android:layout_weight="1"-->
+<!--                    app:cardCornerRadius="@dimen/_8pxh"-->
+<!--                    app:cardElevation="@dimen/_8pxh">-->
+<!--                    <Button-->
+<!--                        android:textSize="18dp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="match_parent"-->
+<!--                        android:id="@+id/btn_Fri"-->
+<!--                        android:text="6"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/black"/>-->
+<!--                </androidx.cardview.widget.CardView>-->
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_marginStart="5dp"
@@ -243,8 +243,8 @@
                         android:textSize="18dp"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/btn_Sat"
-                        android:text="7"
+                        android:id="@+id/btn_Fri"
+                        android:text="6"
                         android:textStyle="bold"
                         android:textColor="@color/black"/>
                 </androidx.cardview.widget.CardView>

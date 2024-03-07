@@ -1,5 +1,6 @@
 package com.example.doctoron.Activities
 
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,12 +9,16 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.doctoron.Interface.Dialog_sucess
 import com.example.doctoron.R
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
 
 class Doctor_Profile : AppCompatActivity() {
     lateinit var btn_Mon_week:Button
@@ -43,9 +48,14 @@ class Doctor_Profile : AppCompatActivity() {
     lateinit var week_5:ArrayList<Long>
     lateinit var week_6:ArrayList<Long>
     lateinit var week_7:ArrayList<Long>
+    var tenbacsi:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor_profile)
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1
+        val year = calendar.get(Calendar.YEAR)
     ///-------------------------------------------------
         week_copy1= ArrayList<Long>().apply {
             repeat(11){
@@ -85,9 +95,9 @@ class Doctor_Profile : AppCompatActivity() {
 
                         Toast.makeText(this,"Đặt hẹn thất bại!",Toast.LENGTH_LONG).show()
                     }
-
+                val str:String=shiftDate(day,month,year,week)
                 val userbooking= hashMapOf(
-                    "Calender" to "$week $hour"
+                    "Calender" to "$str;$hour;$tenbacsi"
                 )
                 db.collection("users")
                     .document(userID_user)
@@ -113,7 +123,8 @@ class Doctor_Profile : AppCompatActivity() {
             .addOnSuccessListener { document ->
                 run {
                     if (document != null) {
-                        Name.setText(document.get("name").toString())
+                        tenbacsi=document.get("name").toString()
+                        Name.setText(tenbacsi)
                         star.setText(document.get("star").toString())
                         about.setText(document.get("about").toString())
                         CN.setText(document.get("CN").toString())
@@ -152,7 +163,14 @@ class Doctor_Profile : AppCompatActivity() {
         btn_Wed_week=findViewById(R.id.btn_wed)
         btn_Thu_week=findViewById(R.id.btn_Thu)
         btn_Fri_week=findViewById(R.id.btn_Fri)
-        btn_Sat_week=findViewById(R.id.btn_Sat)
+//        btn_Sat_week=findViewById(R.id.btn_Sat)
+
+        btn_Mon_week.setText(shiftDate(day,month,year,2))
+        btn_Tue_week.setText(shiftDate(day,month,year,3))
+        btn_Wed_week.setText(shiftDate(day,month,year,4))
+        btn_Thu_week.setText(shiftDate(day,month,year,5))
+        btn_Fri_week.setText(shiftDate(day,month,year,6))
+
 
         btn_Mon_week.setOnClickListener {
             setBackgroundOriginal(2)
@@ -163,9 +181,9 @@ class Doctor_Profile : AppCompatActivity() {
         btn_Wed_week.setOnClickListener {
             setBackgroundOriginal(4)
         }
-        btn_Sat_week.setOnClickListener {
-            setBackgroundOriginal(7)
-        }
+//        btn_Sat_week.setOnClickListener {
+//            setBackgroundOriginal(7)
+//        }
         btn_Fri_week.setOnClickListener {
             setBackgroundOriginal(6)
         }
@@ -294,7 +312,7 @@ class Doctor_Profile : AppCompatActivity() {
         btn_Mon_week.setBackgroundColor(resources.getColor(R.color.primary))
         btn_Wed_week.setBackgroundColor(resources.getColor(R.color.primary))
         btn_Thu_week.setBackgroundColor(resources.getColor(R.color.primary))
-        btn_Sat_week.setBackgroundColor(resources.getColor(R.color.primary))
+//        btn_Sat_week.setBackgroundColor(resources.getColor(R.color.primary))
         btn_Tue_week.setBackgroundColor(resources.getColor(R.color.primary))
         when (i){
             2 -> btn_Mon_week.setBackgroundColor(resources.getColor(R.color.cyan_300))
@@ -302,7 +320,42 @@ class Doctor_Profile : AppCompatActivity() {
             4 -> btn_Wed_week.setBackgroundColor(resources.getColor(R.color.cyan_300))
             5 -> btn_Thu_week.setBackgroundColor(resources.getColor(R.color.cyan_300))
             6 -> btn_Fri_week.setBackgroundColor(resources.getColor(R.color.cyan_300))
-            7 -> btn_Sat_week.setBackgroundColor(resources.getColor(R.color.cyan_300))
+//            7 -> btn_Sat_week.setBackgroundColor(resources.getColor(R.color.cyan_300))
         }
     }
+    fun getCurrentDate(): Int {
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+        val month = calendar.get(Calendar.MONTH) + 1
+        val year = calendar.get(Calendar.YEAR)
+        return day
+    }
+    fun shiftDate(day:Int,month:Int,year:Int, dayshift: Int): String {
+        var day_1=day+dayshift
+        var month_1=month
+
+        when(month){
+            1,3,5,7,8,10,12-> if (day_1>31) {
+                day_1=day_1-31
+                month_1+=1
+                if (month_1>12){
+                    month_1=1
+                }
+            }
+            4,6,9,11 ->if (day_1>30) {
+                day_1 = day_1 - 30
+                month_1 += 1
+            }
+            2->if(day_1>28){
+                if (((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) && day_1>29)
+                {
+                    day_1=day_1-29
+                }
+                else{ day_1=day_1-28}
+                month_1+=1
+            }
+        }
+        return "$day_1/$month_1"
+    }
+
 }

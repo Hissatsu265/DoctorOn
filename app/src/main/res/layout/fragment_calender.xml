@@ -3,13 +3,46 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.CalenderFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:background="@color/purple_200"/>
+        android:background="@drawable/background1"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            app:cardElevation="10dp">
+            <CalendarView
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/primary"
+                android:layout_centerInParent="true"/>
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ghi chú"
+            android:layout_margin="10dp"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            />
+        <TextView
+            android:id="@+id/note"
+            android:layout_marginStart="@dimen/_10pxh"
+            android:layout_weight="1"
+            android:textSize="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:text=""
+            />
+    </LinearLayout>
+
 
 </FrameLayout>

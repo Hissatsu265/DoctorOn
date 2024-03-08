@@ -32,6 +32,7 @@ class Doctor_Profile : AppCompatActivity() {
     lateinit var week_copy1:ArrayList<Long>
     var week:Int=0
     var hour:Int=0
+
     var userID:String="Y4G2Fkx4VKaTpxv7xkwvlTTArsF3"
     var userID_user:String="gTt4CW1WkAVfIWxVcTJEyQ1Akwi2"
     lateinit var week_2:ArrayList<Long>
@@ -40,7 +41,7 @@ class Doctor_Profile : AppCompatActivity() {
     lateinit var week_5:ArrayList<Long>
     lateinit var week_6:ArrayList<Long>
     lateinit var week_7:ArrayList<Long>
-    var tenbacsi:String=""
+    var tenbacsi:String=" "
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor_profile)
@@ -173,9 +174,7 @@ class Doctor_Profile : AppCompatActivity() {
         btn_Wed_week.setOnClickListener {
             setBackgroundOriginal(4)
         }
-//        btn_Sat_week.setOnClickListener {
-//            setBackgroundOriginal(7)
-//        }
+
         btn_Fri_week.setOnClickListener {
             setBackgroundOriginal(6)
         }

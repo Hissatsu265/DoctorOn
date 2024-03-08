@@ -45,15 +45,7 @@ class DoctorList ( private val doctor:ArrayList<Doctor>, private val listener: O
 
     override fun onBindViewHolder(holder: MyViewHolder_Lisdoctor, position: Int) {
         val currentitem=doctor[position]
-//        lateinit var currentitem:Doctor
-//        try{
-//             currentitem=filteredDoctorList[position]
-//        }
-//        catch (e:Exception){
-//            Log.d("loii!", "performFiltering: "+e.message.toString())
-//        }
-//        if (position<filteredDoctorList.size){
-//            val currentitem=filteredDoctorList[position]
+
         holder.tv_Name.setText(currentitem.getName())
         holder.tv_Star.setText(currentitem.getStar().toString())
         holder.tv_CN.setText(currentitem.getCN())
@@ -83,45 +75,4 @@ class DoctorList ( private val doctor:ArrayList<Doctor>, private val listener: O
     override fun getItemCount(): Int {
         return doctor.size
     }
-//    override fun getFilter(): Filter {
-//        return object : Filter() {
-//
-//            override fun performFiltering(constraint: CharSequence?): FilterResults {
-//
-//                val filteredResults = FilterResults()
-//                if (constraint.isNullOrBlank()) {
-//                    try {
-//                        filteredResults.values = doctor
-//                    }
-//                    catch (e:Exception){
-//                        Log.d("loi/!", "performFiltering: "+e.message.toString())
-//                    }
-//                } else {
-//                    try{
-//                        val query = constraint.toString().toLowerCase()
-//                        val filteredList = doctor.filter {
-//                            it.getName().toLowerCase().contains(query)
-//                        }
-//                        filteredResults.values = filteredList
-//                    }
-//                    catch (e:Exception){
-//                        Log.d("loi!", "performFiltering: "+e.message.toString())
-//                    }
-//
-//                }
-//                return filteredResults
-//            }
-//
-//            @Suppress("UNCHECKED_CAST")
-//            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-//                try {
-//                    filteredDoctorList.clear()
-//                    filteredDoctorList.addAll(results?.values as ArrayList<Doctor>)
-//                    notifyDataSetChanged()
-//                } catch (e: Exception) {
-//                    Log.d("loi!!", "publishResults: " + e.message.toString())
-//                }
-//            }
-//        }
-//    }
 }

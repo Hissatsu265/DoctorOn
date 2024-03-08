@@ -9,23 +9,15 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
-import com.example.doctoron.Interface.Dialog_sucess
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
-import com.prolificinteractive.materialcalendarview.spans.DotSpan
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
-import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -77,7 +69,12 @@ class CalenderFragment : Fragment() {
                         val numbersArray1: List<String> = calendardate.toString().split("/")
                         val num1:String=numbersArray1.get(0)
                         val num2:String=numbersArray1.get(1)
-                        Highlightdate(num1.toInt(),num2.toInt())
+                        if(checkDate(num1.toInt(),num2.toInt())){
+                            Highlightdate(num1.toInt(),num2.toInt())
+                        }
+                        else{
+                            calendardate=""
+                        }
                     }
                 }
             }
@@ -94,9 +91,19 @@ class CalenderFragment : Fragment() {
         }
         return view
     }
+    fun checkDate(day:Int,month:Int):Boolean{
+        val calendar = Calendar.getInstance()
+        val day1 = calendar.get(Calendar.DAY_OF_MONTH)
+        val month1 = calendar.get(Calendar.MONTH) + 1
+        if (month<month1 ||(month==month1 && day1>day))
+            return false
+        else
+            return true
+    }
     fun Highlightdate(day:Int,month:Int){
         val specialDays = listOf(
             CalendarDay.from(2024, month-1, day)
+
         )
 
         calendar.addDecorator(object : DayViewDecorator {

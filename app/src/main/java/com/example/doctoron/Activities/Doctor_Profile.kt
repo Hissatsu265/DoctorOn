@@ -1,23 +1,15 @@
 package com.example.doctoron.Activities
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
-import com.example.doctoron.Interface.Dialog_sucess
 import com.example.doctoron.R
-import com.google.firebase.Firebase
 import com.google.firebase.firestore.FirebaseFirestore
-import java.time.LocalDate
-import java.time.format.DateTimeFormatter
 import java.util.Calendar
 
 class Doctor_Profile : AppCompatActivity() {

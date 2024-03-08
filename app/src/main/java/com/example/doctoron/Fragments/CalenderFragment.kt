@@ -1,5 +1,7 @@
 package com.example.doctoron.Fragments
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -11,8 +13,15 @@ import android.widget.CalendarView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import com.example.doctoron.Interface.Dialog_sucess
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
+import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.DayViewDecorator
+import com.prolificinteractive.materialcalendarview.DayViewFacade
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView
+import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
@@ -29,8 +38,7 @@ class CalenderFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var userId:String=""
-
-
+    lateinit var  calendar: MaterialCalendarView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,10 +57,9 @@ class CalenderFragment : Fragment() {
         userId = arguments?.getString("user_ID").toString()
 
         val view=inflater.inflate(R.layout.fragment_calender, container, false)
-        var calendar=view.findViewById<CalendarView>(R.id.calendarView)
+        calendar=view.findViewById<MaterialCalendarView>(R.id.calendarView)
         var tv_note=view.findViewById<TextView>(R.id.note)
 
-//        var Calendar_user:String=""
         var calendardate:String=""
         var calendarhour:String=""
         var calendardoctor:String=""
@@ -67,39 +74,42 @@ class CalenderFragment : Fragment() {
                         calendardate=numbersArray.get(0)
                         calendarhour=numbersArray.get(1)
                         calendardoctor=numbersArray.get(2)
-//                        Log.i("hiiii", "onCreateView: "+Calendar_user)
+                        val numbersArray1: List<String> = calendardate.toString().split("/")
+                        val num1:String=numbersArray1.get(0)
+                        val num2:String=numbersArray1.get(1)
+                        Highlightdate(num1.toInt(),num2.toInt())
                     }
                 }
             }
 
-//        Log.i("hiiii", "onCreateView: "+Calendar_user)
 
-//        try {
-//            Log.i("hiiii", "onCreateView: "+calendardate.toString())
-//            Log.i("hiiii", "onCreateView: "+calendardoctor.toString())
-//            Log.i("hiiii", "onCreateView: "+calendarhour.toString())
-//        }
-//        catch (e:Exception){
-//            Log.d("hiiiiii", "onCreateView: "+e.message.toString())
-//        }
-        calendar.setOnDateChangeListener { _, year, month, dayOfMonth ->
-            try{
-                val selectedDate = "$dayOfMonth/${month + 1}"
-                if (calendardate==selectedDate){
-                    tv_note.setText("Bạn có hẹn với bác sĩ ${calendardoctor} vào lúc ${calendarhour} giờ")
-                }else{
-                    tv_note.setText("")
-                }
-            }
-            catch (e:Exception){
-                Log.d("hiiiiii", "onCreateView: "+e.message.toString())
+        calendar.setOnDateChangedListener { widget, date, selected ->
+            val selectedDate = "${date.day}/${date.month + 1}"
+            Log.d("tag", "onCreateView: "+selectedDate)
+            if (calendardate == selectedDate) {
+                tv_note.setText("Bạn có hẹn với bác sĩ ${calendardoctor} vào lúc ${calendarhour} giờ")
+            } else {
+                tv_note.setText("")
             }
         }
         return view
     }
-    companion object {
+    fun Highlightdate(day:Int,month:Int){
+        val specialDays = listOf(
+            CalendarDay.from(2024, month-1, day)
+        )
 
-        // TODO: Rename and change types and number of parameters
+        calendar.addDecorator(object : DayViewDecorator {
+            override fun shouldDecorate(day: CalendarDay?): Boolean {
+                return specialDays.contains(day)
+            }
+
+            override fun decorate(view: DayViewFacade?) {
+                view?.setBackgroundDrawable(ColorDrawable(Color.GREEN))
+            }
+        })
+    }
+    companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             CalenderFragment().apply {

@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation("com.prolificinteractive:material-calendarview:1.4.3")
     implementation("com.jjoe64:graphview:4.2.2")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

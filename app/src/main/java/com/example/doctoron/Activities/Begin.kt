@@ -7,6 +7,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.example.doctoron.R
 
 class Begin : AppCompatActivity() {
+    private val k : String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_begin)

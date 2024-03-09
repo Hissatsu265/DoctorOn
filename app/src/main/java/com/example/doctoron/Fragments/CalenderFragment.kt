@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.cardview.widget.CardView
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -49,6 +50,8 @@ class CalenderFragment : Fragment() {
         userId = arguments?.getString("user_ID").toString()
 
         val view=inflater.inflate(R.layout.fragment_calender, container, false)
+        var cv_calendar_note=view.findViewById<androidx.cardview.widget.CardView>(R.id.cv_note)
+        cv_calendar_note.visibility=View.GONE
         calendar=view.findViewById<MaterialCalendarView>(R.id.calendarView)
         var tv_note=view.findViewById<TextView>(R.id.note)
 
@@ -84,9 +87,10 @@ class CalenderFragment : Fragment() {
             val selectedDate = "${date.day}/${date.month + 1}"
             Log.d("tag", "onCreateView: "+selectedDate)
             if (calendardate == selectedDate) {
+                cv_calendar_note.visibility=View.VISIBLE
                 tv_note.setText("Bạn có hẹn với bác sĩ ${calendardoctor} vào lúc ${calendarhour} giờ")
             } else {
-                tv_note.setText("")
+                cv_calendar_note.visibility=View.GONE
             }
         }
         return view

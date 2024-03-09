@@ -12,7 +12,8 @@
         android:orientation="vertical"
         >
         <androidx.core.widget.NestedScrollView
-            android:clipToPadding="false" android:fillViewport="true"
+            android:clipToPadding="false"
+            android:fillViewport="true"
             android:gravity="center_horizontal"
             android:id="@+id/scrollViewScrollView"
             android:layout_height="0dp" android:layout_weight="1" android:layout_width="match_parent">
@@ -41,17 +42,18 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:paddingBottom="@dimen/_1pxv"
-                    android:paddingEnd="@dimen/_26pxh"
-                    android:paddingStart="@dimen/_26pxh"
-                    android:paddingTop="@dimen/_12pxv"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/_10pxh"
                     >
                         <androidx.cardview.widget.CardView
+                            android:layout_marginTop="5dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginBottom="@dimen/_10pxh"
                             android:layout_width="match_parent"
                             android:layout_height="180dp"
-                            app:cardUseCompatPadding="true"
                             app:cardCornerRadius="20dp"
-                            app:cardElevation="6dp"
+                            app:cardElevation="8dp"
                             >
                             <com.denzcoskun.imageslider.ImageSlider
                                 android:layout_width="match_parent"

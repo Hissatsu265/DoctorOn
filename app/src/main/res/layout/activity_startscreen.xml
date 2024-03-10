@@ -39,7 +39,7 @@
         android:layout_marginBottom="17dp"
         android:background="@drawable/rectangle_border_name_primary_radius_8"
         android:ellipsize="end"
-        android:fontFamily="@font/inter"
+
         android:gravity="center"
         android:lineSpacingExtra="@dimen/_3pxh"
         android:paddingStart="@dimen/_30pxh"
@@ -66,7 +66,7 @@
         android:layout_marginBottom="17dp"
         android:background="@drawable/rectangle_bg_name_primary_radius_8"
         android:ellipsize="end"
-        android:fontFamily="@font/inter"
+
         android:gravity="center"
         android:paddingStart="@dimen/_30pxh"
         android:paddingTop="@dimen/_16pxv"

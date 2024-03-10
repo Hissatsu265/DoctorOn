@@ -66,8 +66,8 @@
                                 app:iss_title_background="@drawable/gradient"
                                 />
                         </androidx.cardview.widget.CardView>
-
                 </LinearLayout>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -247,7 +247,7 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:background="@color/teal_50"
+
                     android:paddingBottom="@dimen/_16pxv"
                     android:layout_marginBottom="150dp"
                     >
@@ -272,11 +272,12 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Xem thêm >>"
-                            android:textColor="@color/black"
+                            android:textStyle="bold"
+                            android:textColor="@color/cyan_300"
                             android:layout_marginTop="10dp"
                             android:layout_marginEnd="20dp"
                             android:layout_marginBottom="5dp"
-                            android:background="@color/teal_50"/>
+                            />
                     </LinearLayout>
 
                     <androidx.recyclerview.widget.RecyclerView

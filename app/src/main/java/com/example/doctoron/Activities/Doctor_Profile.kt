@@ -68,6 +68,7 @@ class Doctor_Profile : AppCompatActivity() {
         //----------------quay ve -------------------------------
         val btn_back=findViewById<ImageView>(R.id.back_btn)
         btn_back.setOnClickListener {
+//            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             finish()
         }
         //-------------------------------------------------------------

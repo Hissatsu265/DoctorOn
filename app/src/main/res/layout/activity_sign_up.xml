@@ -33,7 +33,6 @@
             android:text="Let's Get Started"
             android:textStyle="bold"
             android:textSize="20dp"
-
           />
         <TextView android:ellipsize="end"
             android:id="@+id/txtCreateAnNewAccount"

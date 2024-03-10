@@ -20,12 +20,12 @@
             <LinearLayout android:id="@+id/linearDashboard"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent" android:orientation="vertical">
-                <LinearLayout
+                <RelativeLayout
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:backgroundTint="@color/teal_200"
-                    android:background="@drawable/round_bottomconner">
-
+                    android:background="@color/cyan_300"
+                    >
                     <TextView android:id="@+id/txtFindYourDesire"
                         android:layout_height="wrap_content"
                         android:layout_width="match_parent"
@@ -36,9 +36,18 @@
                         android:layout_marginStart="@dimen/_26pxh"
                         android:layout_marginTop="5dp"
                         android:textColor="@color/primary"
-                        android:paddingBottom="5dp"
+                        android:paddingBottom="0dp"
                         />
-                </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginTop="75dp"
+                        android:background="@color/primary"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_arc_3" />
+                </RelativeLayout>
                 <LinearLayout android:gravity="start"
                     android:id="@+id/linearOfferBanner"
                     android:layout_height="wrap_content"
@@ -73,8 +82,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginEnd="20dp"
                     android:background="@drawable/round_bottom"
                     >
                     <TextView

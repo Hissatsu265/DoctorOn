@@ -35,6 +35,7 @@ class Chinh_sua_thong_tin_ca_nhan : AppCompatActivity() {
         edt_CN=findViewById<EditText>(R.id.CN)
         edt_About=findViewById<EditText>(R.id.About)
         var kt:Boolean=false
+        // phan khai bao cho bac si
         var cv_bv=findViewById<androidx.cardview.widget.CardView>(R.id.cv_doctorBV)
         var cv_about=findViewById<androidx.cardview.widget.CardView>(R.id.cv_doctorabout)
         var cv_cn=findViewById<androidx.cardview.widget.CardView>(R.id.cv_doctorCN)

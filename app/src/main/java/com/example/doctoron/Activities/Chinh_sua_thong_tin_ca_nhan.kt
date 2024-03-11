@@ -2,6 +2,7 @@ package com.example.doctoron.Activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -14,6 +15,9 @@ class Chinh_sua_thong_tin_ca_nhan : AppCompatActivity() {
 
     var userid : String = ""
     val db = FirebaseFirestore.getInstance()
+    lateinit var edt_bv:EditText
+    lateinit var edt_About:EditText
+    lateinit var edt_CN:EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         userid=intent.getStringExtra("user_ID").toString()
@@ -27,6 +31,16 @@ class Chinh_sua_thong_tin_ca_nhan : AppCompatActivity() {
         var edt_address=findViewById<EditText>(R.id.address)
         var edt_DoB=findViewById<EditText>(R.id.DoB)
         var edt_sex=findViewById<EditText>(R.id.sex)
+        edt_bv=findViewById<EditText>(R.id.BV)
+        edt_CN=findViewById<EditText>(R.id.CN)
+        edt_About=findViewById<EditText>(R.id.About)
+        var kt:Boolean=false
+        var cv_bv=findViewById<androidx.cardview.widget.CardView>(R.id.cv_doctorBV)
+        var cv_about=findViewById<androidx.cardview.widget.CardView>(R.id.cv_doctorabout)
+        var cv_cn=findViewById<androidx.cardview.widget.CardView>(R.id.cv_doctorCN)
+        cv_bv.visibility=View.GONE
+        cv_about.visibility=View.GONE
+        cv_cn.visibility=View.GONE
         //---------------------------------------------------------------------
         db.collection("users")
             .document(userid)
@@ -38,6 +52,13 @@ class Chinh_sua_thong_tin_ca_nhan : AppCompatActivity() {
                         edt_DoB.setText(document.get("DoB").toString())
                         edt_address.setText(document.get("address").toString())
                         edt_age.setText(document.get("age").toString())
+                        if (document.get("isDoctor").toString()!=""){
+                            cv_bv.visibility=View.VISIBLE
+                            cv_about.visibility=View.VISIBLE
+                            cv_cn.visibility=View.VISIBLE
+                            kt=true
+                            Getdltudoctor()
+                        }
                         if (document.get("sex").toString()=="0"){
                             edt_sex.setText("Nam")
                         }
@@ -70,7 +91,39 @@ class Chinh_sua_thong_tin_ca_nhan : AppCompatActivity() {
                 .addOnFailureListener { e ->
                     Toast.makeText(this,"Uopss có lỗi rồi", Toast.LENGTH_SHORT).show()
                 }
+            if(kt){
+                UpdateDL()
+            }
         }
         //--------------------------------------------------------------------
+    }
+    fun Getdltudoctor(){
+        db.collection("Doctors")
+            .document(userid)
+            .get()
+            .addOnSuccessListener { document ->
+                run {
+                    if (document != null) {
+                        edt_bv.setText(document.get("BV").toString())
+                        edt_About.setText(document.get("about").toString())
+                        edt_CN.setText(document.get("CN").toString())
+                    }
+                }
+            }
+    }
+    fun UpdateDL(){
+        val user_data = hashMapOf(
+            "about" to edt_About.text.toString(),
+            "BV" to edt_bv.text.toString(),
+            "CN" to edt_CN.text.toString(),
+        )
+        db.collection("Doctors").document(userid)
+            .update(user_data as Map<String, Any>)
+            .addOnSuccessListener {
+
+            }
+            .addOnFailureListener { e ->
+
+            }
     }
 }

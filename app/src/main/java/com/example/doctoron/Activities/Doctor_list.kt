@@ -16,9 +16,11 @@ import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Interface.OnItemClickListener
 import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.R
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.log
 
 class Doctor_list : AppCompatActivity() , OnItemClickListener {
+    private lateinit var doctors:ArrayList<Doctor>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor_list)
@@ -26,22 +28,18 @@ class Doctor_list : AppCompatActivity() , OnItemClickListener {
         recyclerView.layoutManager=
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerView.setHasFixedSize(true)
-        var  doctors:ArrayList<Doctor> = ArrayList()
+        doctors = ArrayList()
         var  doctors_copy:ArrayList<Doctor> = ArrayList()
         val btn_back=findViewById<ImageView>(R.id.back_btn)
         btn_back.setOnClickListener {
             finish()
         }
-
-        for (i in 1 until 8) {
-            val data = Doctor("Minh hy", "", "", 0, "", 0, 5, "Thai sản","","Bệnh viện Thủ Đức")
-            doctors.add(data)
-        }
-        val data = Doctor("Toàn", "", "", 0, "", 0, 5, "Khoa ngoại","","Bệnh viện Thủ Đức")
-        doctors.add(data)
+        //------------------------Lay du lieu----------------------------------------------------
+        LayDulieutuFirebase()
         //-----------sao chep mang qua --------------
         doctors_copy.addAll(doctors)
         //------------------------------------------
+
         var adapter_topdoctor = DoctorList( doctors_copy,this)
         recyclerView.adapter=adapter_topdoctor
         //----------------------------------------------------------
@@ -71,9 +69,29 @@ class Doctor_list : AppCompatActivity() , OnItemClickListener {
         })
 
     }
+    fun LayDulieutuFirebase(){
+        val db = FirebaseFirestore.getInstance()
+        // Tham chiếu đến collection cụ thể
+        val collectionRef = db.collection("Doctors")
+
+        // Lấy tất cả các document trong collection
+        collectionRef.get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot) {
+                    // Lấy data của document
+                    val data = document.data
+                    val doctor = Doctor(data.get("name").toString(), "", "", 0, "", 0, 5,
+                        data.get("CN").toString(),document.id,data.get("BV").toString())
+                    doctors.add(doctor)
+                }
+            }
+            .addOnFailureListener { exception ->
+            }
+    }
     override fun onItemClick(position: Int) {
         Toast.makeText(this,position.toString(),Toast.LENGTH_SHORT).show()
         val intent= Intent(this,Doctor_Profile::class.java)
+        intent.putExtra("User_ID",doctors.get(position).getID())
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
     }

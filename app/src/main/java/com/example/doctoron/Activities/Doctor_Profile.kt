@@ -33,8 +33,9 @@ class Doctor_Profile : AppCompatActivity() {
     var week:Int=0
     var hour:Int=0
 
-    var userID:String="Y4G2Fkx4VKaTpxv7xkwvlTTArsF3"
-    var userID_user:String="gTt4CW1WkAVfIWxVcTJEyQ1Akwi2"
+    var userID:String="Y4G2Fkx4VKaTpxv7xkwvlTTArsF3"// của doctor
+
+    var userID_user:String="gTt4CW1WkAVfIWxVcTJEyQ1Akwi2"//của người dùng
     lateinit var week_2:ArrayList<Long>
     lateinit var week_3:ArrayList<Long>
     lateinit var week_4:ArrayList<Long>
@@ -62,7 +63,7 @@ class Doctor_Profile : AppCompatActivity() {
         week_5=ArrayList()
         week_7=ArrayList()
         //-------------- sau nhớ mở ra đàng hoàng
-//        userID=intent.getStringExtra("User_ID")
+        userID= intent.getStringExtra("User_ID").toString()
 //        userID=intent.getStringExtra("User_ID_user")
         val db=FirebaseFirestore.getInstance()
         //----------------quay ve -------------------------------

@@ -103,9 +103,7 @@ class CalenderFragment : Fragment() {
                     arr_calendar_copy.add(i)
                 }
             }
-            if(arr_calendar_copy.size>0){
-                adapter.notifyDataSetChanged()
-            }
+            adapter.notifyDataSetChanged()
         }
         return view
     }

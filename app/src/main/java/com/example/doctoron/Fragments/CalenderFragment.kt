@@ -12,6 +12,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.doctoron.Adapters.Calendar_Note
+import com.example.doctoron.Adapters.DoctorList
 import com.example.doctoron.Objects.Calendar_Time
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
@@ -54,33 +58,36 @@ class CalenderFragment : Fragment() {
         val view=inflater.inflate(R.layout.fragment_calender, container, false)
 
         calendar=view.findViewById<MaterialCalendarView>(R.id.calendarView)
+        //-------------------------------------------------------------------
+        val recyclerView = view.findViewById<RecyclerView>(R.id.rv_notification)
+        recyclerView.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL, false)
+        recyclerView.setHasFixedSize(true)
 
-
-
+        var arr_calendar:ArrayList<String> = ArrayList()
+        var arr_calendar_copy:ArrayList<String> = ArrayList()
+        var adapter = Calendar_Note(arr_calendar_copy)
+        recyclerView.adapter=adapter
+        //----------------------------------------------------------------
         val db=FirebaseFirestore.getInstance()
         db.collection("users").document(userId)
             .get().addOnSuccessListener { document ->
                 run {
                     if (document != null)
                     {
-                        var arr_calendar:ArrayList<Calendar_Time> = ArrayList()
-                        arr_calendar=document.get("Calender") as ArrayList<Calendar_Time>
-                        Log.d("hihihihi", "onCreateView: " + arr_calendar.toString())
-
-
-//                        val numbersArray: List<String> = document.get("Calender").toString().split(";")
-//                        calendardate=numbersArray.get(0)
-//                        calendarhour=numbersArray.get(1)
-//                        calendardoctor=numbersArray.get(2)
-//                        val numbersArray1: List<String> = calendardate.toString().split("/")
-//                        val num1:String=numbersArray1.get(0)
-//                        val num2:String=numbersArray1.get(1)
-//                        if(checkDate(num1.toInt(),num2.toInt())){
-//                            Highlightdate(num1.toInt(),num2.toInt())
-//                        }
-//                        else{
-//                            calendardate=""
-//                        }
+                        arr_calendar=document.get("Calender") as ArrayList<String>
+                        for (i in arr_calendar){
+                            val t=Calendar_Time(i)
+                            if(t.checkDate2()){
+                                Highlightdate(t.getDay(),t.getMonth())
+                                arr_calendar_copy.add(i)
+                            }
+                        }
+                        if (arr_calendar_copy.size!=arr_calendar.size)
+                        {
+                            UpdateCalendar(arr_calendar_copy,userId)
+                            arr_calendar.clear()
+                            arr_calendar.addAll(arr_calendar_copy)
+                        }
                     }
                 }
             }
@@ -88,29 +95,31 @@ class CalenderFragment : Fragment() {
 
         calendar.setOnDateChangedListener { widget, date, selected ->
             val selectedDate = "${date.day}/${date.month + 1}"
-//            Log.d("tag", "onCreateView: "+selectedDate)
-//            if (calendardate == selectedDate) {
-//                cv_calendar_note.visibility=View.VISIBLE
-//                tv_note.setText("Bạn có hẹn với ${calendardoctor} vào lúc ${calendarhour} giờ")
-//            } else {
-//                cv_calendar_note.visibility=View.GONE
-//            }
+            arr_calendar_copy.clear()
+            for(i in arr_calendar)
+            {
+                val t=Calendar_Time(i)
+                if(t.checkDate1(selectedDate)){
+                    arr_calendar_copy.add(i)
+                }
+            }
+            if(arr_calendar_copy.size>0){
+                adapter.notifyDataSetChanged()
+            }
         }
         return view
     }
-    fun checkDate(day:Int,month:Int):Boolean{
-        val calendar = Calendar.getInstance()
-        val day1 = calendar.get(Calendar.DAY_OF_MONTH)
-        val month1 = calendar.get(Calendar.MONTH) + 1
-        if (month<month1 ||(month==month1 && day1>day))
-            return false
-        else
-            return true
+    fun UpdateCalendar(arr:ArrayList<String>,id:String){
+        val db=FirebaseFirestore.getInstance()
+        val hashMap= hashMapOf(
+            "Calender" to arr
+        )
+        db.collection("users").document(id).
+        update(hashMap as Map<String, Any>)
     }
     fun Highlightdate(day:Int,month:Int){
         val specialDays = listOf(
             CalendarDay.from(2024, month-1, day)
-
         )
 
         calendar.addDecorator(object : DayViewDecorator {

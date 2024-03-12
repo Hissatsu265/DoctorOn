@@ -44,6 +44,11 @@ class Calendar_Time(var str:String="") {
         else
             return true
     }
-
+    fun getDay():Int{
+        return day.toInt()
+    }
+    fun getMonth():Int{
+        return month.toInt()
+    }
 
 }

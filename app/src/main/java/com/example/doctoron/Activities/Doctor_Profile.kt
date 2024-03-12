@@ -353,21 +353,20 @@ class Doctor_Profile : AppCompatActivity() {
                 run {
                     if (document != null) {
                         a=document.get("Calender")as ArrayList<String>
+                        a.add(str)
+                        val userbooking= hashMapOf(
+                            "Calender" to a
+                        )
+                        db.collection("users")
+                            .document(id)
+                            .update(userbooking as Map<String, Any>)
+                            .addOnSuccessListener {
+                            }
+                            .addOnFailureListener {
+
+                            }
                     }
                 }
-            }
-        a.add(str)
-
-        val userbooking= hashMapOf(
-            "Calender" to a
-        )
-        db.collection("users")
-            .document(id)
-            .update(userbooking as Map<String, Any>)
-            .addOnSuccessListener {
-            }
-            .addOnFailureListener {
-
             }
     }
 }

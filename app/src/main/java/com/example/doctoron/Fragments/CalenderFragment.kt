@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import com.example.doctoron.Objects.Calendar_Time
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
 import com.prolificinteractive.materialcalendarview.CalendarDay
@@ -19,6 +20,7 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator
 import com.prolificinteractive.materialcalendarview.DayViewFacade
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import java.util.Calendar
+import kotlin.math.log
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -50,14 +52,10 @@ class CalenderFragment : Fragment() {
         userId = arguments?.getString("user_ID").toString()
 
         val view=inflater.inflate(R.layout.fragment_calender, container, false)
-        var cv_calendar_note=view.findViewById<androidx.cardview.widget.CardView>(R.id.cv_note)
-        cv_calendar_note.visibility=View.GONE
-        calendar=view.findViewById<MaterialCalendarView>(R.id.calendarView)
-        var tv_note=view.findViewById<TextView>(R.id.note)
 
-        var calendardate:String=""
-        var calendarhour:String=""
-        var calendardoctor:String=""
+        calendar=view.findViewById<MaterialCalendarView>(R.id.calendarView)
+
+
 
         val db=FirebaseFirestore.getInstance()
         db.collection("users").document(userId)
@@ -65,19 +63,24 @@ class CalenderFragment : Fragment() {
                 run {
                     if (document != null)
                     {
-                        val numbersArray: List<String> = document.get("Calender").toString().split(";")
-                        calendardate=numbersArray.get(0)
-                        calendarhour=numbersArray.get(1)
-                        calendardoctor=numbersArray.get(2)
-                        val numbersArray1: List<String> = calendardate.toString().split("/")
-                        val num1:String=numbersArray1.get(0)
-                        val num2:String=numbersArray1.get(1)
-                        if(checkDate(num1.toInt(),num2.toInt())){
-                            Highlightdate(num1.toInt(),num2.toInt())
-                        }
-                        else{
-                            calendardate=""
-                        }
+                        var arr_calendar:ArrayList<Calendar_Time> = ArrayList()
+                        arr_calendar=document.get("Calender") as ArrayList<Calendar_Time>
+                        Log.d("hihihihi", "onCreateView: " + arr_calendar.toString())
+
+
+//                        val numbersArray: List<String> = document.get("Calender").toString().split(";")
+//                        calendardate=numbersArray.get(0)
+//                        calendarhour=numbersArray.get(1)
+//                        calendardoctor=numbersArray.get(2)
+//                        val numbersArray1: List<String> = calendardate.toString().split("/")
+//                        val num1:String=numbersArray1.get(0)
+//                        val num2:String=numbersArray1.get(1)
+//                        if(checkDate(num1.toInt(),num2.toInt())){
+//                            Highlightdate(num1.toInt(),num2.toInt())
+//                        }
+//                        else{
+//                            calendardate=""
+//                        }
                     }
                 }
             }
@@ -85,13 +88,13 @@ class CalenderFragment : Fragment() {
 
         calendar.setOnDateChangedListener { widget, date, selected ->
             val selectedDate = "${date.day}/${date.month + 1}"
-            Log.d("tag", "onCreateView: "+selectedDate)
-            if (calendardate == selectedDate) {
-                cv_calendar_note.visibility=View.VISIBLE
-                tv_note.setText("Bạn có hẹn với bác sĩ ${calendardoctor} vào lúc ${calendarhour} giờ")
-            } else {
-                cv_calendar_note.visibility=View.GONE
-            }
+//            Log.d("tag", "onCreateView: "+selectedDate)
+//            if (calendardate == selectedDate) {
+//                cv_calendar_note.visibility=View.VISIBLE
+//                tv_note.setText("Bạn có hẹn với ${calendardoctor} vào lúc ${calendarhour} giờ")
+//            } else {
+//                cv_calendar_note.visibility=View.GONE
+//            }
         }
         return view
     }

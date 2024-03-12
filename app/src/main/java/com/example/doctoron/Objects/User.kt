@@ -20,8 +20,8 @@ open class User(private var name:String="", private var pass:String="", private 
     // gửi dữ liệu lên firebase
     open fun SendtoFirebase(id:String){
         val db = FirebaseFirestore.getInstance()
-        val collectionRef = db.collection("users")
 
+        val arr :ArrayList<String> = ArrayList()
         val user = hashMapOf(
             "name" to name,
             "age" to age,
@@ -31,7 +31,7 @@ open class User(private var name:String="", private var pass:String="", private 
             "sex" to sex,
             "address" to "",
             "isDoctor" to "",
-            "Calender" to "",
+            "Calender" to arr
         )
         db.collection("users")
             .document(id)

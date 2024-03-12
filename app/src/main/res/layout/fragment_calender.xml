@@ -33,39 +33,12 @@
             android:textStyle="bold"
             android:textSize="25dp"
             />
-        <RelativeLayout
+        <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:id="@+id/rv_notification"
             android:layout_weight="1">
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv_note"
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_10pxh"
-                android:layout_marginEnd="@dimen/_10pxh"
-                app:cardElevation="10dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="120dp"
-                    android:orientation="horizontal"
-                    android:background="@color/cyan_300">
-                    <TextView
-                        android:id="@+id/note"
-                        android:paddingStart="5dp"
-                        android:gravity="center"
-                        android:background="@color/primary"
-                        android:layout_marginStart="@dimen/_14pxh"
-                        android:textSize="23dp"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:text="Helo tôi là baác sĩ"
-                        />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-        </RelativeLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 

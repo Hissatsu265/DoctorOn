@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.bumptech.glide.Glide
+import com.example.doctoron.Objects.Calendar_Time
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
 import java.util.Calendar
@@ -91,17 +92,10 @@ class Doctor_Profile : AppCompatActivity() {
                         Toast.makeText(this,"Đặt hẹn thất bại!",Toast.LENGTH_LONG).show()
                     }
                 val str:String=shiftDate(day,month,year,week)
-                val userbooking= hashMapOf(
-                    "Calender" to "$str;$hour;$tenbacsi"
-                )
-                db.collection("users")
-                    .document(userID_user)
-                    .update(userbooking as Map<String, Any>)
-                    .addOnSuccessListener {
-                    }
-                    .addOnFailureListener {
 
-                    }
+                UpdateDLUser("$str;$hour;bác sĩ $tenbacsi",userID_user)
+                UpdateDLUser("$str;$hour;bệnh nhân",userID)
+
             }
         }
         //-----------------------set profile-------------------------------
@@ -131,8 +125,7 @@ class Doctor_Profile : AppCompatActivity() {
                         week_5= document.get("week_5") as ArrayList<Long>
                         week_6= document.get("week_6") as ArrayList<Long>
                         week_7= document.get("week_7") as ArrayList<Long>
-                        Log.d("minhhy", "onCreate: "+week_2.toString())
-                        Log.d("minhhy", "onCreate: "+week_3.toString())
+
                     }
                 }
             }
@@ -350,5 +343,31 @@ class Doctor_Profile : AppCompatActivity() {
         }
         return "$day_1/$month_1"
     }
+    fun UpdateDLUser(str:String,id:String){
+        val db=FirebaseFirestore.getInstance()
+        var a:ArrayList<String> = ArrayList()
+        db.collection("users")
+            .document(id)
+            .get()
+            .addOnSuccessListener { document ->
+                run {
+                    if (document != null) {
+                        a=document.get("Calender")as ArrayList<String>
+                    }
+                }
+            }
+        a.add(str)
 
+        val userbooking= hashMapOf(
+            "Calender" to a
+        )
+        db.collection("users")
+            .document(id)
+            .update(userbooking as Map<String, Any>)
+            .addOnSuccessListener {
+            }
+            .addOnFailureListener {
+
+            }
+    }
 }

@@ -6,9 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.doctoron.Interface.OnItemClickListener
 import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.R
+import com.google.firebase.firestore.FirebaseFirestore
 
 class Topdoctor(private val doctor:ArrayList<Doctor>,private val listener: OnItemClickListener)
     :RecyclerView.Adapter<Topdoctor.MyViewHolder>() {
@@ -39,5 +41,23 @@ class Topdoctor(private val doctor:ArrayList<Doctor>,private val listener: OnIte
         holder.tv_Name.setText(currentitem.getName())
         holder.tv_Star.setText(currentitem.getStar().toString())
         holder.tv_CN.setText(currentitem.getCN())
+        //----------------------------------------------------------------------------
+        val firestore = FirebaseFirestore.getInstance()
+
+        if (currentitem.getID()!=""){
+            val userRef = firestore.collection("users").document(currentitem.getID())
+            userRef.addSnapshotListener { snapshot, _ ->
+                if (snapshot != null && snapshot.exists()) {
+                    val avatarUrl = snapshot.getString("avatarUrl")
+                    if (!avatarUrl.isNullOrEmpty()) {
+                        Glide.with(holder.itemView.context)
+                            .load(avatarUrl)
+                            .centerCrop()
+                            .thumbnail(0.5f)
+                            .into(holder.iv_Avatar)
+                    }
+                }
+            }
+        }
     }
 }

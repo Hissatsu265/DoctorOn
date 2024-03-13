@@ -65,7 +65,7 @@ class Doctor_Profile : AppCompatActivity() {
         week_7=ArrayList()
         //-------------- sau nhớ mở ra đàng hoàng
         userID= intent.getStringExtra("User_ID").toString()
-//        userID=intent.getStringExtra("User_ID_user")
+        userID_user=intent.getStringExtra("User_ID_user").toString()
         val db=FirebaseFirestore.getInstance()
         //----------------quay ve -------------------------------
         val btn_back=findViewById<ImageView>(R.id.back_btn)

@@ -18,11 +18,13 @@ import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
+import com.example.doctoron.Activities.Doctor_Profile
 import com.example.doctoron.Activities.Doctor_list
 import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Interface.OnItemClickListener
 import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.R
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.log
 
 private const val ARG_PARAM1 = "param1"
@@ -78,23 +80,39 @@ class DashboardFragment : Fragment() , OnItemClickListener {
         recyclerView.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
         recyclerView.setHasFixedSize(true)
         doctors= ArrayList<Doctor>()
-        for (i in 1 until 8) {
-            val data = Doctor("Toàn", "", "", 0, "", 0, 5, "thu y")
-            doctors.add(data)
-        }
-        var adapter_topdoctor = Topdoctor(doctors,this)
-        recyclerView.adapter=adapter_topdoctor
+        val db=FirebaseFirestore.getInstance()
+        db.collection("Doctors")
+            .orderBy("star",com.google.firebase.firestore.Query.Direction.DESCENDING)
+            .limit(5)
+            .get().addOnSuccessListener { querySnapshot ->
+                for (doc in querySnapshot.documents) {
+                    val data=doc.data
+                    val doctor1 = Doctor(
+                        data?.get("name").toString(), "", "", 0, "", 0, data?.get("star").toString().toInt(),
+                        data?.get("CN").toString(),doc.id,data?.get("BV").toString())
+                    doctors.add(doctor1)
+                }
+                var adapter_topdoctor = Topdoctor(doctors,this)
+                recyclerView.adapter=adapter_topdoctor
+            }
+
+
         //----------------------------------------------------------
         val tv_listdoctor=view.findViewById<TextView>(R.id.tv_listdoctor_xt)
         tv_listdoctor.setOnClickListener {
             val intent= Intent(activity,Doctor_list::class.java)
+            intent.putExtra("User_ID_user",userId)
             startActivity(intent)
         }
         //-----------------------------------------------------------
         return view
     }
     override fun onItemClick(position: Int) {
-        Log.d("ha",position.toString())
+//        Log.d("ha",position.toString())
+        val intent= Intent(activity,Doctor_Profile::class.java)
+        intent.putExtra("User_ID_user",userId)
+        intent.putExtra("User_ID",doctors[position].getID())
+        startActivity(intent)
     }
     companion object {
         @JvmStatic

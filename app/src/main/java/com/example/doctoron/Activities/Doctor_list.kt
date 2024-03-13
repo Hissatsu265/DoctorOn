@@ -15,8 +15,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 class Doctor_list : AppCompatActivity() , OnItemClickListener {
     private lateinit var doctors:ArrayList<Doctor>
+    private lateinit var userID_user:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        userID_user=intent.getStringExtra("User_ID_user").toString()
+
         setContentView(R.layout.activity_doctor_list)
         val recyclerView=findViewById<RecyclerView>(R.id.rv_listdoctor)
         recyclerView.layoutManager=
@@ -94,9 +97,10 @@ class Doctor_list : AppCompatActivity() , OnItemClickListener {
     }
 
     override fun onItemClick(position: Int) {
-        Toast.makeText(this,position.toString(),Toast.LENGTH_SHORT).show()
+//        Toast.makeText(this,position.toString(),Toast.LENGTH_SHORT).show()
         val intent= Intent(this,Doctor_Profile::class.java)
         intent.putExtra("User_ID",doctors.get(position).getID())
+        intent.putExtra("User_ID_user",userID_user)
         startActivity(intent)
         overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
     }

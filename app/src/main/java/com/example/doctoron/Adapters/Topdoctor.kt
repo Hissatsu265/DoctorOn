@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.example.doctoron.Interface.OnItemClickListener
 import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.R
@@ -53,6 +54,7 @@ class Topdoctor(private val doctor:ArrayList<Doctor>,private val listener: OnIte
                         Glide.with(holder.itemView.context)
                             .load(avatarUrl)
                             .centerCrop()
+                            .apply(RequestOptions.circleCropTransform())
                             .thumbnail(0.5f)
                             .into(holder.iv_Avatar)
                     }

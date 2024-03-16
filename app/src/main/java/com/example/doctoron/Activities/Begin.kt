@@ -9,6 +9,7 @@ import com.example.doctoron.R
 class Begin : AppCompatActivity() {
     //kfggjdffshdjhgjhdgsjgh
     //sdfhsfhshd
+    //kvvgvg
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_begin)

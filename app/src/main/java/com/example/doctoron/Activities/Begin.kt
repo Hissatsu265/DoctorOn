@@ -7,9 +7,7 @@ import androidx.appcompat.widget.AppCompatButton
 import com.example.doctoron.R
 
 class Begin : AppCompatActivity() {
-    //lloiiji
-    //kvvgvg
-    //ljjhjg
+    //shdfhsjs
     //jdsdhfs
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

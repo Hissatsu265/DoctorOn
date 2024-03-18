@@ -10,6 +10,7 @@ class Begin : AppCompatActivity() {
     //lloiiji
     //kvvgvg
     //ljjhjg
+    //jdsdhfs
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_begin)

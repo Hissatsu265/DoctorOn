@@ -141,7 +141,36 @@
                     android:textSize="24dp"
                     android:textAlignment="center"
                     />
-
+                <TextView
+                    android:fontFamily="@font/font7"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lượng đường trong máu"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="25dp"/>
+                <EditText
+                    android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textSize="24dp"
+                    android:textAlignment="center"
+                    />
+                <TextView
+                    android:fontFamily="@font/font7"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Chênh lệch đoạn ST khi nghỉ"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="25dp"/>
+                <EditText
+                    android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
+                    android:layout_width="match_parent"
+                    android:layout_height="60dp"
+                    android:textSize="24dp"
+                    android:textAlignment="center"
+                    />
                 <TextView
                     android:fontFamily="@font/font7"
                     android:layout_marginTop="10dp"
@@ -221,6 +250,129 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Không"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                </LinearLayout>
+                <TextView
+                    android:fontFamily="@font/font7"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số lượng đoạn mạch chính"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="25dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                </LinearLayout>
+                <TextView
+                    android:fontFamily="@font/font7"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Loại đau ngưc"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="25dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Không"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nhẹ"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Vừa"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nặng"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                </LinearLayout>
+                <TextView
+                    android:fontFamily="@font/font7"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dấu hiệu sóng (tăng dần 0->3)"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="25dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="2"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3"
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                 </LinearLayout>

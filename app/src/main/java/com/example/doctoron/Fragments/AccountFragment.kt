@@ -23,6 +23,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.doctoron.Activities.Chinh_sua_thong_tin_ca_nhan
 import com.example.doctoron.Activities.Chiso_bmi_hr_calo
 import com.example.doctoron.Activities.Lognin
+import com.example.doctoron.Activities.Predict_health
 import com.example.doctoron.Activities.Setting_account
 
 // TODO: Rename parameter arguments, choose names that match
@@ -69,7 +70,7 @@ class AccountFragment : Fragment() {
         var ll_changepass:LinearLayout=view.findViewById(R.id.changepass)
         var ll_chinhtt:LinearLayout=view.findViewById(R.id.chinhsuatt)
         var ll_logout:LinearLayout=view.findViewById(R.id.logout)
-
+        var ll_predict: LinearLayout=view.findViewById(R.id.predict_health)
         var tv_name_user:TextView=view.findViewById(R.id.tv_name_account)
         var img_avatar:ImageView=view.findViewById(R.id.user_avatar)
         //-------------------------------------------------------------------------------
@@ -77,6 +78,10 @@ class AccountFragment : Fragment() {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             startActivityForResult(intent, PICK_IMAGE_REQUEST)
+        }
+        ll_predict.setOnClickListener{
+            val intent = Intent(activity, Predict_health::class.java)
+            startActivity(intent)
         }
         ll_help.setOnClickListener{
             val intent = Intent(activity, Setting_account::class.java)

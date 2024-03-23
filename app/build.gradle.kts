@@ -44,6 +44,9 @@ android {
 }
 
 dependencies {
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+
     implementation("com.prolificinteractive:material-calendarview:1.4.3")
     implementation("com.jjoe64:graphview:4.2.2")
     implementation("androidx.core:core-ktx:1.12.0")

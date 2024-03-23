@@ -31,12 +31,12 @@ import com.google.android.material.navigation.NavigationView
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     private lateinit var fragmentManager: FragmentManager
     private lateinit var drawerLayout: androidx.drawerlayout.widget.DrawerLayout
-    var user_ID:String=""
+    var user_ID:String="gTt4CW1WkAVfIWxVcTJEyQ1Akwi2"
     override fun onCreate(savedInstanceState: Bundle?) {
         try {
 
             //---------------truyen user id ------------------------
-            user_ID=intent.getStringExtra("user_ID").toString()
+//            user_ID=intent.getStringExtra("user_ID").toString()
             //----------------------------------------------------
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)

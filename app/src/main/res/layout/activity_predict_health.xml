@@ -41,6 +41,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
             <androidx.cardview.widget.CardView
+                android:id="@+id/btn_predict_diabete"
                 android:layout_marginTop="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
@@ -48,16 +49,18 @@
                 android:layout_height="wrap_content"
                 app:cardElevation="12dp">
                 <Button
+                    android:id="@+id/btn_predict_diabetes"
                     android:fontFamily="@font/font7"
                     android:background="@drawable/rectangle_border_name_primary_radius_8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dự đoán bênh tiểu đường"
-                    android:textColor="@color/cyan_300"
+                    android:textColor="@color/teal_700"
                     android:textSize="30dp"
                     />
             </androidx.cardview.widget.CardView>
             <androidx.cardview.widget.CardView
+                android:id="@+id/btn_predict_heart"
                 android:layout_marginTop="50dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
@@ -65,16 +68,18 @@
                 android:layout_height="wrap_content"
                 app:cardElevation="12dp">
                 <Button
+                    android:id="@+id/btn_predict_heart1"
                     android:fontFamily="@font/font7"
                     android:background="@drawable/rectangle_border_name_primary_radius_8"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Dự đoán bênh tim mạch"
-                    android:textColor="@color/cyan_300"
+                    android:textColor="@color/teal_700"
                     android:textSize="30dp"
                     />
             </androidx.cardview.widget.CardView>
             <LinearLayout
+                android:id="@+id/ll_heart"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
@@ -90,6 +95,7 @@
                     android:layout_marginBottom="5dp"
                     android:textSize="25dp"/>
                 <EditText
+                    android:id="@+id/heart_age"
                     android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -105,6 +111,7 @@
                     android:layout_marginBottom="5dp"
                     android:textSize="25dp"/>
                 <EditText
+                    android:id="@+id/heart_tres"
                     android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -120,6 +127,7 @@
                     android:layout_marginBottom="5dp"
                     android:textSize="25dp"/>
                 <EditText
+                    android:id="@+id/heart_chol"
                     android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -135,6 +143,7 @@
                     android:layout_marginBottom="5dp"
                     android:textSize="25dp"/>
                 <EditText
+                    android:id="@+id/heart_thalach"
                     android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -150,6 +159,7 @@
                     android:layout_marginBottom="5dp"
                     android:textSize="25dp"/>
                 <EditText
+                    android:id="@+id/heart_fbs"
                     android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -165,6 +175,7 @@
                     android:layout_marginBottom="5dp"
                     android:textSize="25dp"/>
                 <EditText
+                    android:id="@+id/heart_oldpeak"
                     android:background="@drawable/rectangle_bg_name_primary_border_name_blue_50_radius_5"
                     android:layout_width="match_parent"
                     android:layout_height="60dp"
@@ -184,6 +195,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/heart_sex_nam"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -191,6 +203,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_sex_nu"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -211,6 +224,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/heart_restec_bt"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -218,6 +232,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_restec_kbt"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -239,6 +254,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/heart_exang_yes"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -246,6 +262,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_exang_no"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -266,6 +283,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/heart_ca_0"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -273,6 +291,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_ca_1"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -280,6 +299,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_ca_2"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -287,6 +307,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_ca_3"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -307,6 +328,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/heart_cp_1"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -314,6 +336,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_cp_2"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -321,6 +344,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_cp_3"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -328,6 +352,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_cp_4"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -348,6 +373,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
                     <RadioButton
+                        android:id="@+id/heart_thal_0"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -355,6 +381,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_thal_1"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -362,6 +389,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_thal_2"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -369,6 +397,7 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                     <RadioButton
+                        android:id="@+id/heart_thal_3"
                         android:layout_weight="1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -376,7 +405,44 @@
                         android:fontFamily="@font/font7"
                         android:textSize="24dp"/>
                 </LinearLayout>
+                <TextView
+                    android:fontFamily="@font/font7"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Độ dốc đỉnh ST khi tập thể dục"
+                    android:layout_marginBottom="5dp"
+                    android:textSize="25dp"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/heart_slope_0"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="bình thường"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:id="@+id/heart_slope_1"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="tăng"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
+                    <RadioButton
+                        android:id="@+id/heart_slope_2"
+                        android:layout_weight="1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="giảm"
+                        android:fontFamily="@font/font7"
+                        android:textSize="24dp"/>
 
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

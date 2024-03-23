@@ -8,6 +8,7 @@
 
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -50,13 +51,13 @@
             android:name=".Activities.Home"
             android:exported="false" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.Begin"
             android:exported="false" />
         <activity
             android:name=".Activities.Signup"
             android:exported="false" />
         <activity
-            android:name=".Activities.Begin"
+            android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -2,6 +2,8 @@ package com.example.doctoron.Fragments
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.ShapeDrawable
+import android.graphics.drawable.shapes.OvalShape
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +11,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
@@ -120,13 +123,37 @@ class CalenderFragment : Fragment() {
             CalendarDay.from(2024, month-1, day)
         )
 
+//        calendar.addDecorator(object : DayViewDecorator {
+//            override fun shouldDecorate(day: CalendarDay?): Boolean {
+//                return specialDays.contains(day)
+//            }
+//
+//            override fun decorate(view: DayViewFacade?) {
+//                view?.setBackgroundDrawable(ColorDrawable(Color.GREEN))
+//            }
+//        })
+        //----------------------------------------------------------------------------------------
         calendar.addDecorator(object : DayViewDecorator {
             override fun shouldDecorate(day: CalendarDay?): Boolean {
                 return specialDays.contains(day)
             }
 
             override fun decorate(view: DayViewFacade?) {
-                view?.setBackgroundDrawable(ColorDrawable(Color.GREEN))
+                // Tạo một ImageView để hiển thị hình tròn
+                val imageView = ImageView(context)
+                imageView.setImageResource(R.drawable.circle_shape) // Đặt tệp drawable hình tròn
+
+                // Thiết lập kích thước và vị trí cho ImageView
+                imageView.layoutParams = ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                )
+                imageView.scaleType = ImageView.ScaleType.CENTER_INSIDE
+
+                // Đặt ImageView làm nền cho ngày
+//                view?.setBackgroundDrawable(ShapeDrawable(OvalShape()))
+                view?.setSelectionDrawable(imageView.drawable)
+//                view?.setBackgroundDrawable(R.drawable.circle_shape)
             }
         })
     }

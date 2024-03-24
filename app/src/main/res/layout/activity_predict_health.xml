@@ -443,6 +443,15 @@
                         android:textSize="24dp"/>
 
                 </LinearLayout>
+                <Button
+                    android:id="@+id/btn_makepredictheart"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Dự đoán"
+                    android:textSize="24dp"
+                    android:fontFamily="@font/font7"
+                    android:textColor="@color/teal_700"
+                    android:layout_margin="20dp"/>
             </LinearLayout>
 
         </LinearLayout>

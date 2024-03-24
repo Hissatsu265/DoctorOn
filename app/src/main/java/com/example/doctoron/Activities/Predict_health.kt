@@ -1,5 +1,6 @@
 package com.example.doctoron.Activities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 //import android.telecom.Call
@@ -12,6 +13,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
+import com.example.doctoron.Objects.CustomDialog_Predict
 import com.example.doctoron.Objects.PredictionResponse
 import com.example.doctoron.R
 import com.google.android.gms.common.api.Response
@@ -81,6 +83,45 @@ class Predict_health : AppCompatActivity() {
         ll_predict_heart.visibility=View.GONE
         btn_predict_heart=findViewById(R.id.btn_predict_heart1)
         btn_predict_diabetes=findViewById(R.id.btn_predict_diabetes)
+
+        radio_ca_0=findViewById(R.id.heart_ca_0)
+        radio_ca_1=findViewById(R.id.heart_ca_1)
+        radio_ca_2=findViewById(R.id.heart_ca_2)
+        radio_ca_3=findViewById(R.id.heart_ca_3)
+        radio_cp_1=findViewById(R.id.heart_cp_1)
+        radio_cp_2=findViewById(R.id.heart_cp_2)
+        radio_cp_3=findViewById(R.id.heart_cp_3)
+        radio_cp_4=findViewById(R.id.heart_cp_4)
+        radio_exang_no=findViewById(R.id.heart_exang_no)
+        radio_exang_yes=findViewById(R.id.heart_exang_yes)
+        radio_restec_bt=findViewById(R.id.heart_restec_bt)
+        radio_restec_kbt=findViewById(R.id.heart_restec_kbt)
+        radio_sex_nam=findViewById(R.id.heart_sex_nam)
+        radio_sex_nu=findViewById(R.id.heart_sex_nu)
+        radio_slope_0=findViewById(R.id.heart_slope_0)
+        radio_slope_1=findViewById(R.id.heart_slope_1)
+        radio_slope_2=findViewById(R.id.heart_slope_2)
+        radio_thal_0=findViewById(R.id.heart_thal_0)
+        radio_thal_1=findViewById(R.id.heart_thal_1)
+        radio_thal_2=findViewById(R.id.heart_thal_2)
+        radio_thal_3=findViewById(R.id.heart_thal_3)
+        //-------------------------------------------------------------
+        val radioCa = arrayOf(radio_ca_0, radio_ca_1, radio_ca_2, radio_ca_3)
+        val radioCp = arrayOf(radio_cp_1, radio_cp_2, radio_cp_3, radio_cp_4)
+        val radioSex = arrayOf(radio_sex_nam, radio_sex_nu)
+        val radioThal = arrayOf(radio_thal_0, radio_thal_1, radio_thal_2, radio_thal_3)
+        val radioSlope= arrayOf(radio_slope_0,radio_slope_1,radio_slope_2)
+        val radioexang= arrayOf(radio_exang_no,radio_exang_yes)
+        val radiorestec= arrayOf(radio_restec_bt,radio_restec_kbt)
+
+        setRadioEvents(radioCa)
+        setRadioEvents(radioCp)
+        setRadioEvents(radioSex)
+        setRadioEvents(radioThal)
+        setRadioEvents(radioSlope)
+        setRadioEvents(radiorestec)
+        setRadioEvents(radioexang)
+
         //-------------------------------------------------------------
         btn_predict_diabetes.setOnClickListener{
             Predic_tieuduong()
@@ -98,11 +139,60 @@ class Predict_health : AppCompatActivity() {
         cv_predict_diabete.visibility= View.VISIBLE
         cv_predict_heart.visibility=View.GONE
         ll_predict_heart.visibility=View.VISIBLE
-        val inputData1 = floatArrayOf(57.0f, 1.0f, 3.0f, 145.0f, 233.0f, 1.0f, 0.0f, 150.0f, 0.0f, 2.3f, 0.0f, 0.0f, 1.0f)
-        makePrediction(inputData1)
+        val btn=findViewById<Button>(R.id.btn_makepredictheart)
+        btn.setOnClickListener {
+            val inputData1 = floatArrayOf(
+                edt_heart_age.text.toString().toFloat(),
+                Value_Radio(radio_sex_nu,radio_sex_nam).toFloat(),
+                Value_Radio(radio_cp_1,radio_cp_2,radio_cp_3,radio_cp_4).toFloat(),
+                edt_heart_tres.text.toString().toFloat(),
+                edt_heart_chol.text.toString().toFloat(),
+                edt_heart_fbs.text.toString().toFloat(),
+                Value_Radio(radio_restec_kbt,radio_restec_bt).toFloat(),
+                edt_heart_thalach.text.toString().toFloat(),
+                Value_Radio(radio_exang_no,radio_exang_yes).toFloat(),
+                edt_heart_oldpeak.text.toString().toFloat(),
+                Value_Radio(radio_slope_0,radio_slope_1,radio_slope_2).toFloat(),
+                Value_Radio(radio_ca_0,radio_ca_1,radio_ca_2,radio_ca_3).toFloat(),
+                Value_Radio(radio_thal_0,radio_thal_1,radio_thal_2,radio_thal_3).toFloat()
+            )
+//            makePrediction(inputData1)
+
+            try {
+//                Log.d("hehe", "Predic_tim: "+ inputd2.toList().toString())
+                CustomDialog_Predict(this,"kha nang mac benh tim của bạn khoảng 10%").show()
+            }
+            catch (e:Exception){
+                Log.e("kkkkk", "Predic_tim: "+ e.message.toString() )
+            }
+
+        }
 
     }
-    // Define Retrofit interface
+    //---------------------------------------------------------------------------------------------------------------------
+    fun HandleEvent_Radio(vararg radioButtons: RadioButton?) {
+        radioButtons.forEach { radioButton ->
+            radioButton?.isChecked = false
+        }
+    }
+    fun setRadioEvents(radios: Array<RadioButton>) {
+        radios.forEachIndexed { index, radioButton ->
+            radioButton.setOnClickListener {
+                val otherRadios = radios.filterIndexed { idx, _ -> idx != index }
+                HandleEvent_Radio(*otherRadios.toTypedArray())
+            }
+        }
+    }
+    fun Value_Radio(vararg radioButtons:RadioButton?):Int{
+        radioButtons.forEachIndexed() { idx,radioButton ->
+            if (radioButton != null) {
+                if(radioButton.isChecked==true)
+                    return idx
+            }
+        }
+        return 0
+    }
+    // Define Retrofit interface------------------------------------------------------------------------------------------------------
     interface PredictionApi {
         @POST("/predict")
         fun predictHeartDisease(@Body inputData: Map<String, FloatArray>): Call<PredictionResponse>
@@ -134,7 +224,7 @@ class Predict_health : AppCompatActivity() {
 
 
             override fun onFailure(call: Call<PredictionResponse>, t: Throwable) {
-//                Toast.makeText(context, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+//                Toast.makeText(this, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
                 Log.e("loisa", t.message.toString())
             }
 
@@ -146,7 +236,8 @@ class Predict_health : AppCompatActivity() {
                     val predictionResponse = response.body()
                     val result = predictionResponse?.prediction ?: -1
                     val kq:Double = result*1.0/100.0
-//                     ""
+
+                    CustomDialog_Predict(applicationContext,"kha nang mac benh tim của bạn khoảng $kq%").show()
                     Log.d("hihii", "kha nang mac benh tim của bạn khoảng $kq%")
                 } else {
                     Log.d("lloisa", response.message())

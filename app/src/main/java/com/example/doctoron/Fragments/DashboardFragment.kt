@@ -56,8 +56,8 @@ class DashboardFragment : Fragment() , OnItemClickListener {
         var imageSlider:ImageSlider= view.findViewById(R.id.imageSlider)
 
         slideModels.add(SlideModel(R.drawable.doctor_splashscreen, ScaleTypes.FIT))
-        slideModels.add(SlideModel(R.drawable.img_confirm_mail, ScaleTypes.FIT))
-        slideModels.add(SlideModel(R.drawable.img_forgotpass, ScaleTypes.FIT))
+        slideModels.add(SlideModel(R.drawable.img_drug,ScaleTypes.FIT))
+        slideModels.add(SlideModel(R.drawable.img_lich,ScaleTypes.FIT))
 
         imageSlider.setImageList(slideModels,ScaleTypes.FIT)
         imageSlider.setItemClickListener(object : ItemClickListener {

@@ -156,15 +156,13 @@ class Predict_health : AppCompatActivity() {
                 Value_Radio(radio_ca_0,radio_ca_1,radio_ca_2,radio_ca_3).toFloat(),
                 Value_Radio(radio_thal_0,radio_thal_1,radio_thal_2,radio_thal_3).toFloat()
             )
-//            makePrediction(inputData1)
-
-            try {
-//                Log.d("hehe", "Predic_tim: "+ inputd2.toList().toString())
-                CustomDialog_Predict(this,"kha nang mac benh tim của bạn khoảng 10%").show()
-            }
-            catch (e:Exception){
-                Log.e("kkkkk", "Predic_tim: "+ e.message.toString() )
-            }
+            makePrediction(inputData1,this)
+//            try {
+//                CustomDialog_Predict(this,"kha nang mac benh tim của bạn khoảng 10%").show()
+//            }
+//            catch (e:Exception){
+//                Log.e("kkkkk", "Predic_tim: "+ e.message.toString() )
+//            }
 
         }
 
@@ -197,7 +195,7 @@ class Predict_health : AppCompatActivity() {
         @POST("/predict")
         fun predictHeartDisease(@Body inputData: Map<String, FloatArray>): Call<PredictionResponse>
     }
-    fun makePrediction(inputData: FloatArray) {
+    fun makePrediction(inputData: FloatArray,context_1:Context) {
         if (inputData.size != 13) {
             Toast.makeText(this,"Bạn chưa nhập đủ dữ liệu",Toast.LENGTH_SHORT).show()
             return
@@ -233,12 +231,17 @@ class Predict_health : AppCompatActivity() {
                 response: retrofit2.Response<PredictionResponse>
             ) {
                 if (response.isSuccessful) {
-                    val predictionResponse = response.body()
-                    val result = predictionResponse?.prediction ?: -1
-                    val kq:Double = result*1.0/100.0
 
-                    CustomDialog_Predict(applicationContext,"kha nang mac benh tim của bạn khoảng $kq%").show()
-                    Log.d("hihii", "kha nang mac benh tim của bạn khoảng $kq%")
+                    try{
+                        val predictionResponse = response.body()
+                        val result = predictionResponse?.prediction ?: -1
+                        val kq:Double = result*1.0/100.0
+                        CustomDialog_Predict(context_1,"khả năng mắc bệnh tim của bạn khoảng $kq%").show()
+                    }
+                    catch (e:Exception){
+                        Log.d("loii", e.message.toString())
+                    }
+
                 } else {
                     Log.d("lloisa", response.message())
 //                    Toast.makeText(context, "Error: ${response.message()}", Toast.LENGTH_SHORT).show()

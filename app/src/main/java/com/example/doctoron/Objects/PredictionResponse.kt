@@ -1,6 +1,6 @@
 package com.example.doctoron.Objects
 
-class PredictionResponse(var prediction: Int=0) {
+class PredictionResponse(var prediction: Int = 0) {
     init{
         prediction=prediction
     }

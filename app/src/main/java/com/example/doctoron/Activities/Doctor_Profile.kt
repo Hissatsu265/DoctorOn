@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.doctoron.Objects.Calendar_Time
 import com.example.doctoron.R
@@ -57,7 +58,7 @@ class Doctor_Profile : AppCompatActivity() {
                 add(0)
             }
         }
-        week_2= ArrayList()
+        week_2=ArrayList()
         week_4=ArrayList()
         week_6=ArrayList()
         week_3=ArrayList()
@@ -277,15 +278,15 @@ class Doctor_Profile : AppCompatActivity() {
             setColor(btn_hour_6pm,R.color.primary)
             hour=i
             when(i){
-                10 -> setColor(btn_hour_10am,R.color.cyan_300)
+                10->  setColor(btn_hour_10am,R.color.cyan_300)
                 9->   setColor(btn_hour_9am,R.color.cyan_300)
                 8->   setColor(btn_hour_8am,R.color.cyan_300)
-                1-> setColor(btn_hour_1pm,R.color.cyan_300)
-                2->       setColor(btn_hour_2pm,R.color.cyan_300)
+                1->   setColor(btn_hour_1pm,R.color.cyan_300)
+                2->   setColor(btn_hour_2pm,R.color.cyan_300)
                 3->   setColor(btn_hour_3pm,R.color.cyan_300)
-                4-> setColor(btn_hour_4pm,R.color.cyan_300)
-                5->       setColor(btn_hour_5pm,R.color.cyan_300)
-                6->  setColor(btn_hour_6pm,R.color.cyan_300)
+                4->   setColor(btn_hour_4pm,R.color.cyan_300)
+                5->   setColor(btn_hour_5pm,R.color.cyan_300)
+                6->   setColor(btn_hour_6pm,R.color.cyan_300)
             }
         }
         else{
@@ -294,6 +295,7 @@ class Doctor_Profile : AppCompatActivity() {
     }
     fun setBackgroundOriginal(i:Int){
         week=i
+        SetButonDisable()
         btn_Fri_week.setBackgroundColor(resources.getColor(R.color.primary))
         btn_Mon_week.setBackgroundColor(resources.getColor(R.color.primary))
         btn_Wed_week.setBackgroundColor(resources.getColor(R.color.primary))
@@ -368,5 +370,19 @@ class Doctor_Profile : AppCompatActivity() {
                     }
                 }
             }
+    }
+    fun SetButonDisable(){
+        val arr = intArrayOf(10,1,4,3,2,5,6,8,9)
+        val arr_btn= arrayOf(btn_hour_10am,btn_hour_1pm,btn_hour_4pm,btn_hour_3pm,btn_hour_2pm,btn_hour_5pm
+        ,btn_hour_6pm,btn_hour_8am,btn_hour_9am)
+
+        arr_btn.forEachIndexed() { idx,Button ->
+            if(!CheckFreeinWeek(arr[idx])){
+                Button.setTextColor(ContextCompat.getColor(this, R.color.primaryContainer))
+            }
+            else{
+                Button.setTextColor(ContextCompat.getColor(this, R.color.black))
+            }
+        }
     }
 }

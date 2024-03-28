@@ -90,18 +90,23 @@ class Predict_health : AppCompatActivity() {
         edt_diabete_age=findViewById(R.id.diabete_age)
         edt_diabete_bmi=findViewById(R.id.diabetes_bmi)
         edt_diabete_phyHL=findViewById(R.id.diabetes_physHL)
-        for (i in 1 until 6) {
+
+        for (i in 0 until 5) {
             diabete_genhl.add(findViewById(R.id.diabetes_genhl_1 + i))
         }
+
         for (i in 0 until 2){
             diabete_chol.add(findViewById(R.id.diabetes_chol_0+i))
             diabete_diff.add(findViewById(R.id.diabete_diff_0+i))
-            diabete_fruit.add(findViewById(R.id.diabetes_fruit_0+i))
+//            diabete_fruit.add(findViewById(R.id.diabetes_fruit_0+i))
             diabete_vege.add(findViewById(R.id.diabete_vege_0+i))
             diabete_phyactivity.add(findViewById(R.id.diabetes_Phyactivity_0+i))
             diabete_highbp.add(findViewById(R.id.diabete_highbp_0+i))
             diabete_heart.add(findViewById(R.id.diabete_heart_0+i))
         }
+        diabete_fruit.add(findViewById(R.id.diabetes_fruitt_0))
+        diabete_fruit.add(findViewById(R.id.diabetes_fruitt_1))
+
         diabete_sex.add(findViewById(R.id.diabetes_sex_nu))
         diabete_sex.add(findViewById(R.id.diabetes_sex_nam))
         try{
@@ -114,7 +119,7 @@ class Predict_health : AppCompatActivity() {
             setRadioEvents(arrayOf( diabete_vege[1],diabete_vege[0]))
             setRadioEvents(arrayOf( diabete_chol[0],diabete_chol[1]))
             setRadioEvents(arrayOf(diabete_highbp[1],diabete_highbp[0]))
-            setRadioEvents(arrayOf(diabete_genhl[1],diabete_genhl[0],diabete_genhl[4],diabete_genhl[3],diabete_genhl[2]))
+            setRadioEvents(arrayOf(diabete_genhl[0],diabete_genhl[1],diabete_genhl[2],diabete_genhl[3],diabete_genhl[4]))
         }catch (e:Exception){
             Log.d("kkl", "onCreate: "+e.message.toString())
         }
@@ -199,24 +204,25 @@ class Predict_health : AppCompatActivity() {
                     edt_diabete_bmi.text.toString().toFloat(),
                     Value_Radio(diabete_heart[0],diabete_heart[1]).toFloat(),
                     Value_Radio(diabete_phyactivity[0],diabete_phyactivity[1]).toFloat(),
-//                    Value_Radio(diabete_fruit[0],diabete_fruit[1]).toFloat(),
-//                    Value_Radio(diabete_vege[0],diabete_vege[1]).toFloat(),
-//                    Value_Radio(diabete_genhl[0],diabete_genhl[1],diabete_genhl[2],diabete_genhl[3],diabete_genhl[4]).toFloat(),
-//                    edt_diabete_phyHL.text.toString().toFloat(),
-//                    Value_Radio(diabete_diff[0],diabete_diff[1]).toFloat(),
-//                    Value_Radio(diabete_highbp[0],diabete_highbp[1]).toFloat(),
+                    Value_Radio(diabete_fruit[0],diabete_fruit[1]).toFloat(),
+                    Value_Radio(diabete_vege[0],diabete_vege[1]).toFloat(),
+                    Value_Radio(diabete_genhl[0],diabete_genhl[1],diabete_genhl[2],diabete_genhl[3],diabete_genhl[4]).toFloat(),
+                    edt_diabete_phyHL.text.toString().toFloat(),
+                    Value_Radio(diabete_diff[0],diabete_diff[1]).toFloat(),
+                    Value_Radio(diabete_highbp[0],diabete_highbp[1]).toFloat(),
                 )
                 Log.d("kfffj", "Predic_tim: " + inputData1.toList().toString())
+                try{
+                    makePrediction(inputData1,this,"tiểu đường")
+                }catch (e:Exception){
+                    Log.d("fdfdf", "Predic_tieuduong: "+e.message.toString())
+                }
 
             }catch (e:Exception){
                 Log.d("fdfdf", "Predic_tieuduong: "+e.message.toString())
             }
 
-//            try{
-//                makePrediction(inputData1,this,"tiểu đường")
-//            }catch (e:Exception){
-//                Log.d("fdfdf", "Predic_tieuduong: "+e.message.toString())
-//            }
+
 //            makePrediction(inputData1,this,"tiểu đường")
         }
     }
@@ -282,7 +288,7 @@ class Predict_health : AppCompatActivity() {
         fun predictHeartDisease(@Body inputData: Map<String, FloatArray>): Call<PredictionResponse>
     }
     fun makePrediction(inputData: FloatArray,context_1:Context,loaibenh:String) {
-        if (inputData.size != 13) {
+        if ((inputData.size != 13 && loaibenh.equals("bệnh tim")) || inputData.size<12) {
             Toast.makeText(this,"Bạn chưa nhập đủ dữ liệu",Toast.LENGTH_SHORT).show()
             return
         }

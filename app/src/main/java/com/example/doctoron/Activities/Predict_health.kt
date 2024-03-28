@@ -29,6 +29,7 @@ class Predict_health : AppCompatActivity() {
     lateinit var cv_predict_diabete:androidx.cardview.widget.CardView
     lateinit var cv_predict_heart:androidx.cardview.widget.CardView
     lateinit var ll_predict_heart:LinearLayout
+    lateinit var ll_predict_diabete:LinearLayout
     lateinit var btn_predict_heart: Button
     lateinit var btn_predict_diabetes: Button
 
@@ -61,6 +62,22 @@ class Predict_health : AppCompatActivity() {
     lateinit var radio_thal_2:RadioButton
     lateinit var radio_thal_3:RadioButton
 
+    lateinit var edt_diabete_age:EditText
+    lateinit var edt_diabete_bmi:EditText
+    lateinit var edt_diabete_phyHL:EditText
+
+    val diabete_sex = mutableListOf<RadioButton>()
+    val diabete_chol = mutableListOf<RadioButton>()
+    val diabete_genhl = mutableListOf<RadioButton>()
+    val diabete_highbp = mutableListOf<RadioButton>()
+    val diabete_phyactivity = mutableListOf<RadioButton>()
+    val diabete_fruit = mutableListOf<RadioButton>()
+    val diabete_vege = mutableListOf<RadioButton>()
+    val diabete_diff = mutableListOf<RadioButton>()
+    val diabete_heart = mutableListOf<RadioButton>()
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_predict_health)
@@ -69,6 +86,38 @@ class Predict_health : AppCompatActivity() {
         btn_back.setOnClickListener {
             finish()
         }
+        //-----------------------------------------------------------
+        edt_diabete_age=findViewById(R.id.diabete_age)
+        edt_diabete_bmi=findViewById(R.id.diabetes_bmi)
+        edt_diabete_phyHL=findViewById(R.id.diabetes_physHL)
+        for (i in 1 until 6) {
+            diabete_genhl.add(findViewById(R.id.diabetes_genhl_1 + i))
+        }
+        for (i in 0 until 2){
+            diabete_chol.add(findViewById(R.id.diabetes_chol_0+i))
+            diabete_diff.add(findViewById(R.id.diabete_diff_0+i))
+            diabete_fruit.add(findViewById(R.id.diabetes_fruit_0+i))
+            diabete_vege.add(findViewById(R.id.diabete_vege_0+i))
+            diabete_phyactivity.add(findViewById(R.id.diabetes_Phyactivity_0+i))
+            diabete_highbp.add(findViewById(R.id.diabete_highbp_0+i))
+            diabete_heart.add(findViewById(R.id.diabete_heart_0+i))
+        }
+        diabete_sex.add(findViewById(R.id.diabetes_sex_nu))
+        diabete_sex.add(findViewById(R.id.diabetes_sex_nam))
+        try{
+            setRadioEvents(arrayOf( diabete_heart[0],diabete_heart[1]))
+            setRadioEvents(arrayOf( diabete_chol[0],diabete_chol[1]))
+            setRadioEvents(arrayOf( diabete_sex[0],diabete_sex[1]))
+            setRadioEvents(arrayOf( diabete_diff[0],diabete_diff[1]))
+            setRadioEvents(arrayOf(diabete_fruit[0],diabete_fruit[1]))
+            setRadioEvents(arrayOf( diabete_vege[1],diabete_vege[0]))
+//            setRadioEvents(arrayOf( diabete_chol[0],diabete_chol[1]))
+//            setRadioEvents(arrayOf(diabete_highbp[1],diabete_highbp[0]))
+//            setRadioEvents(arrayOf(diabete_genhl[1],diabete_genhl[0],diabete_genhl[4],diabete_genhl[3],diabete_genhl[2]))
+        }catch (e:Exception){
+            Log.d("kkl", "onCreate: "+e.message.toString())
+        }
+
         //-------------------------------------------------------------
         edt_heart_age=findViewById(R.id.heart_age)
         edt_heart_chol=findViewById(R.id.heart_chol)
@@ -79,8 +128,12 @@ class Predict_health : AppCompatActivity() {
         //-------------------------------------------------------------
         cv_predict_diabete=findViewById(R.id.btn_predict_diabete)
         cv_predict_heart=findViewById(R.id.btn_predict_heart)
+
         ll_predict_heart=findViewById(R.id.ll_heart)
         ll_predict_heart.visibility=View.GONE
+        ll_predict_diabete=findViewById(R.id.ll_diabetes)
+        ll_predict_diabete.visibility=View.GONE
+
         btn_predict_heart=findViewById(R.id.btn_predict_heart1)
         btn_predict_diabetes=findViewById(R.id.btn_predict_diabetes)
 
@@ -134,11 +187,31 @@ class Predict_health : AppCompatActivity() {
         cv_predict_diabete.visibility= View.GONE
         cv_predict_heart.visibility=View.VISIBLE
         ll_predict_heart.visibility=View.GONE
+        ll_predict_diabete.visibility=View.VISIBLE
+        val btn=findViewById<Button>(R.id.btn_makepredictdiabete)
+        btn.setOnClickListener {
+            val inputData1 = floatArrayOf(
+                edt_diabete_age.text.toString().toFloat(),
+                Value_Radio(diabete_sex[0],diabete_sex[1]).toFloat(),
+                Value_Radio(diabete_chol[0],diabete_chol[1]).toFloat(),
+                edt_diabete_bmi.text.toString().toFloat(),
+                Value_Radio(diabete_heart[0],diabete_heart[1]).toFloat(),
+                Value_Radio(diabete_phyactivity[0],diabete_phyactivity[1]).toFloat(),
+                Value_Radio(diabete_fruit[0],diabete_fruit[1]).toFloat(),
+                Value_Radio(diabete_vege[0],diabete_vege[1]).toFloat(),
+                Value_Radio(diabete_genhl[0],diabete_genhl[1],diabete_genhl[2],diabete_genhl[3],diabete_genhl[4]).toFloat(),
+                edt_diabete_phyHL.text.toString().toFloat(),
+                Value_Radio(diabete_diff[0],diabete_diff[1]).toFloat(),
+                Value_Radio(diabete_highbp[0],diabete_highbp[1]).toFloat(),
+            )
+            makePrediction(inputData1,this,"tiểu đường")
+        }
     }
     fun Predic_tim(){
         cv_predict_diabete.visibility= View.VISIBLE
         cv_predict_heart.visibility=View.GONE
         ll_predict_heart.visibility=View.VISIBLE
+        ll_predict_diabete.visibility=View.GONE
         val btn=findViewById<Button>(R.id.btn_makepredictheart)
         btn.setOnClickListener {
             val inputData1 = floatArrayOf(
@@ -156,14 +229,9 @@ class Predict_health : AppCompatActivity() {
                 Value_Radio(radio_ca_0,radio_ca_1,radio_ca_2,radio_ca_3).toFloat(),
                 Value_Radio(radio_thal_0,radio_thal_1,radio_thal_2,radio_thal_3).toFloat()
             )
-            makePrediction(inputData1,this)
-//            try {
-//                CustomDialog_Predict(this,"kha nang mac benh tim của bạn khoảng 10%").show()
-//            }
-//            catch (e:Exception){
-//                Log.e("kkkkk", "Predic_tim: "+ e.message.toString() )
-//            }
 
+            Log.d("kfffj", "Predic_tim: " + inputData1.toList().toString())
+//            makePrediction(inputData1,this,"bệnh tim")
         }
 
     }
@@ -181,6 +249,7 @@ class Predict_health : AppCompatActivity() {
             }
         }
     }
+
     fun Value_Radio(vararg radioButtons:RadioButton?):Int{
         radioButtons.forEachIndexed() { idx,radioButton ->
             if (radioButton != null) {
@@ -195,7 +264,7 @@ class Predict_health : AppCompatActivity() {
         @POST("/predict")
         fun predictHeartDisease(@Body inputData: Map<String, FloatArray>): Call<PredictionResponse>
     }
-    fun makePrediction(inputData: FloatArray,context_1:Context) {
+    fun makePrediction(inputData: FloatArray,context_1:Context,loaibenh:String) {
         if (inputData.size != 13) {
             Toast.makeText(this,"Bạn chưa nhập đủ dữ liệu",Toast.LENGTH_SHORT).show()
             return
@@ -236,7 +305,7 @@ class Predict_health : AppCompatActivity() {
                         val predictionResponse = response.body()
                         val result = predictionResponse?.prediction ?: -1
                         val kq:Double = result*1.0/100.0
-                        CustomDialog_Predict(context_1,"khả năng mắc bệnh tim của bạn khoảng $kq%").show()
+                        CustomDialog_Predict(context_1,"khả năng mắc $loaibenh của bạn khoảng $kq%").show()
                     }
                     catch (e:Exception){
                         Log.d("loii", e.message.toString())

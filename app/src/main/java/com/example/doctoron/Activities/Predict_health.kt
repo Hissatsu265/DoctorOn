@@ -110,10 +110,11 @@ class Predict_health : AppCompatActivity() {
             setRadioEvents(arrayOf( diabete_sex[0],diabete_sex[1]))
             setRadioEvents(arrayOf( diabete_diff[0],diabete_diff[1]))
             setRadioEvents(arrayOf(diabete_fruit[0],diabete_fruit[1]))
+            setRadioEvents(arrayOf(diabete_phyactivity[0],diabete_phyactivity[1]))
             setRadioEvents(arrayOf( diabete_vege[1],diabete_vege[0]))
-//            setRadioEvents(arrayOf( diabete_chol[0],diabete_chol[1]))
-//            setRadioEvents(arrayOf(diabete_highbp[1],diabete_highbp[0]))
-//            setRadioEvents(arrayOf(diabete_genhl[1],diabete_genhl[0],diabete_genhl[4],diabete_genhl[3],diabete_genhl[2]))
+            setRadioEvents(arrayOf( diabete_chol[0],diabete_chol[1]))
+            setRadioEvents(arrayOf(diabete_highbp[1],diabete_highbp[0]))
+            setRadioEvents(arrayOf(diabete_genhl[1],diabete_genhl[0],diabete_genhl[4],diabete_genhl[3],diabete_genhl[2]))
         }catch (e:Exception){
             Log.d("kkl", "onCreate: "+e.message.toString())
         }
@@ -190,21 +191,33 @@ class Predict_health : AppCompatActivity() {
         ll_predict_diabete.visibility=View.VISIBLE
         val btn=findViewById<Button>(R.id.btn_makepredictdiabete)
         btn.setOnClickListener {
-            val inputData1 = floatArrayOf(
-                edt_diabete_age.text.toString().toFloat(),
-                Value_Radio(diabete_sex[0],diabete_sex[1]).toFloat(),
-                Value_Radio(diabete_chol[0],diabete_chol[1]).toFloat(),
-                edt_diabete_bmi.text.toString().toFloat(),
-                Value_Radio(diabete_heart[0],diabete_heart[1]).toFloat(),
-                Value_Radio(diabete_phyactivity[0],diabete_phyactivity[1]).toFloat(),
-                Value_Radio(diabete_fruit[0],diabete_fruit[1]).toFloat(),
-                Value_Radio(diabete_vege[0],diabete_vege[1]).toFloat(),
-                Value_Radio(diabete_genhl[0],diabete_genhl[1],diabete_genhl[2],diabete_genhl[3],diabete_genhl[4]).toFloat(),
-                edt_diabete_phyHL.text.toString().toFloat(),
-                Value_Radio(diabete_diff[0],diabete_diff[1]).toFloat(),
-                Value_Radio(diabete_highbp[0],diabete_highbp[1]).toFloat(),
-            )
-            makePrediction(inputData1,this,"tiểu đường")
+            try{
+                val inputData1 = floatArrayOf(
+                    edt_diabete_age.text.toString().toFloat(),
+                    Value_Radio(diabete_sex[0],diabete_sex[1]).toFloat(),
+                    Value_Radio(diabete_chol[0],diabete_chol[1]).toFloat(),
+                    edt_diabete_bmi.text.toString().toFloat(),
+                    Value_Radio(diabete_heart[0],diabete_heart[1]).toFloat(),
+                    Value_Radio(diabete_phyactivity[0],diabete_phyactivity[1]).toFloat(),
+//                    Value_Radio(diabete_fruit[0],diabete_fruit[1]).toFloat(),
+//                    Value_Radio(diabete_vege[0],diabete_vege[1]).toFloat(),
+//                    Value_Radio(diabete_genhl[0],diabete_genhl[1],diabete_genhl[2],diabete_genhl[3],diabete_genhl[4]).toFloat(),
+//                    edt_diabete_phyHL.text.toString().toFloat(),
+//                    Value_Radio(diabete_diff[0],diabete_diff[1]).toFloat(),
+//                    Value_Radio(diabete_highbp[0],diabete_highbp[1]).toFloat(),
+                )
+                Log.d("kfffj", "Predic_tim: " + inputData1.toList().toString())
+
+            }catch (e:Exception){
+                Log.d("fdfdf", "Predic_tieuduong: "+e.message.toString())
+            }
+
+//            try{
+//                makePrediction(inputData1,this,"tiểu đường")
+//            }catch (e:Exception){
+//                Log.d("fdfdf", "Predic_tieuduong: "+e.message.toString())
+//            }
+//            makePrediction(inputData1,this,"tiểu đường")
         }
     }
     fun Predic_tim(){
@@ -230,8 +243,12 @@ class Predict_health : AppCompatActivity() {
                 Value_Radio(radio_thal_0,radio_thal_1,radio_thal_2,radio_thal_3).toFloat()
             )
 
-            Log.d("kfffj", "Predic_tim: " + inputData1.toList().toString())
-//            makePrediction(inputData1,this,"bệnh tim")
+//            Log.d("kfffj", "Predic_tim: " + inputData1.toList().toString())
+            try {
+                makePrediction(inputData1,this,"bệnh tim")
+            }catch (e:Exception){
+                Log.d("loiii", "Predic_tim: "+e.message.toString())
+            }
         }
 
     }

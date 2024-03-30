@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
+import android.widget.ImageButton
 import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -20,6 +21,7 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.doctoron.Activities.Doctor_Profile
 import com.example.doctoron.Activities.Doctor_list
+import com.example.doctoron.Activities.Predict_health
 import com.example.doctoron.Adapters.Drug_Adapter
 import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Interface.OnItemClickListener
@@ -79,6 +81,12 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
                 }
             }
         })
+        //----------------------------------------------------------------------------------
+        var btn_predict=view.findViewById<ImageButton>(R.id.button6)
+        btn_predict.setOnClickListener {
+            val intent= Intent(activity,Predict_health::class.java)
+            startActivity(intent)
+        }
         //----------------------------------Top doctor----------------------------------------
         recyclerView=view.findViewById(R.id.rv_topdoctor)
         recyclerView.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)

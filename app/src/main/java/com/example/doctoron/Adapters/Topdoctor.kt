@@ -19,6 +19,7 @@ class Topdoctor(private val doctor:ArrayList<Doctor>,private val listener: OnIte
             var tv_Name:TextView=itemView.findViewById(R.id.textView_Name)
             var tv_Star:TextView=itemView.findViewById(R.id.textView_Ranking)
             var tv_CN:TextView=itemView.findViewById(R.id.textView_CN)
+            var tv_Bv:TextView=itemView.findViewById(R.id.textView_Bv)
             var iv_Avatar:ImageView=itemView.findViewById(R.id.imageView_avatardoctor)
             //-------------------------------------------------------------------------
             init {
@@ -42,6 +43,7 @@ class Topdoctor(private val doctor:ArrayList<Doctor>,private val listener: OnIte
         holder.tv_Name.setText(currentitem.getName())
         holder.tv_Star.setText(currentitem.getStar().toString())
         holder.tv_CN.setText(currentitem.getCN())
+        holder.tv_Bv.setText(currentitem.getHospital())
         //----------------------------------------------------------------------------
         val firestore = FirebaseFirestore.getInstance()
 

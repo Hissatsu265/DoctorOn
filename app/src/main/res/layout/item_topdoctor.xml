@@ -50,6 +50,17 @@
         android:padding="3dp"
         android:background="@color/cyan_300"
         />
+    <TextView
+        android:singleLine="true"
+        android:ellipsize="end"
+        android:id="@+id/textView_Bv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="BV. Thủ đức"
+        android:textSize="13dp"
+        android:textAlignment="textStart"
+        android:padding="3dp"
+            />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

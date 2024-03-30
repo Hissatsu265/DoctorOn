@@ -109,30 +109,24 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
             startActivity(intent)
         }
         //---------------------------Drug--------------------------------------------------------
-        try {
+        val rview_Drug=view.findViewById<RecyclerView>(R.id.rv_drug)
+        rview_Drug.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
+        rview_Drug.setHasFixedSize(true)
+        drugs= ArrayList<Drug>()
 
-            val rview_Drug=view.findViewById<RecyclerView>(R.id.rv_drug)
-            rview_Drug.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
-            rview_Drug.setHasFixedSize(true)
-            drugs= ArrayList<Drug>()
-
-            val db1=FirebaseFirestore.getInstance()
-            db1.collection("Drug")
-                .get().addOnSuccessListener { querySnapshot ->
-                    for (doc in querySnapshot.documents) {
-                        val data=doc.data
-                        val drug1 = Drug(data?.get("name").toString(),data?.get("dactri").toString(),
-                            data?.get("chongchidinh").toString(),data?.get("tp").toString(),data?.get("price").toString(),
-                            data?.get("use").toString(),data?.get("tdphu").toString(),doc.id)
-                        drugs.add(drug1)
-                    }
-                    var adapter_drug = Drug_Adapter(drugs,this)
-                    rview_Drug.adapter=adapter_drug
+        val db1=FirebaseFirestore.getInstance()
+        db1.collection("Drug")
+            .get().addOnSuccessListener { querySnapshot ->
+                for (doc in querySnapshot.documents) {
+                    val data=doc.data
+                    val drug1 = Drug(data?.get("name").toString(),data?.get("dactri").toString(),
+                        data?.get("chongchidinh").toString(),data?.get("tp").toString(),data?.get("price").toString(),
+                        data?.get("use").toString(),data?.get("tdphu").toString(),doc.id)
+                    drugs.add(drug1)
                 }
-        }
-        catch (e:Exception){
-            Log.d("loiiiii", "onCreateView: "+e.message.toString())
-        }
+                var adapter_drug = Drug_Adapter(drugs,this)
+                rview_Drug.adapter=adapter_drug
+            }
 
         //------------------------------------------------------------------
         return view
@@ -156,7 +150,6 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
     }
 
     override fun onItemDrugClick(position: Int) {
-        TODO("Not yet implemented")
         Log.d("hasaaaaa",position.toString())
     }
 }

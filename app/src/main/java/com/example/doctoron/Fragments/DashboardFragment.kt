@@ -20,21 +20,25 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.doctoron.Activities.Doctor_Profile
 import com.example.doctoron.Activities.Doctor_list
+import com.example.doctoron.Adapters.Drug_Adapter
 import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Interface.OnItemClickListener
+import com.example.doctoron.Interface.OnitemDrugClickListener
 import com.example.doctoron.Objects.Doctor
+import com.example.doctoron.Objects.Drug
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.log
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-class DashboardFragment : Fragment() , OnItemClickListener {
+class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var recyclerView: RecyclerView
     private lateinit var doctors: ArrayList<Doctor>
+    private lateinit var drugs:ArrayList<Drug>
     private var userId:String=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -104,7 +108,33 @@ class DashboardFragment : Fragment() , OnItemClickListener {
             intent.putExtra("User_ID_user",userId)
             startActivity(intent)
         }
-        //-----------------------------------------------------------
+        //---------------------------Drug--------------------------------------------------------
+        try {
+
+            val rview_Drug=view.findViewById<RecyclerView>(R.id.rv_drug)
+            rview_Drug.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
+            rview_Drug.setHasFixedSize(true)
+            drugs= ArrayList<Drug>()
+
+            val db1=FirebaseFirestore.getInstance()
+            db1.collection("Drug")
+                .get().addOnSuccessListener { querySnapshot ->
+                    for (doc in querySnapshot.documents) {
+                        val data=doc.data
+                        val drug1 = Drug(data?.get("name").toString(),data?.get("dactri").toString(),
+                            data?.get("chongchidinh").toString(),data?.get("tp").toString(),data?.get("price").toString(),
+                            data?.get("use").toString(),data?.get("tdphu").toString(),doc.id)
+                        drugs.add(drug1)
+                    }
+                    var adapter_drug = Drug_Adapter(drugs,this)
+                    rview_Drug.adapter=adapter_drug
+                }
+        }
+        catch (e:Exception){
+            Log.d("loiiiii", "onCreateView: "+e.message.toString())
+        }
+
+        //------------------------------------------------------------------
         return view
     }
     override fun onItemClick(position: Int) {
@@ -123,5 +153,10 @@ class DashboardFragment : Fragment() , OnItemClickListener {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onItemDrugClick(position: Int) {
+        TODO("Not yet implemented")
+        Log.d("hasaaaaa",position.toString())
     }
 }

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="250dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="10dp"
+    android:layout_margin="5dp"
+    app:cardElevation="12dp">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:layout_margin="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp">
+            <ImageView
+                android:id="@+id/drug_anh"
+                android:scaleType="fitXY"
+                android:layout_width="250dp"
+                android:layout_height="150dp"
+                android:src="@drawable/img_drug_1"
+                />
+        </androidx.cardview.widget.CardView>
+        <TextView
+            android:id="@+id/drug_name"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="4dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="18dp"
+            android:text="Paracetamol"/>
+        <TextView
+            android:id="@+id/drug_dactri"
+            android:layout_marginStart="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:fontFamily="@font/font2"
+            android:text="Chuyên trị đau đầu "/>
+        <TextView
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/cyan_300"
+            android:layout_marginEnd="18dp"
+            android:layout_marginBottom="8dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="textEnd"
+            android:text="Chi tiết"/>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

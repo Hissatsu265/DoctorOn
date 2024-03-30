@@ -24,11 +24,13 @@
         android:scaleType="centerCrop"
         android:src="@drawable/img_profile" />
     <TextView
+        android:singleLine="true"
         android:layout_marginTop="7dp"
         android:id="@+id/textView_Name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Item Name"
+        android:textSize="14dp"
         android:textStyle="bold"
         android:maxLines = "1"
         android:ellipsize = "end"
@@ -37,15 +39,17 @@
         android:layout_gravity="left"
         />
     <TextView
+        android:singleLine="true"
+        android:ellipsize="end"
         android:id="@+id/textView_CN"
-
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Chuyên ngành"
-        android:textSize="11dp"
-        android:textAlignment="center"
-        android:gravity="center"
-        android:layout_gravity="left"/>
+        android:textSize="13dp"
+        android:textAlignment="textStart"
+        android:padding="3dp"
+        android:background="@color/cyan_300"
+        />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

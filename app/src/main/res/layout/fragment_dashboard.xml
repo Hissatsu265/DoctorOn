@@ -24,7 +24,7 @@
 
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/cyan_300"
+                    android:background="@color/primary"
                     >
                     <TextView android:id="@+id/txtFindYourDesire"
                         android:layout_height="wrap_content"
@@ -35,26 +35,26 @@
                         android:textStyle="bold"
                         android:layout_marginStart="@dimen/_26pxh"
                         android:layout_marginTop="5dp"
-                        android:textColor="@color/primary"
+                        android:textColor="@color/teal_200"
                         android:paddingBottom="0dp"
                         />
-
                     <ImageView
                         android:layout_width="match_parent"
                         android:layout_height="20dp"
                         android:layout_alignParentTop="true"
                         android:layout_marginTop="75dp"
-                        android:background="@color/primary"
+                        android:background="@drawable/gradient_color"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_arc_3_1" />
+                        android:src="@drawable/img_arc_4" />
                 </RelativeLayout>
                 <LinearLayout android:gravity="start"
                     android:id="@+id/linearOfferBanner"
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:orientation="vertical"
-                    android:layout_marginTop="10dp"
+                    android:paddingTop="10dp"
                     android:layout_marginBottom="@dimen/_10pxh"
+                    android:background="@drawable/gradient_color"
                     >
                         <androidx.cardview.widget.CardView
                             android:layout_marginTop="5dp"

@@ -21,7 +21,7 @@
                 android:layout_weight="1"
                 android:layout_height="?attr/actionBarSize"
                 android:id="@+id/toolbar"
-                android:background="@color/teal_300"
+                android:background="@color/teal_200"
                 android:elevation="4dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
@@ -31,9 +31,9 @@
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="match_parent"
                 android:src="@drawable/img_notification"
-                android:background="@color/teal_300"
-                android:scaleType="fitXY"
+                android:background="@color/teal_200"
                 android:padding="12dp"
+                android:scaleType="fitXY"
                 />
         </LinearLayout>
         <FrameLayout
@@ -53,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bottomAppBar"
                 android:layout_gravity="bottom"
-                android:backgroundTint="@color/teal_300"
+                android:backgroundTint="@color/teal_200"
                 app:fabCradleMargin="10dp"
                 app:fabCradleRoundedCornerRadius="80dp"
                 >
@@ -67,19 +67,7 @@
 
             </com.google.android.material.bottomappbar.BottomAppBar>
 
-<!--            <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-<!--                android:id="@+id/fab"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
 
-<!--                android:layout_marginBottom="35dp"-->
-<!--                android:layout_marginStart="18dp"-->
-<!--                android:background="@drawable/round_fab"-->
-<!--                android:backgroundTint="@color/white"-->
-<!--                android:src="@drawable/baseline_account_circle_24"-->
-<!--                app:layout_anchor="@+id/bottomAppBar"-->
-
-<!--                app:maxImageSize="90dp" />-->
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/appCompatButton"
                 android:layout_width="100dp"

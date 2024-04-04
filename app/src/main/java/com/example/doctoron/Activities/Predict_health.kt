@@ -304,7 +304,14 @@ class Predict_health : AppCompatActivity() {
 
         // Prepare data to be sent
         val data = hashMapOf<String, FloatArray>()
+        var t : Int=1
         data["features"] = inputData
+        if(loaibenh=="bệnh tim"){
+            data["type"] = floatArrayOf(t.toFloat())
+        }else{
+            t=t+1
+            data["type"] = floatArrayOf(t.toFloat())
+        }
 
         // Make the prediction request
         val call = predictionApi.predictHeartDisease(data)

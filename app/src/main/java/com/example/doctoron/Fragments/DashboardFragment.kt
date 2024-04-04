@@ -22,6 +22,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.doctoron.Activities.Doctor_Profile
 import com.example.doctoron.Activities.Doctor_list
 import com.example.doctoron.Activities.Predict_health
+import com.example.doctoron.Activities.Xray_predict
 import com.example.doctoron.Adapters.Drug_Adapter
 import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Interface.OnItemClickListener
@@ -85,6 +86,11 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         var btn_predict=view.findViewById<ImageButton>(R.id.button6)
         btn_predict.setOnClickListener {
             val intent= Intent(activity,Predict_health::class.java)
+            startActivity(intent)
+        }
+        var btn_xray=view.findViewById<ImageButton>(R.id.button2)
+        btn_xray.setOnClickListener {
+            val intent= Intent(activity,Xray_predict::class.java)
             startActivity(intent)
         }
         //----------------------------------Top doctor----------------------------------------

@@ -241,14 +241,14 @@
                                     android:backgroundTint="@color/primary"
                                     android:id="@+id/button2"
                                     android:layout_width="100dp"
-                                    android:layout_height="100dp"
+                                    android:layout_height="95dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/img_button1"
+                                    android:src="@drawable/img_xray_icon"
                                     android:gravity="center"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Gọi cho bác sĩ"
+                                    android:text="Xray"
                                     android:layout_gravity="center"
                                     android:paddingBottom="8dp"
                                     />

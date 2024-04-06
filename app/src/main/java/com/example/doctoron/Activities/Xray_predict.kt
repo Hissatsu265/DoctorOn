@@ -1,12 +1,17 @@
 package com.example.doctoron.Activities
 
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.Toast
 import com.example.doctoron.Objects.CustomDialog_Predict
 import com.example.doctoron.Objects.PredictionResponse
@@ -25,6 +30,7 @@ import retrofit2.http.Part
 import java.io.ByteArrayOutputStream
 import java.io.File
 
+private lateinit var imageView_anh:ImageView
 class Xray_predict : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +40,28 @@ class Xray_predict : AppCompatActivity() {
             val image=R.drawable.img_xray
             sendImage(image,this)
         }
-
+//----------------------------------------------------------
+        imageView_anh=findViewById(R.id.upload_anh)
+        imageView_anh.setOnClickListener {
+            chooseImage()
+        }
     }
+//    -----------------------------------------------------------------------
+    private val PICK_IMAGE_REQUEST = 1
+
+    fun chooseImage() {
+        val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+        startActivityForResult(intent, PICK_IMAGE_REQUEST)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null) {
+            val selectedImageUri: Uri? = data.data
+            imageView_anh.setImageURI(selectedImageUri)
+        }
+    }
+//    -----------------------------------------------------------------------
     interface PredictionApi {
         @Multipart
         @POST("/predict_xray")

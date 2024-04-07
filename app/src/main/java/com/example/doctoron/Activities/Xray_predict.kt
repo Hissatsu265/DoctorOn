@@ -35,6 +35,11 @@ class Xray_predict : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_xray_predict)
+        val btn_back=findViewById<Button>(R.id.back_btn)
+        btn_back.setOnClickListener {
+            finish()
+        }
+//        ------------------------------------------------------
         val btn1=findViewById<Button>(R.id.btn)
         btn1.setOnClickListener {
 //            val image=R.drawable.img_xray

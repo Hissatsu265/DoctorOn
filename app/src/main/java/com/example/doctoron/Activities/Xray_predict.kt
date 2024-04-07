@@ -37,8 +37,8 @@ class Xray_predict : AppCompatActivity() {
         setContentView(R.layout.activity_xray_predict)
         val btn1=findViewById<Button>(R.id.btn)
         btn1.setOnClickListener {
-            val image=R.drawable.img_xray
-            sendImage(image,this)
+//            val image=R.drawable.img_xray
+            sendImage(this)
         }
 //----------------------------------------------------------
         imageView_anh=findViewById(R.id.upload_anh)
@@ -67,15 +67,21 @@ class Xray_predict : AppCompatActivity() {
         @POST("/predict_xray")
         fun predictXray(@Part image: MultipartBody.Part): Call<PredictionResponse>
     }
-    private fun sendImage(drawableId: Int,context_1:Context) {
+    private fun sendImage(context_1:Context) {
         val retrofit = Retrofit.Builder()
             .baseUrl("http://192.168.1.67:5000")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         val predictionApi = retrofit.create(PredictionApi::class.java)
+//--------------------------------------------------------------------------------------
 
-        val imageBitmap = getBitmapFromDrawable(drawableId)
+//        val imageBitmap = getBitmapFromDrawable(drawableId)
+        imageView_anh.isDrawingCacheEnabled = true
+        imageView_anh.buildDrawingCache(true)
+        val imageBitmap = Bitmap.createBitmap(imageView_anh.drawingCache)
+        imageView_anh.isDrawingCacheEnabled = false
+//--------------------------------------------------------------------------------------
 
         if (imageBitmap != null) {
             val imageByteArray = convertBitmapToByteArray(imageBitmap)
@@ -92,11 +98,11 @@ class Xray_predict : AppCompatActivity() {
                             try{
                                 val predictionResponse = response.body()
                                 val result = predictionResponse?.prediction ?: -1
-                                val kq:Double = result*1.0
-                                if(kq>0){
-                                    CustomDialog_Predict(context_1,"khả năng mắc bệnh viêm phổi của bạn khá cao đó hãy cẩn thận").show()
+                                val kq:Double = result/100.0
+                                if(kq>50){
+                                    CustomDialog_Predict(context_1,"khả năng mắc bệnh viêm phổi của bạn khá cao đó $kq% hãy cẩn thận",true).show()
                                 }else{
-                                    CustomDialog_Predict(context_1,"khả năng mắc bệnh viêm phổi của bạn thấp hãy giữ gìn sức khỏe nhé").show()
+                                    CustomDialog_Predict(context_1,"khả năng mắc bệnh viêm phổi của bạn thấp $kq% hãy giữ gìn sức khỏe nhé").show()
                                 }
 
                             }
@@ -117,13 +123,13 @@ class Xray_predict : AppCompatActivity() {
         }
     }
 
-    private fun getBitmapFromDrawable(drawableId: Int): Bitmap? {
-        return try {
-            BitmapFactory.decodeResource(resources, drawableId)
-        } catch (e: Exception) {
-            null
-        }
-    }
+//    private fun getBitmapFromDrawable(drawableId: Int): Bitmap? {
+//        return try {
+//            BitmapFactory.decodeResource(resources, drawableId)
+//        } catch (e: Exception) {
+//            null
+//        }
+//    }
 
     private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray? {
         val byteArrayOutputStream = ByteArrayOutputStream()

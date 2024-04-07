@@ -50,7 +50,7 @@
                 android:layout_width="280dp"
                 android:layout_height="280dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/img_xray" />
+                android:src="@drawable/img_upload" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <TextView
@@ -75,7 +75,7 @@
             android:id="@+id/btn"
             android:textStyle="bold"
             android:textSize="18dp"
-            android:text="Dư đoán"
+            android:text="Dự đoán"
             android:textColor="@color/cyan_300"/>
     </androidx.cardview.widget.CardView>
 

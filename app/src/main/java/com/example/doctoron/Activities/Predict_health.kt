@@ -335,7 +335,8 @@ class Predict_health : AppCompatActivity() {
                         val predictionResponse = response.body()
                         val result = predictionResponse?.prediction ?: -1
                         val kq:Double = result*1.0/100.0
-                        CustomDialog_Predict(context_1,"khả năng mắc $loaibenh của bạn khoảng $kq%").show()
+                        val check= kq > 50
+                        CustomDialog_Predict(context_1,"khả năng mắc $loaibenh của bạn khoảng $kq%",check).show()
                     }
                     catch (e:Exception){
                         Log.d("loii", e.message.toString())

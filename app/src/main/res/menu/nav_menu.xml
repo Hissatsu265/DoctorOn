@@ -6,16 +6,16 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_prime"
-            android:icon="@drawable/baseline_adb_24"
-            android:title="Prime"/>
+            android:icon="@drawable/img_nav_account"
+            android:title="Tài khoản của bạn"/>
         <item
             android:id="@+id/nav_prime1"
-            android:icon="@drawable/baseline_adb_24"
-            android:title="Prime1"/>
+            android:icon="@drawable/img_help"
+            android:title="Trợ giúp"/>
         <item
             android:id="@+id/nav_prime2"
-            android:icon="@drawable/baseline_adb_24"
-            android:title="Prime2"/>
+            android:icon="@drawable/img_logout"
+            android:title="Đăng xuất"/>
 
     </group>
 

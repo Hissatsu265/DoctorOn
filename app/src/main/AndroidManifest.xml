@@ -18,6 +18,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Activities.Drug_info"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.iot"
+            android:exported="false" />
+        <activity
             android:name=".Activities.Xray_predict"
             android:exported="false" />
         <activity

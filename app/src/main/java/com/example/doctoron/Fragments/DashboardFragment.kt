@@ -21,6 +21,7 @@ import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.example.doctoron.Activities.Doctor_Profile
 import com.example.doctoron.Activities.Doctor_list
+import com.example.doctoron.Activities.Drug_info
 import com.example.doctoron.Activities.Predict_health
 import com.example.doctoron.Activities.Xray_predict
 import com.example.doctoron.Adapters.Drug_Adapter
@@ -31,6 +32,7 @@ import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.Objects.Drug
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
+import java.io.Serializable
 import kotlin.math.log
 
 private const val ARG_PARAM1 = "param1"
@@ -90,8 +92,13 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         }
         var btn_xray=view.findViewById<ImageButton>(R.id.button2)
         btn_xray.setOnClickListener {
-            val intent= Intent(activity,Xray_predict::class.java)
-            startActivity(intent)
+            try{
+                val intent9= Intent(activity,Xray_predict::class.java)
+                startActivity(intent9)
+            }
+            catch (e:Exception) {
+                Log.d("lllllloi", "onCreateView: " + e.message.toString())
+            }
         }
         //----------------------------------Top doctor----------------------------------------
         recyclerView=view.findViewById(R.id.rv_topdoctor)
@@ -130,12 +137,13 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
 
         val db1=FirebaseFirestore.getInstance()
         db1.collection("Drug")
+            .limit(3)
             .get().addOnSuccessListener { querySnapshot ->
                 for (doc in querySnapshot.documents) {
                     val data=doc.data
                     val drug1 = Drug(data?.get("name").toString(),data?.get("dactri").toString(),
                         data?.get("chongchidinh").toString(),data?.get("tp").toString(),data?.get("price").toString(),
-                        data?.get("use").toString(),data?.get("tdphu").toString(),doc.id)
+                        data?.get("use").toString(),data?.get("tdphu").toString(),doc.id,data?.get("imageUrl").toString())
                     drugs.add(drug1)
                 }
                 var adapter_drug = Drug_Adapter(drugs,this)
@@ -146,7 +154,6 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         return view
     }
     override fun onItemClick(position: Int) {
-//        Log.d("ha",position.toString())
         val intent= Intent(activity,Doctor_Profile::class.java)
         intent.putExtra("User_ID_user",userId)
         intent.putExtra("User_ID",doctors[position].getID())
@@ -164,6 +171,13 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
     }
 
     override fun onItemDrugClick(position: Int) {
-        Log.d("hasaaaaa",position.toString())
+        val intent11= Intent(activity,Drug_info::class.java)
+        val bundle = Bundle()
+        val drug=drugs[position] as Serializable
+        bundle.putSerializable("drugtt",drug)
+        intent11.putExtras(bundle)
+//        intent.putExtra("ID_drug",drugs[position].getID())
+        startActivity(intent11)
+//        Log.d("loiroi", "onItemDrugClick: "+ position.toString())
     }
 }

@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.Toast
 import com.example.doctoron.Objects.CustomDialog_Predict
@@ -35,7 +36,7 @@ class Xray_predict : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_xray_predict)
-        val btn_back=findViewById<Button>(R.id.back_btn)
+        val btn_back=findViewById<ImageButton>(R.id.back_btn)
         btn_back.setOnClickListener {
             finish()
         }
@@ -128,13 +129,13 @@ class Xray_predict : AppCompatActivity() {
         }
     }
 
-//    private fun getBitmapFromDrawable(drawableId: Int): Bitmap? {
-//        return try {
-//            BitmapFactory.decodeResource(resources, drawableId)
-//        } catch (e: Exception) {
-//            null
-//        }
-//    }
+    private fun getBitmapFromDrawable(drawableId: Int): Bitmap? {
+        return try {
+            BitmapFactory.decodeResource(resources, drawableId)
+        } catch (e: Exception) {
+            null
+        }
+    }
 
     private fun convertBitmapToByteArray(bitmap: Bitmap): ByteArray? {
         val byteArrayOutputStream = ByteArrayOutputStream()

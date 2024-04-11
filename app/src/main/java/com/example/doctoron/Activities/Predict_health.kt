@@ -9,6 +9,7 @@ import android.view.View
 import android.view.WindowInsetsAnimation
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
@@ -76,13 +77,11 @@ class Predict_health : AppCompatActivity() {
     val diabete_diff = mutableListOf<RadioButton>()
     val diabete_heart = mutableListOf<RadioButton>()
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_predict_health)
         //------------------------------------------------------------
-        val btn_back=findViewById<ImageView>(R.id.back_btn)
+        val btn_back=findViewById<ImageButton>(R.id.back_btn)
         btn_back.setOnClickListener {
             finish()
         }

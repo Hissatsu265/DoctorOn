@@ -86,9 +86,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
-            R.id.nav_prime->Toast.makeText(this,"Prime",Toast.LENGTH_SHORT).show()
-            R.id.nav_prime1->Toast.makeText(this,"Prime1",Toast.LENGTH_SHORT).show()
-            R.id.nav_prime2->Toast.makeText(this,"Prime2",Toast.LENGTH_SHORT).show()
+            R.id.nav_prime->openFragment(AccountFragment())
+            R.id.nav_prime1->{
+                val intent = Intent(this, Setting_account::class.java)
+                startActivity(intent)
+            }
+            R.id.nav_prime2->{
+                val intent = Intent(this, Lognin::class.java)
+                startActivity(intent)
+                this?.finish()
+            }
         }
         drawerLayout.closeDrawer(GravityCompat.START)
         return true
@@ -102,11 +109,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
     }
     private fun openFragment(fragment: Fragment){
-
         val bundle = Bundle()
         bundle.putString("user_ID", user_ID)
         fragment.arguments=bundle
-
         val fragmentTransaction:FragmentTransaction= fragmentManager.beginTransaction()
         fragmentTransaction.replace(R.id.fragment_container,fragment)
         fragmentTransaction.commit()

@@ -19,7 +19,6 @@ class Setting_account : AppCompatActivity() {
             finish()
         }
     }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
 //        return super.onCreateOptionsMenu(menu)
         menuInflater.inflate(R.menu.toolbar_help,menu)

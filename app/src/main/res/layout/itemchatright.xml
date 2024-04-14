@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:padding="8dp"
     android:orientation="horizontal"
     android:gravity="end"
     android:layout_height="wrap_content">
-
-
     <TextView
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="14:00"
-        android:layout_weight="1"
-        android:fontFamily="@font/nunito"
         android:id="@+id/timeView"
-        android:textStyle="italic"
-        android:gravity="end"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"/>
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/show_message"
+        android:layout_alignStart="@+id/show_message"
+        android:fontFamily="@font/nunito"
+        android:text="19:30"
+        android:textStyle="italic" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,4 +26,4 @@
         android:textColor="@android:color/white"
         android:id="@+id/show_message"
         android:background="@drawable/background_sent_message"/>
-</LinearLayout>
+</RelativeLayout>

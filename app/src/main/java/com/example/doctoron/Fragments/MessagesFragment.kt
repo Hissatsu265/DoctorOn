@@ -17,10 +17,13 @@ import com.example.doctoron.Activities.Drug_info
 import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Adapters.UserchatDoctor
 import com.example.doctoron.Interface.OnItemClickListener
+import com.example.doctoron.Objects.Chat
 import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.Objects.Doctor_userchat
 
 import com.example.doctoron.R
+import com.google.android.gms.tasks.Task
+import com.google.android.gms.tasks.TaskCompletionSource
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.io.Serializable
@@ -39,7 +42,7 @@ class MessagesFragment : Fragment() , OnItemClickListener{
     ): View? {
         userId = arguments?.getString("user_ID").toString()
         val view= inflater.inflate(R.layout.fragment_chat_from_home, container, false)
-        //----------------------------------------------------------------------------------------------
+        //--------------------------------Render top user ở trên-------------------------------------------------------------
         recyclerView=view.findViewById(R.id.rvUsers)
         recyclerView.layoutManager=
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -68,9 +71,13 @@ class MessagesFragment : Fragment() , OnItemClickListener{
             val data=doctorsuserchat[position] as Serializable
             bundle.putSerializable("Userchat",data)
             intent122.putExtras(bundle)
-
-            CheckandInit(userId,doctorsuserchat[position].getId())
-
+            if(userId<doctorsuserchat[position].getId()){
+                CheckandInit(userId,doctorsuserchat[position].getId())
+                intent122.putExtra("Id_Con",userId+doctorsuserchat[position].getId())
+            }else{
+                CheckandInit(doctorsuserchat[position].getId(),userId)
+                intent122.putExtra("Id_Con",doctorsuserchat[position].getId()+userId)
+            }
             startActivity(intent122)
         }catch (e:Exception){
             Log.d("TAGhhhhhhhhhh", "onItemClick: "+e.message.toString())
@@ -78,49 +85,34 @@ class MessagesFragment : Fragment() , OnItemClickListener{
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun CheckandInit(a:String, b:String){
-        var idConversation:String=""
-        if(b<a){idConversation=b+a}
-        else{ idConversation=a+b}
-
+        var idConversation:String=a+b
         val db = FirebaseFirestore.getInstance()
-        val collectionRef = db.collection("tên_bộ_sưu_tập")
-
-
+        val collectionRef = db.collection("Conversation")
+//        val taskCompleter = TaskCompletionSource<Void>()
         collectionRef.document(idConversation)
             .get()
             .addOnSuccessListener { documentSnapshot ->
                 if (documentSnapshot.exists()) {
-                    // Tài liệu tồn tại trong bộ sưu tập
                 } else {
-                    var t1:String=""
-                    var t2:String=""
-                    if (b<a) {
-                         t1=b
-                         t2=a
-                    }else{
-                        t1=a
-                        t2=b
-                    }
-//        ----------------------------------------------------------------------
+//        ---------------------------Khi chưa bao giờ nhắn cho nhau----------------------------------------
                     val data = hashMapOf(
-                        "userA" to t1,
-                        "userB" to t2,
+                        "userA" to a,
+                        "userB" to b,
                         "time" to Timeminute(),
-                        "lastmess" to "Chào bạn, tôi có thể giúp gì cho bạn",
+                        "lastmess" to "Chào bạn, tôi có thể giúp gì cho bạn!",
                     )
                     collectionRef.document(idConversation)
                         .set(data)
                         .addOnSuccessListener {
                         }
-                        .addOnFailureListener { exception ->
+                        .addOnFailureListener { exception1 ->
                         }
-
+                    var chatwithdoc: Chat =Chat(idConversation)
+                    chatwithdoc.Initchat()
 //        ----------------------------------------------------------------------
-
                 }
             }
             .addOnFailureListener { exception ->
-
             }
     }
     @RequiresApi(Build.VERSION_CODES.O)

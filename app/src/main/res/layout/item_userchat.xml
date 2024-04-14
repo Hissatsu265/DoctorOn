@@ -1,73 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="12dp"
-    android:layout_margin="4dp">
+    android:layout_centerInParent="true"
+    android:layout_margin="4dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5dp">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/recentChatImageView"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/baseline_account_circle_24"
-            app:civ_border_width="2dp"
-            app:civ_border_color="@color/black"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:backgroundTint="@color/teal_300"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:src="@drawable/baseline_account_circle_24"
+        app:civ_border_width="2dp"
+        android:layout_centerHorizontal="true"
+        app:civ_border_color="#FE2C54"
+        android:id="@+id/imageViewUser"/>
 
-        <TextView
-            android:id="@+id/recentChatTextName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="User name"
-            android:textSize="18sp"
-            android:textColor="#000000"
-            android:fontFamily="@font/nunito_bold"
-            app:layout_constraintStart_toEndOf="@+id/recentChatImageView"
-            app:layout_constraintTop_toTopOf="@+id/recentChatImageView"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/recentChatTextTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="18:00"
-            android:textStyle="bold"
-            android:textColor="#000000"
-            android:fontFamily="@font/nunito"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/recentChatImageView"
-            android:layout_marginEnd="16dp"
-            android:layout_marginTop="8dp"/>
-
-        <TextView
-            android:id="@+id/recentChatTextLastMessage"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Last Message"
-            android:textSize="16sp"
-            android:textColor="#000000"
-            android:fontFamily="@font/nunito"
-            app:layout_constraintStart_toEndOf="@+id/recentChatImageView"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recentChatTextName"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.cardview.widget.CardView>
+<!--    <androidx.cardview.widget.CardView-->
+<!--        android:id="@+id/statusOnline"-->
+<!--        android:visibility="visible"-->
+<!--        android:layout_width="18dp"-->
+<!--        app:cardCornerRadius="12dp"-->
+<!--        android:layout_height="18dp"-->
+<!--        android:translationY="43dp"-->
+<!--        android:backgroundTint="#00FF00"-->
+<!--        android:layout_marginLeft="-10dp"/>-->
+    <androidx.cardview.widget.CardView
+        app:cardCornerRadius="12dp"
+        android:id="@+id/statusOnline"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:translationY="43dp"
+        android:backgroundTint="#00FF00"
+        android:layout_toRightOf="@id/imageViewUser"
+        android:layout_marginLeft="-10dp"/>
+    <TextView
+        android:layout_width="80dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="User name"
+        android:id="@+id/userName"
+        android:textColor="@color/black"
+        android:layout_below="@id/statusOnline"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/nunito_bold"
+        android:singleLine="true"
+        android:ellipsize="end"/>
+</RelativeLayout>

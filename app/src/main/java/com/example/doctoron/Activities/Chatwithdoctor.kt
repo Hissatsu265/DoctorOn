@@ -1,10 +1,14 @@
 package com.example.doctoron.Activities
 
+import android.os.Build
 import android.os.Bundle
+import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -17,13 +21,18 @@ import com.example.doctoron.Objects.Doctor_userchat
 import com.example.doctoron.Objects.Drug
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
+import java.time.LocalTime
 
 class Chatwithdoctor : AppCompatActivity() {
     private var idConversation:String=""
+    private var Id_User:String=""
     lateinit var doctorsuserchat_data: ArrayList<String>
     lateinit var doctorsuserchat_time: ArrayList<String>
     lateinit var doctorsuserchat_send: ArrayList<String>
     private lateinit var recyclerView: RecyclerView
+    lateinit var adapter_topdoctor:ChatwithDoc_Adapter
+    private var isActive:Boolean=false
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -33,8 +42,8 @@ class Chatwithdoctor : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        Id_User=intent.getStringExtra("Id_user").toString()
         idConversation=intent.getStringExtra("Id_Con").toString()
-        InitChat()
         //------------------------------------------------------------------------------------
         val btn_back=findViewById<ImageView>(R.id.chatBackBtn)
         btn_back.setOnClickListener {
@@ -55,7 +64,6 @@ class Chatwithdoctor : AppCompatActivity() {
                         .thumbnail(0.5f)
                         .into(Iv_userchat)
                 }
-
             }
         }
     //--------------------------------Render các tin nhắn ra------------------------------------------------------
@@ -67,7 +75,7 @@ class Chatwithdoctor : AppCompatActivity() {
         doctorsuserchat_data= ArrayList()
         doctorsuserchat_time= ArrayList()
         doctorsuserchat_send= ArrayList()
-
+//--------------------------------------------------------------------------------------------
         val db=FirebaseFirestore.getInstance()
         db.collection("Messages").document(idConversation)
             .get().addOnSuccessListener { documentSnapshot ->
@@ -79,16 +87,46 @@ class Chatwithdoctor : AppCompatActivity() {
                     doctorsuserchat_data = ArrayList<String>(stringList1)
                     doctorsuserchat_time = ArrayList<String>(stringList2)
                     doctorsuserchat_send = ArrayList<String>(stringList3)
-
-                    var adapter_topdoctor = ChatwithDoc_Adapter(doctorsuserchat_data,
-                        doctorsuserchat_time,doctorsuserchat_send)
-                    recyclerView.adapter=adapter_topdoctor
+//------------------------------------------------------------------------------------------------------
+                    db.collection("users").document(Id_User)
+                        .get().addOnSuccessListener { documentSnapshot1 ->
+                            if (documentSnapshot1.exists()) {
+                                if(documentSnapshot1.get("isDoctor").toString().isNullOrEmpty()){
+                                    adapter_topdoctor = ChatwithDoc_Adapter(doctorsuserchat_data,
+                                        doctorsuserchat_time,doctorsuserchat_send,"0")
+                                    recyclerView.adapter=adapter_topdoctor
+                                }else{
+                                    adapter_topdoctor = ChatwithDoc_Adapter(doctorsuserchat_data,
+                                        doctorsuserchat_time,doctorsuserchat_send,"1")
+                                    recyclerView.adapter=adapter_topdoctor
+                                }
+                                isActive=true
+                            }
+                        }
+//---------------------------------------------------------------------------------------------------------
                 }
             }
-//---------------------------------------------------------------------------------------------------------------
+//---------------------------------Gửi tin nhắn----------------------------------------------------------
+        val btn_send=findViewById<FrameLayout>(R.id.sendBtn)
+        val edt_mess=findViewById<EditText>(R.id.editTextMessage)
+        btn_send.setOnClickListener {
+            if(isActive){
+                doctorsuserchat_data.add(edt_mess.text.toString())
+                doctorsuserchat_time.add(Timeminute())
+                doctorsuserchat_send.add("0")
+
+                adapter_topdoctor.notifyDataSetChanged()
+                recyclerView.scrollToPosition(doctorsuserchat_data.size - 1)
+                edt_mess.setText("")
+            }
+        }
+
     }
-
-    fun InitChat(){
-
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun Timeminute():String {
+        val currentTime = LocalTime.now()
+        val hour = currentTime.hour
+        val minute = currentTime.minute
+        return hour.toString()+":"+minute.toString()
     }
 }

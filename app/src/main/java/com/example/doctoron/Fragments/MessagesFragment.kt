@@ -78,6 +78,7 @@ class MessagesFragment : Fragment() , OnItemClickListener{
                 CheckandInit(doctorsuserchat[position].getId(),userId)
                 intent122.putExtra("Id_Con",doctorsuserchat[position].getId()+userId)
             }
+            intent122.putExtra("Id_user",userId)
             startActivity(intent122)
         }catch (e:Exception){
             Log.d("TAGhhhhhhhhhh", "onItemClick: "+e.message.toString())
@@ -107,8 +108,12 @@ class MessagesFragment : Fragment() , OnItemClickListener{
                         }
                         .addOnFailureListener { exception1 ->
                         }
+//            --------------------------------------------------
                     var chatwithdoc: Chat =Chat(idConversation)
-                    chatwithdoc.Initchat()
+                    if(a==userId)
+                        chatwithdoc.Initchat()
+                    else
+                        chatwithdoc.Initchat()
 //        ----------------------------------------------------------------------
                 }
             }

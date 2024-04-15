@@ -11,7 +11,7 @@ import com.example.doctoron.Objects.Chat
 import com.example.doctoron.R
 
 class ChatwithDoc_Adapter(private val data:ArrayList<String>,private val time:ArrayList<String>,
-                          private val send:ArrayList<String>)
+                          private val send:ArrayList<String>,private val isdoctor:String)
     : RecyclerView.Adapter<ChatwithDoc_Adapter.MyViewHolder>() {
     class MyViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
     {
@@ -39,7 +39,8 @@ class ChatwithDoc_Adapter(private val data:ArrayList<String>,private val time:Ar
     }
     override fun getItemViewType(position: Int): Int {
         val sender = send[position]
-        return if (sender=="1") VIEW_TYPE_LEFT else VIEW_TYPE_RIGHT
+        return if ((sender=="1"&& isdoctor=="0")||
+            (sender=="0"&& isdoctor=="1")) VIEW_TYPE_LEFT else VIEW_TYPE_RIGHT
     }
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val currentitem_data=data[position]

@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.doctoron.Adapters.ChatwithDoc_Adapter
 import com.example.doctoron.Adapters.UserchatDoctor
+import com.example.doctoron.Objects.Chat
 import com.example.doctoron.Objects.Doctor_userchat
 import com.example.doctoron.Objects.Drug
 import com.example.doctoron.R
@@ -32,6 +33,7 @@ class Chatwithdoctor : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     lateinit var adapter_topdoctor:ChatwithDoc_Adapter
     private var isActive:Boolean=false
+    var isSender:String=""
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -92,10 +94,12 @@ class Chatwithdoctor : AppCompatActivity() {
                         .get().addOnSuccessListener { documentSnapshot1 ->
                             if (documentSnapshot1.exists()) {
                                 if(documentSnapshot1.get("isDoctor").toString().isNullOrEmpty()){
+                                    isSender="0"
                                     adapter_topdoctor = ChatwithDoc_Adapter(doctorsuserchat_data,
                                         doctorsuserchat_time,doctorsuserchat_send,"0")
                                     recyclerView.adapter=adapter_topdoctor
                                 }else{
+                                    isSender="1"
                                     adapter_topdoctor = ChatwithDoc_Adapter(doctorsuserchat_data,
                                         doctorsuserchat_time,doctorsuserchat_send,"1")
                                     recyclerView.adapter=adapter_topdoctor
@@ -113,14 +117,36 @@ class Chatwithdoctor : AppCompatActivity() {
             if(isActive){
                 doctorsuserchat_data.add(edt_mess.text.toString())
                 doctorsuserchat_time.add(Timeminute())
-                doctorsuserchat_send.add("0")
-
+                doctorsuserchat_send.add(isSender)
+                SendtoFirebase()
                 adapter_topdoctor.notifyDataSetChanged()
                 recyclerView.scrollToPosition(doctorsuserchat_data.size - 1)
                 edt_mess.setText("")
             }
         }
-
+//-----------------------------------------Lắng nghe tin nhắn-------------------------------------------------------------------------
+//        db.collection("Conversation").document(idConversation).addSnapshotListener{
+//          querySnapshot, exception ->{
+//              if (exception==null){
+//                  querySnapshot?.let { snapshot ->
+//                      for (doc in snapshot.documents) {
+//                          val message = doc.getString("message")
+//                          val time = doc.getString("time")
+//                          val send = doc.getString("send")
+//
+//                          message?.let { doctorsuserchat_data.add(it) }
+//                          time?.let { doctorsuserchat_time.add(it) }
+//                          send?.let { doctorsuserchat_send.add(it) }
+//                      }
+//
+//              }
+//            }
+//        }
+//        }
+    }
+    fun SendtoFirebase(){
+        val chat_data: Chat =Chat(idConversation,doctorsuserchat_data,doctorsuserchat_time,doctorsuserchat_time)
+        chat_data.UpdateDataonFirebase()
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun Timeminute():String {

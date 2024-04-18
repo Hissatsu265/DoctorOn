@@ -24,6 +24,7 @@ import com.example.doctoron.Activities.Doctor_list
 import com.example.doctoron.Activities.Drug_info
 import com.example.doctoron.Activities.Predict_health
 import com.example.doctoron.Activities.Xray_predict
+import com.example.doctoron.Activities.iot
 import com.example.doctoron.Adapters.Drug_Adapter
 import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Interface.OnItemClickListener
@@ -99,6 +100,11 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
             catch (e:Exception) {
                 Log.d("lllllloi", "onCreateView: " + e.message.toString())
             }
+        }
+        var btn_iot=view.findViewById<ImageButton>(R.id.button3)
+        btn_iot.setOnClickListener {
+            val intent79= Intent(activity, iot::class.java)
+            startActivity(intent79)
         }
         //----------------------------------Top doctor----------------------------------------
         recyclerView=view.findViewById(R.id.rv_topdoctor)

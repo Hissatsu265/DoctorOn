@@ -69,4 +69,6 @@ dependencies {
 
     implementation ("de.hdodenhof:circleimageview:2.1.0")
     implementation ("com.squareup.picasso:picasso:2.71828")
+
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

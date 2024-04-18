@@ -101,6 +101,7 @@ class MessagesFragment : Fragment() , OnItemClickListener{
                         "userB" to b,
                         "time" to Timeminute(),
                         "lastmess" to "Chào bạn, tôi có thể giúp gì cho bạn!",
+                        "sender" to "1",
                     )
                     collectionRef.document(idConversation)
                         .set(data)
@@ -109,7 +110,9 @@ class MessagesFragment : Fragment() , OnItemClickListener{
                         .addOnFailureListener { exception1 ->
                         }
 //            --------------------------------------------------
-                    var chatwithdoc: Chat =Chat(idConversation)
+                    var arr :ArrayList<String>
+                    arr=ArrayList()
+                    var chatwithdoc: Chat =Chat(idConversation,arr,arr,arr)
                     if(a==userId)
                         chatwithdoc.Initchat()
                     else

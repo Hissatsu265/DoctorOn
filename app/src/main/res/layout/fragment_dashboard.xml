@@ -168,15 +168,15 @@
                                 <ImageButton
                                     android:backgroundTint="@color/primary"
                                     android:id="@+id/button5"
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
+                                    android:layout_width="95dp"
+                                    android:layout_height="90dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/img_news"
+                                    android:src="@drawable/img_icon_chat"
                                     android:gravity="center"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="News"
+                                    android:text="Chat"
                                     android:layout_gravity="center"
                                     android:paddingBottom="8dp"
                                     />

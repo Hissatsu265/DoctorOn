@@ -1,5 +1,6 @@
 package com.example.doctoron.Activities
 
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
@@ -10,6 +11,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.doctoron.R
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.firebase.firestore.FirebaseFirestore
 import com.jjoe64.graphview.GraphView
 import com.jjoe64.graphview.series.DataPoint
@@ -18,11 +25,19 @@ import java.text.DecimalFormat
 import java.util.Calendar
 
 
+
 class Chiso_bmi_hr_calo : AppCompatActivity() {
 
-    lateinit var lineGraphView: GraphView
-    lateinit var lineGraphView1: GraphView
+    //--------------------------------------------
+    lateinit var chart_heartrace: LineChart
+    lateinit var chart_bmi: LineChart
+    lateinit var chart_calo: LineChart
 
+    lateinit var chart_heartraceTB: LineChart
+    lateinit var chart_bmiTB: LineChart
+    lateinit var chart_caloTB: LineChart
+
+    //-------------------------------------------------------------------------
     var month:String=getCurrentDate()
     // sau này nhớ đặt lại --------------------------------------
     lateinit var chisotb_bmi1:TextView
@@ -37,19 +52,23 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         setContentView(R.layout.activity_chiso_bmi_hr_calo)
         userid=intent.getStringExtra("user_ID").toString()
         //--------------------Khai báo------------------------------------------------
-        lineGraphView = findViewById(R.id.idGraphView_month)
-        lineGraphView1 = findViewById(R.id.idGraphView_year)
+
         val db = FirebaseFirestore.getInstance()
-        lineGraphView.animate()
-        lineGraphView.viewport.isScrollable = true
-        lineGraphView.viewport.isScalable = true
-        lineGraphView.viewport.setScalableY(true)
-        lineGraphView.viewport.setScrollableY(true)
-        lineGraphView1.animate()
-        lineGraphView1.viewport.isScrollable = true
-        lineGraphView1.viewport.isScalable = true
-        lineGraphView1.viewport.setScalableY(true)
-        lineGraphView1.viewport.setScrollableY(true)
+
+        //--------------------------------------------
+        chart_bmi=findViewById(R.id.chart_bmi99)
+        chart_calo=findViewById(R.id.chart_calo99)
+        chart_heartrace = findViewById(R.id.chart)
+        Initbangchiso(chart_heartrace,"hr")
+        Initbangchiso(chart_bmi,"bmi")
+        Initbangchiso(chart_calo,"calo")
+
+        chart_bmiTB=findViewById(R.id.chart_bmi99TB)
+        chart_caloTB=findViewById(R.id.chart_calo99TB)
+        chart_heartraceTB = findViewById(R.id.chartTB)
+        Initbangchiso(chart_heartraceTB,"hr",13F)
+        Initbangchiso(chart_bmiTB,"bmi",13F)
+        Initbangchiso(chart_caloTB,"calo",13F)
         //-------------------------------------------------------------------
         Capnhapchiso()
         Capnhapchisonam()
@@ -71,6 +90,7 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
             finish()
         }
         btn_kt.setOnClickListener {
+            Toast.makeText(this,"Done",Toast.LENGTH_SHORT).show()
             var t=edt_month.text.toString().toInt()
             if (t in 1..12){
                 month=edt_month.text.toString()
@@ -102,8 +122,6 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
     }
 
     fun Capnhapchiso(){
-//        Toast.makeText(this,"hú",Toast.LENGTH_SHORT).show()
-        lineGraphView.removeAllSeries()
         db.collection("Chiso")
             .document(userid)
             .get()
@@ -113,19 +131,18 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
                         val bmi = document.get("bmi_$month") as? ArrayList<Double>
                         val calo = document.get("calo_$month") as? ArrayList<Double>
                         val heartrace = document.get("heartrace_$month") as? ArrayList<Double>
-
+                        if (heartrace != null) {
+                            setData(heartrace,chart_heartrace,"hr")
+                        }
+                        if(calo!=null){
+                            setData(calo,chart_calo,"calo")
+                        }
+                        if(bmi!=null){
+                            setData(bmi,chart_bmi,"bmi")
+                        }
                         chisotb_bmi1.setText(TinhchisoTB(bmi))
                         chisotb_calo1.setText(TinhchisoTB(calo))
                         chisotb_hr1.setText(TinhchisoTB(heartrace))
-
-                        try{
-                            AddSeries(bmi, 0, 0)
-                            AddSeries(calo, 1, 0)
-                            AddSeries(heartrace, 2, 0)
-                        }
-                        catch (e:Exception){
-                            Log.d("huhuhu",e.message.toString())
-                        }
                     }
                 }
             }
@@ -137,7 +154,6 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         val year = calendar.get(Calendar.YEAR)
         return month.toString()
     }
-
     fun TinhchisoTB(a:ArrayList<Double>?):String{
         var tb:Double=0.0
         var size:Int=0
@@ -154,29 +170,7 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
         val formattedNumber = decimalFormat.format(tb)
         return formattedNumber.toString()
     }
-    fun AddSeries(a:ArrayList<Double>?,color:Int,type:Int){
-        var index:Int=0
-        var mangchiso:ArrayList<DataPoint> = ArrayList()
-        if (a != null) {
-            for(i in a){
-                if ( i > 1.0){
-                    mangchiso.add(DataPoint(index.toDouble(),i.toDouble()))
-                    index=index+1
-                }
-            }
-        }
-        val series: LineGraphSeries<DataPoint> = LineGraphSeries(mangchiso.toTypedArray())
-        when (color){
-            0 -> series.color=ContextCompat.getColor(this, R.color.cyan_300)
-            1 -> series.color=ContextCompat.getColor(this, R.color.purple_500)
-            2 -> series.color=ContextCompat.getColor(this, R.color.primaryContainer)
-        }
-        series.thickness=15
-        when(type){
-            0 -> lineGraphView.addSeries(series)
-            1 -> lineGraphView1.addSeries(series)
-        }
-    }
+
     fun Updatechiso(a:ArrayList<Double>?,b:Double,type:String){
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)
@@ -222,16 +216,142 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
                                 heartrace.add(TinhchisoTB(heartrace1).toDouble())
                             }
                         }
-                        try{
-                            AddSeries(bmi, 0, 1)
-                            AddSeries(calo, 1, 1)
-                            AddSeries(heartrace, 2, 1)
-                        }
-                        catch (e:Exception){
-                            Log.d("huhuhu",e.message.toString())
-                        }
+                        setData(bmi,chart_bmiTB,"bmi",12)
+                        setData(calo,chart_caloTB,"calo",12)
+                        setData(heartrace,chart_heartraceTB,"hr",12)
                     }
                 }
             }
+    }
+    private fun setData(a:ArrayList<Double>,chart: LineChart,type:String,number:Int=31)
+    {
+        val values = ArrayList<Entry>()
+        for (i in 0 until number)
+        if(a[i].toFloat()>2F)
+        {
+            values.add(Entry((i+1).toFloat(),a[i].toFloat()))
+        }
+        val set1: LineDataSet
+        if (chart.data != null && chart.data.dataSetCount > 0) {
+            set1 = chart.data.getDataSetByIndex(0) as LineDataSet
+            set1.values = values
+            set1.notifyDataSetChanged()
+            chart.data.notifyDataChanged()
+            chart.notifyDataSetChanged()
+        } else {
+            // create a dataset and give it a type
+            set1 = LineDataSet(values, "DataSet 1")
+            set1.setDrawIcons(false)
+
+            // Chỉnh màu cho line
+            set1.color = Color.WHITE
+            //set1.setDrawCircleHole(true)
+            set1.setDrawValues(false)// hiển thị giá trị lên biểu đồ
+            set1.setCircleColor(Color.BLACK)// có dấu chấm tại giá trị
+            set1.setDrawCircles(true)
+            set1.mode = LineDataSet.Mode.CUBIC_BEZIER
+            set1.isHighlightEnabled =true
+            set1.setDrawHighlightIndicators(false)
+
+            // chỉnh kích thước đường kẻ và kích thước dấu chấm
+            set1.lineWidth = 4f
+            set1.circleRadius = 2f
+
+            // kích thước và màu của chữ
+            set1.valueTextSize = 19f
+            set1.valueTextColor = R.color.black
+
+
+            // Tạo vùng phủ màu dưới đường kẻ
+            set1.setDrawFilled(true)
+            if(type=="hr"){
+                set1.fillDrawable = getDrawable(R.drawable.bg_line) }
+            else if (type=="bmi"){
+                set1.fillDrawable = getDrawable(R.drawable.bg_line_bmi) }
+            else{
+                set1.fillDrawable = getDrawable(R.drawable.bg_line_calo)
+            }
+
+            val dataSets = ArrayList<ILineDataSet>()
+            dataSets.add(set1) // add the data sets
+
+            // create a data object with the data sets
+            val data = LineData(dataSets)
+
+            // set data
+            chart.data = data
+        }
+    }
+    fun Initbangchiso(chart: LineChart,typeChart1:String,number:Float=31F){
+        //chart.setBackgroundColor()
+        chart.description.isEnabled = false //hiện chú thích
+        chart.legend.isEnabled = false
+        chart.setNoDataText("No data available")
+        chart.setTouchEnabled(true)
+        //chart.setOnChartValueSelectedListener(this)
+
+        chart.setDrawGridBackground(false)
+        chart.isDragEnabled = true
+        chart.setScaleEnabled(true)
+        chart.setPinchZoom(true)
+        var max:Float
+        if(typeChart1=="bmi"){
+            max=28F
+        }else{
+            max=18F
+        }
+        // chỉnh thông số cho trục dọc
+        chart.axisRight.isEnabled=false
+        chart.axisLeft.apply {
+            axisMinimum = 0f //giá trị thấp nhất
+            axisMaximum = max// giá trị cao nhất
+            setDrawGridLines(true)
+        }
+        // chỉnh thông số cho trục kẻ ngang
+        chart.xAxis.apply {
+            axisMinimum = 1f
+            axisMaximum = number
+            isGranularityEnabled = true
+            setDrawGridLines(true)
+            position = XAxis.XAxisPosition.BOTTOM
+        }
+        //---------------------------------------------
+        chart.animateX(1800)
+    }
+    fun Fakechiso(){
+        //--------------------tạo chỉ số fake-------------------------------
+//            val db1 = FirebaseFirestore.getInstance()
+//            try{
+//                val aa= listOf(19.29, 19.15, 20.25, 20.91, 19.64, 19.24, 20.81, 19.26, 20.58, 19.78, 19.01, 20.72, 20.94, 19.69, 19.5, 19.43, 20.89, 19.49, 20.52, 19.36, 20.56, 20.01, 20.24, 19.5, 19.06, 19.25, 20.31, 19.85, 19.42, 20.99, 19.23)
+//                val cc=listOf(12.29, 12.02, 12.07, 13.9, 10.45, 14.67, 11.47, 14.48, 12.86, 14.86, 14.88, 10.98, 13.37, 13.72, 10.34, 13.52, 12.71, 14.73, 10.59, 11.58, 12.74, 11.46, 13.43, 14.61, 14.49, 12.55, 11.87, 14.79, 12.54, 12.94, 14.01)
+//                val bb=listOf(8.79, 9.02, 8.54, 9.21, 8.81, 9.67, 8.83, 8.33, 8.66, 8.62, 9.52, 8.58, 9.39, 9.62, 9.29, 8.46, 8.88, 9.6, 8.52, 8.74, 8.77, 8.74, 8.72, 9.63, 9.28, 8.89, 9.38, 9.48, 9.08, 8.61, 9.13)
+//
+//                val data = hashMapOf(
+//                    "bmi_5" to aa,
+//                    "calo_5" to cc,
+//                    "heartrace_5" to bb,
+//                    "bmi_4" to aa,
+//                    "calo_4" to cc,
+//                    "heartrace_4" to bb,
+//                    "bmi_6" to aa,
+//                    "calo_6" to cc,
+//                    "heartrace_6" to bb,
+//                    "bmi_7" to aa,
+//                    "calo_7" to cc,
+//                    "heartrace_7" to bb,
+//                )
+//                db1.collection("Chiso").document(userid)
+//                    .update(data as Map<String, Any>)
+//                    .addOnSuccessListener {
+//                        Toast.makeText(this,"Update dữ liệu thành công",Toast.LENGTH_SHORT).show()
+//                    }
+//                    .addOnFailureListener { e ->
+//                        Toast.makeText(this,"Uopss có lỗi rồi",Toast.LENGTH_SHORT).show()
+//                    }
+//            }
+//            catch (e:Exception){
+//                Log.d("TAGloii", "onCreate: "+e.message.toString())
+//            }
+        //---------------------------------------------------------------------
     }
 }

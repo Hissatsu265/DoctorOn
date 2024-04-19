@@ -106,6 +106,12 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
             val intent79= Intent(activity, iot::class.java)
             startActivity(intent79)
         }
+        var btn_chat=view.findViewById<ImageButton>(R.id.button5)
+        btn_chat.setOnClickListener {
+//            val intent799= Intent(activity, MessagesFragment::class.java)
+//            intent799.putExtra("user_ID",userId)
+//            startActivity(intent799)
+        }
         //----------------------------------Top doctor----------------------------------------
         recyclerView=view.findViewById(R.id.rv_topdoctor)
         recyclerView.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)

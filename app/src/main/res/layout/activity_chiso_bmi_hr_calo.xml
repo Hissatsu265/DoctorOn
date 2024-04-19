@@ -5,16 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/primary"
+    android:background="@color/teal_50"
     tools:context=".Activities.Chiso_bmi_hr_calo">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         app:cardElevation="18dp"
         >
         <LinearLayout
             android:layout_width="match_parent"
+
             android:layout_height="?attr/actionBarSize"
             android:orientation="horizontal">
             <ImageButton
@@ -35,11 +37,11 @@
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
     <ScrollView
+        android:layout_marginTop="12dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background4">
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,29 +79,149 @@
                     android:layout_marginStart="8dp"
                     />
             </LinearLayout>
-            <androidx.cardview.widget.CardView
-                android:layout_margin="12dp"
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="270dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="390dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/primary"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="12dp"
+                        >
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="390dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/primary"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="12dp"
+                        >
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_bmi99"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="390dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/primary"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="12dp"
+                        >
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_calo99"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </HorizontalScrollView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp">
-                <com.jjoe64.graphview.GraphView
-                    android:id="@+id/idGraphView_month"
+                android:text="Bảng chỉ số theo tháng"
+                android:gravity="center"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/nunito"/>
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="270dp">
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    />
-            </androidx.cardview.widget.CardView>
-
-            <androidx.cardview.widget.CardView
-                android:layout_margin="12dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="390dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/primary"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="12dp"
+                        >
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chartTB"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="390dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/primary"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="12dp"
+                        >
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_bmi99TB"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginTop="20dp"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginBottom="20dp"
+                        android:layout_width="390dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/primary"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="12dp"
+                        >
+                        <com.github.mikephil.charting.charts.LineChart
+                            android:id="@+id/chart_calo99TB"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            app:layout_constraintBottom_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"/>
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </HorizontalScrollView>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardElevation="8dp">
-                <com.jjoe64.graphview.GraphView
-                    android:id="@+id/idGraphView_year"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    />
-            </androidx.cardview.widget.CardView>
+                android:text="Bảng chỉ số theo năm"
+                android:gravity="center"
+                android:layout_marginBottom="10dp"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/nunito"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"

@@ -2,6 +2,7 @@ package com.example.doctoron.Activities
 
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -125,27 +126,27 @@ class Chatwithdoctor : AppCompatActivity() {
             }
         }
 //-----------------------------------------Lắng nghe tin nhắn-------------------------------------------------------------------------
-//        db.collection("Conversation").document(idConversation).addSnapshotListener{
-//          querySnapshot, exception ->{
-//              if (exception==null){
-//                  querySnapshot?.let { snapshot ->
-//                      for (doc in snapshot.documents) {
-//                          val message = doc.getString("message")
-//                          val time = doc.getString("time")
-//                          val send = doc.getString("send")
-//
-//                          message?.let { doctorsuserchat_data.add(it) }
-//                          time?.let { doctorsuserchat_time.add(it) }
-//                          send?.let { doctorsuserchat_send.add(it) }
-//                      }
-//
-//              }
-//            }
-//        }
-//        }
+        db.collection("Conversation").document(idConversation).addSnapshotListener { documentSnapshot, exception ->
+            if (exception != null) {
+                Log.e("Firestore", "Listen failed"+ exception)
+                return@addSnapshotListener
+            }
+            if (documentSnapshot != null && documentSnapshot.exists() && isSender!="") {
+                val data = documentSnapshot.data
+                if (data != null && doctorsuserchat_data.size>1) {
+                    if(data.get("sender")!=isSender){
+                        doctorsuserchat_data.add(data.get("lastmess").toString())
+                        doctorsuserchat_time.add(data.get("time").toString())
+                        doctorsuserchat_send.add(data.get("sender").toString())
+                        adapter_topdoctor.notifyDataSetChanged()
+                    }
+                }
+            }
+        }
+
     }
     fun SendtoFirebase(){
-        val chat_data: Chat =Chat(idConversation,doctorsuserchat_data,doctorsuserchat_time,doctorsuserchat_time)
+        val chat_data: Chat =Chat(idConversation,doctorsuserchat_data,doctorsuserchat_time,doctorsuserchat_send)
         chat_data.UpdateDataonFirebase()
     }
     @RequiresApi(Build.VERSION_CODES.O)

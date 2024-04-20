@@ -8,18 +8,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.doctoron.Activities.Chatwithdoctor
 import com.example.doctoron.Activities.Doctor_Profile
 import com.example.doctoron.Activities.Drug_info
+import com.example.doctoron.Adapters.RecentChat_Adapter
 import com.example.doctoron.Adapters.Topdoctor
 import com.example.doctoron.Adapters.UserchatDoctor
 import com.example.doctoron.Interface.OnItemClickListener
+import com.example.doctoron.Interface.OnItemClickListener1
 import com.example.doctoron.Objects.Chat
 import com.example.doctoron.Objects.Doctor
 import com.example.doctoron.Objects.Doctor_userchat
+import com.example.doctoron.Objects.RecentChat_Object
 
 import com.example.doctoron.R
 import com.google.android.gms.tasks.Task
@@ -28,11 +32,15 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.io.Serializable
 import java.time.LocalTime
-class MessagesFragment : Fragment() , OnItemClickListener{
+import kotlin.math.log
+
+class MessagesFragment : Fragment() , OnItemClickListener,OnItemClickListener1{
 
     private var userId:String=""
     lateinit var doctorsuserchat: ArrayList<Doctor_userchat>
+    lateinit var recentChat:ArrayList<RecentChat_Object>
     private lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView_recenrchat:RecyclerView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -61,6 +69,44 @@ class MessagesFragment : Fragment() , OnItemClickListener{
                 var adapter_topdoctor = UserchatDoctor(doctorsuserchat,this)
                 recyclerView.adapter=adapter_topdoctor
             }
+        //-----------------------Render recent message----------------------------------------
+
+        recyclerView_recenrchat=view.findViewById(R.id.rvRecentChats)
+        recyclerView_recenrchat.layoutManager=
+            LinearLayoutManager(activity, LinearLayoutManager.VERTICAL, false)
+        recyclerView_recenrchat.setHasFixedSize(true)
+
+        recentChat= ArrayList()
+
+        try {
+            val db1 = FirebaseFirestore.getInstance()
+            val collectionRef1 = db1.collection("Conversation")
+            collectionRef1.get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        val data=document.data
+                        if(data.get("userA")==userId){
+                            val data_recent=RecentChat_Object(data.get("lastmess").toString()
+                                ,data.get("time").toString(),data.get("userB").toString())
+                            recentChat.add(data_recent)
+                        }else if(data.get("userB")==userId){
+                            val data_recent=RecentChat_Object(data.get("lastmess").toString()
+                                ,data.get("time").toString(),data.get("userA").toString())
+                            recentChat.add(data_recent)
+                        }
+                    }
+                    Log.d("TAGloooo", "onCreateView: "+recentChat.toString())
+                    var adapter_recent = RecentChat_Adapter(recentChat,this)
+                    recyclerView_recenrchat.adapter=adapter_recent
+                }
+                .addOnFailureListener { exception ->
+                    Log.w("Error", "Error getting documents: ", exception)
+                }
+        }catch (e:Exception){
+            Log.d("TAGloiiii", "onCreateView: "+e.message.toString())
+        }
+
+        //-------------------------------------------------------------------------------
         return view
     }
     @RequiresApi(Build.VERSION_CODES.O)
@@ -129,6 +175,24 @@ class MessagesFragment : Fragment() , OnItemClickListener{
         val hour = currentTime.hour
         val minute = currentTime.minute
         return hour.toString()+":"+minute.toString()
+    }
+
+    override fun onItemClick1(position: Int) {
+        val intent1221= Intent(activity, Chatwithdoctor::class.java)
+        val bundle = Bundle()
+        recentChat[position].getUrlavatarandName { _ , name ->
+            val dataDoctor=Doctor_userchat(recentChat[position].getId(),name)
+            val data= dataDoctor as Serializable
+            bundle.putSerializable("Userchat",data)
+            intent1221.putExtras(bundle)
+            if(userId<recentChat[position].getId()){
+                intent1221.putExtra("Id_Con",userId+recentChat[position].getId())
+            }else{
+                intent1221.putExtra("Id_Con",recentChat[position].getId()+userId)
+            }
+            intent1221.putExtra("Id_user",userId)
+            startActivity(intent1221)
+        }
     }
 
 }

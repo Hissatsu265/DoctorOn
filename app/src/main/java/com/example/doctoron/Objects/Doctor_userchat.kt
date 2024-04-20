@@ -18,7 +18,6 @@ class Doctor_userchat(private var id:String="",private var name:String=""): Seri
     }
     fun getUrlavatar(callback: (String) -> Unit) {
         if (url_image.isNotEmpty()) {
-            // If url_image is not empty, return it immediately
             callback(url_image)
         } else {
             val db = FirebaseFirestore.getInstance()
@@ -34,7 +33,6 @@ class Doctor_userchat(private var id:String="",private var name:String=""): Seri
                 }
                 .addOnFailureListener { exception ->
 //                    Log.w("TAG", "Error getting documents.", exception)
-                    // You might want to handle the failure case here
                 }
         }
     }

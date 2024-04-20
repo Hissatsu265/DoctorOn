@@ -13,6 +13,8 @@ import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.ImageSlider
@@ -108,9 +110,17 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         }
         var btn_chat=view.findViewById<ImageButton>(R.id.button5)
         btn_chat.setOnClickListener {
-//            val intent799= Intent(activity, MessagesFragment::class.java)
-//            intent799.putExtra("user_ID",userId)
-//            startActivity(intent799)
+
+            val fragmentB = MessagesFragment()
+            val bundle = Bundle()
+            bundle.putString("user_ID", userId)
+            fragmentB.arguments=bundle
+            val fragmentManager: FragmentManager? = parentFragmentManager
+            val transaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+            transaction?.replace(R.id.fragment_container, fragmentB)
+            transaction?.addToBackStack(null)
+            transaction?.commit()
+
         }
         //----------------------------------Top doctor----------------------------------------
         recyclerView=view.findViewById(R.id.rv_topdoctor)

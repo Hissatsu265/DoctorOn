@@ -28,6 +28,7 @@ import com.example.doctoron.Objects.RecentChat_Object
 import com.example.doctoron.R
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.TaskCompletionSource
+import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.io.Serializable
@@ -41,6 +42,8 @@ class MessagesFragment : Fragment() , OnItemClickListener,OnItemClickListener1{
     lateinit var recentChat:ArrayList<RecentChat_Object>
     private lateinit var recyclerView: RecyclerView
     private lateinit var recyclerView_recenrchat:RecyclerView
+    lateinit var adapter_recent:RecentChat_Adapter
+    var t:Int=1
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -50,7 +53,7 @@ class MessagesFragment : Fragment() , OnItemClickListener,OnItemClickListener1{
     ): View? {
         userId = arguments?.getString("user_ID").toString()
         val view= inflater.inflate(R.layout.fragment_chat_from_home, container, false)
-        //--------------------------------Render top user ở trên-------------------------------------------------------------
+        //--------------------------------Render top user ở trên------------------------------------
         recyclerView=view.findViewById(R.id.rvUsers)
         recyclerView.layoutManager=
             LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
@@ -86,17 +89,24 @@ class MessagesFragment : Fragment() , OnItemClickListener,OnItemClickListener1{
                     for (document in documents) {
                         val data=document.data
                         if(data.get("userA")==userId){
+                            t=0
                             val data_recent=RecentChat_Object(data.get("lastmess").toString()
-                                ,data.get("time").toString(),data.get("userB").toString())
+                                ,data.get("time").toString(),data.get("userB").toString()
+                                ,document.id.toString())
                             recentChat.add(data_recent)
                         }else if(data.get("userB")==userId){
+                            t=0
                             val data_recent=RecentChat_Object(data.get("lastmess").toString()
-                                ,data.get("time").toString(),data.get("userA").toString())
+                                ,data.get("time").toString(),data.get("userA").toString()
+                                ,document.id.toString())
                             recentChat.add(data_recent)
                         }
                     }
                     Log.d("TAGloooo", "onCreateView: "+recentChat.toString())
-                    var adapter_recent = RecentChat_Adapter(recentChat,this)
+                    adapter_recent = RecentChat_Adapter(recentChat,this)
+                    recentChat.sortWith(Comparator { obj1, obj2 ->
+                            obj1.getTime().compareTo(obj2.getTime())
+                        })
                     recyclerView_recenrchat.adapter=adapter_recent
                 }
                 .addOnFailureListener { exception ->
@@ -105,9 +115,66 @@ class MessagesFragment : Fragment() , OnItemClickListener,OnItemClickListener1{
         }catch (e:Exception){
             Log.d("TAGloiiii", "onCreateView: "+e.message.toString())
         }
-
-        //-------------------------------------------------------------------------------
+        //------------------------------Lắng nghe trên conversation--------------------------------
+        val db2=FirebaseFirestore.getInstance()
+        db2.collection("Conversation").addSnapshotListener { snapshot, exception ->
+            if (exception != null) {
+                println("Có lỗi xảy ra: $exception")
+                return@addSnapshotListener
+            }
+            if (snapshot != null && t==0) {
+                for (document in snapshot.documents) {
+                   AddRecentChat(document)
+                }
+            }
+        }
+        //-----------------------------------------------------------------------------
         return view
+    }
+    fun AddRecentChat(documentID:DocumentSnapshot){
+        val data=documentID.data
+        if (data != null) {
+            Log.d("TAGtttttttttt", "AddRecentChat: "+data.get("time"))
+            Log.d("TAGtttttttttt", "AddRecentChat: "+data.get("userB"))
+        }
+        if (data != null) {
+            if (data.get("userA") == userId) {
+                val data_recent = RecentChat_Object(
+                    data.get("lastmess").toString(),
+                    data.get("time").toString(),
+                    data.get("userB").toString(),
+                    documentID.id
+                )
+                recentChat.add(0, data_recent)
+            } else if (data.get("userB") == userId) {
+                val data_recent = RecentChat_Object(
+                    data.get("lastmess").toString(),
+                    data.get("time").toString(),
+                    data.get("userA").toString(),
+                    documentID.id
+                )
+                recentChat.add( data_recent)
+            }
+
+            var i: Int = -1
+            for (index in 0 until recentChat.size-1) {
+                if (recentChat[index].getIDConver() == documentID.id ){
+                    i=index
+                    break
+                }
+            }
+            if (i > -1) {
+                recentChat.removeAt(i)
+            }
+
+            try{
+                adapter_recent.notifyDataSetChanged()
+            }
+            catch (e:Exception){
+                Log.d("TAGloiii", "AddRecentChat: "+e.message.toString())
+            }
+
+        }
     }
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onItemClick(position: Int) {
@@ -135,7 +202,6 @@ class MessagesFragment : Fragment() , OnItemClickListener,OnItemClickListener1{
         var idConversation:String=a+b
         val db = FirebaseFirestore.getInstance()
         val collectionRef = db.collection("Conversation")
-//        val taskCompleter = TaskCompletionSource<Void>()
         collectionRef.document(idConversation)
             .get()
             .addOnSuccessListener { documentSnapshot ->
@@ -174,7 +240,11 @@ class MessagesFragment : Fragment() , OnItemClickListener,OnItemClickListener1{
         val currentTime = LocalTime.now()
         val hour = currentTime.hour
         val minute = currentTime.minute
-        return hour.toString()+":"+minute.toString()
+        var t:String =""
+        var t1:String=""
+        if(minute<10) { t="0"}
+        if(hour<10){t1="0"}
+        return t1+hour.toString()+":"+t+minute.toString()
     }
 
     override fun onItemClick1(position: Int) {

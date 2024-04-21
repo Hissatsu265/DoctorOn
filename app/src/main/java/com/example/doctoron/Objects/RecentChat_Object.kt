@@ -5,15 +5,18 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlin.math.log
 
 class RecentChat_Object(private var lastmess:String="", private var time:String="",
-                        private var id:String= "") {
+                        private var id:String= "",private var id_conver:String="") {
     private var url_image:String=""
     private var name:String=""
     init {
         lastmess=lastmess
         time=time
         id=id
+        id_conver=id_conver
     }
-
+    fun getIDConver():String{
+        return id_conver
+    }
     fun getLastmess():String{
         return lastmess
     }

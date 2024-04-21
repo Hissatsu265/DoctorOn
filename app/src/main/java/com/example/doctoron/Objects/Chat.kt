@@ -22,7 +22,12 @@ class Chat(private var idchat:String="",private var arr_mess:ArrayList<String>,
         val currentTime = LocalTime.now()
         val hour = currentTime.hour
         val minute = currentTime.minute
-        return hour.toString()+":"+minute.toString()
+
+        var t:String =""
+        var t1:String=""
+        if(minute<10) { t="0"}
+        if(hour<10){t1="0"}
+        return t1+hour.toString()+":"+t+minute.toString()
     }
     @RequiresApi(Build.VERSION_CODES.O)
     fun Initchat(){

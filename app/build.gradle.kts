@@ -71,4 +71,7 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.71828")
 
     implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation ("org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.5")
+    implementation ("org.eclipse.paho:org.eclipse.paho.android.service:1.1.1")
 }

@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.doctoron.Objects.MQTT
 import com.example.doctoron.R
 import com.github.mikephil.charting.charts.LineChart
 
@@ -19,10 +20,23 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 class iot : AppCompatActivity() {
     lateinit var chart: LineChart
     val values = ArrayList<Entry>()
+    //-------------------------------------------------------------------------------------------
+    private val mqttHelper by lazy {
+        MQTT(applicationContext, "tcp://mqtt.eclipse.org:1883", "android_client_id")
+    }
+    //-------------------------------------------------------------------------------------------
+    override fun onDestroy() {
+        super.onDestroy()
+        mqttHelper.disconnect()
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_iot)
+//--------------------------------------------------------------------------------------
+//        // Đăng ký để nhận dữ liệu từ topic "test" với QoS 1
+//        mqttHelper.subscribeToTopic("test", 1)
+//--------------------------------------------------------------------------------------
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -68,7 +82,6 @@ class iot : AppCompatActivity() {
         chart.animateX(1500)
 
     }
-
 
     private fun setData()
     {

@@ -430,6 +430,7 @@
         android:orientation="horizontal"
        >
         <ImageButton
+            android:id="@+id/btnChat"
             android:layout_marginStart="12dp"
             android:layout_width="65dp"
             android:layout_height="60dp"

@@ -1,17 +1,25 @@
 package com.example.doctoron.Activities
 
+import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.doctoron.Objects.Calendar_Time
+import com.example.doctoron.Objects.Chat
+import com.example.doctoron.Objects.Doctor_userchat
 import com.example.doctoron.R
 import com.google.firebase.firestore.FirebaseFirestore
+import java.io.Serializable
+import java.time.LocalTime
 import java.util.Calendar
 
 class Doctor_Profile : AppCompatActivity() {
@@ -45,6 +53,7 @@ class Doctor_Profile : AppCompatActivity() {
     lateinit var week_6:ArrayList<Long>
     lateinit var week_7:ArrayList<Long>
     var tenbacsi:String=" "
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_doctor_profile)
@@ -73,6 +82,26 @@ class Doctor_Profile : AppCompatActivity() {
         btn_back.setOnClickListener {
 //            overridePendingTransition(R.anim.slide_in_right, R.anim.slide_in_left)
             finish()
+        }
+        //----------------------------Chat-------------------------------
+        val btn_chat=findViewById<ImageButton>(R.id.btnChat)
+        btn_chat.setOnClickListener {
+            val intent122= Intent(this, Chatwithdoctor::class.java)
+            val bundle = Bundle()
+            val dataDoctor= Doctor_userchat(userID,tenbacsi)
+
+            val data=dataDoctor as Serializable
+            bundle.putSerializable("Userchat",data)
+            intent122.putExtras(bundle)
+            if(userID_user<userID){
+                CheckandInit(userID_user,userID)
+                intent122.putExtra("Id_Con",userID_user+userID)
+            }else{
+                CheckandInit(userID,userID_user)
+                intent122.putExtra("Id_Con",userID+userID_user)
+            }
+            intent122.putExtra("Id_user",userID_user)
+            startActivity(intent122)
         }
         //-------------------------------------------------------------
         val btn_booking=findViewById<androidx.appcompat.widget.AppCompatButton>(R.id.btn_booking)
@@ -311,6 +340,57 @@ class Doctor_Profile : AppCompatActivity() {
 //            7 -> btn_Sat_week.setBackgroundColor(resources.getColor(R.color.cyan_300))
         }
     }
+    //-----------------------------------------------------------------------------------------
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun CheckandInit(a:String, b:String){
+        var idConversation:String=a+b
+        val db = FirebaseFirestore.getInstance()
+        val collectionRef = db.collection("Conversation")
+        collectionRef.document(idConversation)
+            .get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot.exists()) {
+                } else {
+//        ---------------------------Khi chưa bao giờ nhắn cho nhau----------------------------------------
+                    val data = hashMapOf(
+                        "userA" to a,
+                        "userB" to b,
+                        "time" to Timeminute(),
+                        "lastmess" to "Chào bạn, tôi có thể giúp gì cho bạn!",
+                        "sender" to "1",
+                    )
+                    collectionRef.document(idConversation)
+                        .set(data)
+                        .addOnSuccessListener {
+                        }
+                        .addOnFailureListener { exception1 ->
+                        }
+//            --------------------------------------------------
+                    var arr :ArrayList<String>
+                    arr=ArrayList()
+                    var chatwithdoc: Chat = Chat(idConversation,arr,arr,arr)
+                    if(a==userID_user)
+                        chatwithdoc.Initchat()
+                    else
+                        chatwithdoc.Initchat()
+//        ----------------------------------------------------------------------
+                }
+            }
+            .addOnFailureListener { exception ->
+            }
+    }
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun Timeminute():String {
+        val currentTime = LocalTime.now()
+        val hour = currentTime.hour
+        val minute = currentTime.minute
+        var t:String =""
+        var t1:String=""
+        if(minute<10) { t="0"}
+        if(hour<10){t1="0"}
+        return t1+hour.toString()+":"+t+minute.toString()
+    }
+    //----------------------------------------------------------------------------------------
     fun getCurrentDate(): Int {
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_MONTH)

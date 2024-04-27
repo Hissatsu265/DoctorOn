@@ -96,6 +96,7 @@
                         android:fontFamily="@font/font2"
                         android:textSize="20dp"/>
                     <Button
+                        android:id="@+id/knowmore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Tìm hiều thêm"

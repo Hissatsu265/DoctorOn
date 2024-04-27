@@ -42,7 +42,7 @@ import kotlin.math.log
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListener {
-    // TODO: Rename and change types of parameters
+
     private var param1: String? = null
     private var param2: String? = null
     private lateinit var recyclerView: RecyclerView
@@ -89,6 +89,7 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
             }
         })
         //----------------------------------------------------------------------------------
+
         var btn_predict=view.findViewById<ImageButton>(R.id.button6)
         btn_predict.setOnClickListener {
             val intent= Intent(activity,Predict_health::class.java)
@@ -101,6 +102,9 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         btn_xray.setOnClickListener {
             try{
                 val intent9= Intent(activity,Xray_predict::class.java)
+                val bundle = Bundle()
+                bundle.putString("user_ID", userId)
+                intent9.putExtras(bundle)
                 startActivity(intent9)
             }
             catch (e:Exception) {
@@ -116,6 +120,15 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
             intent79.putExtras(bundle)
             startActivity(intent79)
         }
+        var btn_knowmore=view.findViewById<ImageButton>(R.id.knowmore)
+        btn_knowmore.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("userId", userId)
+            val intent72= Intent(activity, iot::class.java)
+            intent72.putExtras(bundle)
+            startActivity(intent72)
+        }
+
         var btn_chat=view.findViewById<ImageButton>(R.id.button5)
         btn_chat.setOnClickListener {
 
@@ -213,8 +226,6 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         val drug=drugs[position] as Serializable
         bundle.putSerializable("drugtt",drug)
         intent11.putExtras(bundle)
-//        intent.putExtra("ID_drug",drugs[position].getID())
         startActivity(intent11)
-//        Log.d("loiroi", "onItemDrugClick: "+ position.toString())
     }
 }

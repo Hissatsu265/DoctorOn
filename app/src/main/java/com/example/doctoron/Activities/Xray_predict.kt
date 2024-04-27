@@ -17,6 +17,7 @@ import android.widget.Toast
 import com.example.doctoron.Objects.CustomDialog_Predict
 import com.example.doctoron.Objects.PredictionResponse
 import com.example.doctoron.R
+import com.google.firebase.firestore.FirebaseFirestore
 import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -30,12 +31,16 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.util.Calendar
 
 private lateinit var imageView_anh:ImageView
 class Xray_predict : AppCompatActivity() {
+    var userId:String=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_xray_predict)
+
+        userId=intent.getStringExtra("user_ID").toString()
         val btn_back=findViewById<ImageButton>(R.id.back_btn)
         btn_back.setOnClickListener {
             finish()
@@ -110,6 +115,7 @@ class Xray_predict : AppCompatActivity() {
                                 }else{
                                     CustomDialog_Predict(context_1,"khả năng mắc bệnh viêm phổi của bạn thấp $kq% hãy giữ gìn sức khỏe nhé").show()
                                 }
+                                UpdatedatetoPredict(kq)
 
                             }
                             catch (e:Exception){
@@ -147,5 +153,40 @@ class Xray_predict : AppCompatActivity() {
         } finally {
             byteArrayOutputStream.close()
         }
+    }
+    fun UpdatedatetoPredict(rate1:Double){
+        val db= FirebaseFirestore.getInstance()
+        db.collection("Prediction").document(userId).get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    var time=document.get("time") as ArrayList<String>
+                    var type=document.get("type") as ArrayList<String>
+                    var rate=document.get("rate") as ArrayList<String>
+
+                    type.add("2")
+                    rate.add(rate1.toString())
+                    time.add(getCurrentDateTimeUsingCalendar())
+                    val data= hashMapOf<String, Any>(
+                        "time" to time,
+                        "rate" to rate,
+                        "type" to type
+                    )
+                    //-------------------------đẩy lên firebase lại-----------------------
+                    FirebaseFirestore.getInstance().collection("Prediction")
+                        .document(userId).update(data)
+
+                }
+            }
+    }
+    fun getCurrentDateTimeUsingCalendar(): String{
+        val calendar: Calendar = Calendar.getInstance()
+        val year: Int = calendar.get(Calendar.YEAR)
+        val month: Int = calendar.get(Calendar.MONTH) + 1 // Tháng bắt đầu từ 0
+        val dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
+        val hourOfDay: Int = calendar.get(Calendar.HOUR_OF_DAY) // 24-giờ format
+        val minute: Int = calendar.get(Calendar.MINUTE)
+        val time:String = "$hourOfDay:$minute $dayOfMonth/$month/$year"
+
+        return time
     }
 }

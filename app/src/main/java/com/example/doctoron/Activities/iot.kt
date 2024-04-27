@@ -2,7 +2,12 @@ package com.example.doctoron.Activities
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -16,23 +21,37 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlin.math.log
 
 class iot : AppCompatActivity() {
     lateinit var chart: LineChart
     val values = ArrayList<Entry>()
+    var userId:String=""
+    var kt_check=0
+    var index=0
+    lateinit var heart_race:ArrayList<Int>
     //-------------------------------------------------------------------------------------------
-    private val mqttHelper by lazy {
-        MQTT(applicationContext, "tcp://mqtt.eclipse.org:1883", "android_client_id")
+    lateinit var tv_nhiptim:TextView
+    //-------------------------------------------------------------------------------------------
+    override fun onPause() {
+        super.onPause()
+//        if(kt_check<0){
+//            Updatedata("hr",heart_race)
+//        }
     }
-    //-------------------------------------------------------------------------------------------
+
     override fun onDestroy() {
         super.onDestroy()
-        mqttHelper.disconnect()
+//        if(kt_check<0){
+//            Updatedata("hr",heart_race)
+//        }
     }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_iot)
+        heart_race= ArrayList()
 //--------------------------------------------------------------------------------------
 //        // Đăng ký để nhận dữ liệu từ topic "test" với QoS 1
 //        mqttHelper.subscribeToTopic("test", 1)
@@ -42,14 +61,22 @@ class iot : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+        userId = intent.getStringExtra("userId").toString()
+        Log.d("TAGiddd", "onCreate: "+userId)
         val btn_back=findViewById<ImageButton>(R.id.back_btn)
         btn_back.setOnClickListener {
+//            values.clear()
             finish()
         }
 //        --------------------------------------------------------------
-
+        var edt_privateid=findViewById<EditText>(R.id.privateid)
+        var btn_watch=findViewById<Button>(R.id.xemkq_nk)
+        var edt_idnk=findViewById<EditText>(R.id.idanother)
+        tv_nhiptim=findViewById(R.id.nhiptim)
+        var btn_update=findViewById<Button>(R.id.updateid)
+//=============================================================================
         chart = findViewById(R.id.chart)
-
         //chart.setBackgroundColor()
         chart.description.isEnabled = false //hiện chú thích
         chart.legend.isEnabled = false
@@ -61,13 +88,11 @@ class iot : AppCompatActivity() {
         chart.isDragEnabled = true
         chart.setScaleEnabled(true)
         chart.setPinchZoom(true)
-
-
         // chỉnh thông số cho trục dọc
         chart.axisRight.isEnabled=false
         chart.axisLeft.apply {
-            axisMinimum = 0f //giá trị thấp nhất
-            axisMaximum = 200f// giá trị cao nhất
+            axisMinimum = 60f //giá trị thấp nhất
+            axisMaximum = 100f// giá trị cao nhất
             setDrawGridLines(true)
         }
         // chỉnh thông số cho trục kẻ ngang
@@ -78,25 +103,140 @@ class iot : AppCompatActivity() {
             setDrawGridLines(true)
             position = XAxis.XAxisPosition.BOTTOM
         }
-        setData()
         chart.animateX(1500)
+//---------------------------Lấy data lúc đầu------------------------------------------------------------
+        val db=FirebaseFirestore.getInstance()
+        db.collection("Iot").document(userId).get()
+            .addOnSuccessListener { document ->
+            if (document != null) {
+                try{
+                    val data = document.data
+                    if (data != null) {
+                        if(data.get("idprivate").toString()!=""){
+                            edt_privateid.setText(data.get("idprivate").toString())
+                        }
+                        tv_nhiptim.setText(data.get("data").toString())
+                        heart_race=data.get("hr") as ArrayList<Int>
+                        setData(heart_race)
+                        kt_check=-1
+                    }
+                }
+                catch (e:Exception){
+                    Log.d("TAGloiii", "onCreate: "+e.message.toString())
+                }
+
+            } else {
+                println("Không tìm thấy tài liệu.")
+            }
+        }
+            .addOnFailureListener { exception ->
+                println("Lỗi khi lấy dữ liệu: $exception")
+            }
+    //------------------------lắng nghe cập nhập---------------------------------------
+        try {
+//            val db3=FirebaseFirestore.getInstance()
+            db.collection("Iot").document(userId).addSnapshotListener { snapshot, e ->
+                if (e != null || kt_check>0) {
+                    Log.d("ttttt","Lỗi khi lắng nghe sự kiện: $e")
+                    return@addSnapshotListener
+                }
+                index++
+                if (snapshot != null && snapshot.exists() && index>1) {
+                    val data = snapshot.data
+                    val fieldData= data?.get("data").toString().toInt()
+                    tv_nhiptim.setText(fieldData.toString())
+                    XuliLine(fieldData)
+                }
+            }
+        }
+        catch (e:Exception){
+            Log.d("TAGlopp", "XuliLine: "+e.message.toString())
+        }
+
+        //-------------------------------xem id người khác-----------------------------
+        btn_watch.setOnClickListener {
+            val idnk=edt_idnk.text.toString()
+            if(idnk!=""){
+                kt_check=1
+                Watchotherdata(idnk)
+            }
+        }
+        //-------------------------------Cập nhập private id---------------------------
+        btn_update.setOnClickListener {
+            val privateid:String=edt_privateid.text.toString()
+            if(privateid!=""){
+                Updatedata("idprivate",privateid)
+            }
+        }
+    }
+    private fun XuliLine(a:Int){
+        heart_race.add(a.toInt())
+        if(heart_race.size>30){
+            heart_race.removeAt(0)
+        }
+        Log.d("TAGloppp", "XuliLine: "+a.toString())
+        Log.d("TAGloppp", "XuliLine: "+heart_race.toString())
+        Updatedata("hr",heart_race)
+        setData(heart_race)
 
     }
-
-    private fun setData()
+    private fun Watchotherdata(id:String){
+       val db2=FirebaseFirestore.getInstance()
+       db2.collection("Iot").get()
+           .addOnSuccessListener { documents ->
+               for (document in documents) {
+                   val data = document.data
+                   if(data.get("idprivate").toString()==id){
+                       tv_nhiptim.setText(data.get("data").toString())
+                       heart_race.clear()
+                       heart_race=data.get("hr") as ArrayList<Int>
+                       setData(heart_race)
+                       Log.d("TAGhiii", "Watchotherdata: "+heart_race[0].toString())
+                       kt_check=3
+                       break
+                   }
+               }
+               if(kt_check!=3){
+                   kt_check=-1
+                   Toast.makeText(this,"Không tìm thấy ai có id này",Toast.LENGTH_SHORT).show()
+               }
+           }
+           .addOnFailureListener { exception ->
+                kt_check=-1
+           }
+    }
+    private fun Updatedata(key:String,value:Any){
+        kt_check=1
+        val db1=FirebaseFirestore.getInstance()
+        val update_data = hashMapOf<String, Any>(
+            key to value,
+        )
+        db1.collection("Iot").document(userId).update(update_data)
+            .addOnSuccessListener {
+                if(key!="hr"){
+                    Toast.makeText(this,"Update Success",Toast.LENGTH_SHORT).show()
+                }
+                kt_check=-1
+            }
+            .addOnFailureListener { exception ->
+                Toast.makeText(this,"Update Fail",Toast.LENGTH_SHORT).show()
+            }
+    }
+    private fun setData(a:ArrayList<Int>)
     {
-        values.add(Entry(0f, 80f))
-        values.add(Entry(1f, 85f))
-        values.add(Entry(2f, 75f))
-        values.add(Entry(3f, 80f))
-        values.add(Entry(4f, 81f))
-        values.add(Entry(5f, 82f))
-        values.add(Entry(6f, 79f))
-        values.add(Entry(7f, 75f))
-        values.add(Entry(8f, 80f))
-        values.add(Entry(9f, 81f))
-
-
+        values.clear()
+        chart.xAxis.apply {
+            axisMinimum = 0f
+            axisMaximum = a.size.toString().toFloat()
+            isGranularityEnabled = true
+            setDrawGridLines(true)
+            position = XAxis.XAxisPosition.BOTTOM
+        }
+        Log.d("tagky", "setData: "+a.toString())
+        for (i in 0 until a.size){
+            values.add(Entry(i.toFloat(), a[i].toFloat()))
+        }
+//======================================================================
         val set1: LineDataSet
         if (chart.data != null && chart.data.dataSetCount > 0) {
             set1 = chart.data.getDataSetByIndex(0) as LineDataSet
@@ -120,12 +260,12 @@ class iot : AppCompatActivity() {
             set1.setDrawHighlightIndicators(false)
 
             // chỉnh kích thước đường kẻ và kích thước dấu chấm
-            set1.lineWidth = 2f
-            set1.circleRadius = 3f
+            set1.lineWidth = 4f
+            set1.circleRadius = 2f
 
 
             // kích thước và màu của chữ
-            set1.valueTextSize = 15f
+            set1.valueTextSize = 19f
             set1.valueTextColor = R.color.black
 
 
@@ -138,7 +278,6 @@ class iot : AppCompatActivity() {
 
             // create a data object with the data sets
             val data = LineData(dataSets)
-
             // set data
             chart.data = data
         }

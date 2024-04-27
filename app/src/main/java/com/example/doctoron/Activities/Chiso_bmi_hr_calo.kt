@@ -225,6 +225,13 @@ class Chiso_bmi_hr_calo : AppCompatActivity() {
     }
     private fun setData(a:ArrayList<Double>,chart: LineChart,type:String,number:Int=31)
     {
+        chart.xAxis.apply {
+            axisMinimum = 1f
+            axisMaximum = number.toFloat()
+            isGranularityEnabled = true
+            setDrawGridLines(true)
+            position = XAxis.XAxisPosition.BOTTOM
+        }
         val values = ArrayList<Entry>()
         for (i in 0 until number)
         if(a[i].toFloat()>2F)

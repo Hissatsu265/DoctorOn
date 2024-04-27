@@ -105,7 +105,11 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         }
         var btn_iot=view.findViewById<ImageButton>(R.id.button3)
         btn_iot.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("userId", userId)
+
             val intent79= Intent(activity, iot::class.java)
+            intent79.putExtras(bundle)
             startActivity(intent79)
         }
         var btn_chat=view.findViewById<ImageButton>(R.id.button5)

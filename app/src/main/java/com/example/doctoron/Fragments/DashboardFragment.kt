@@ -92,6 +92,9 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
         var btn_predict=view.findViewById<ImageButton>(R.id.button6)
         btn_predict.setOnClickListener {
             val intent= Intent(activity,Predict_health::class.java)
+            val bundle = Bundle()
+            bundle.putString("user_ID", userId)
+            intent.putExtras(bundle)
             startActivity(intent)
         }
         var btn_xray=view.findViewById<ImageButton>(R.id.button2)

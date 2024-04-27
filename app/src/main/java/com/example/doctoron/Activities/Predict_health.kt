@@ -14,10 +14,12 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.RadioButton
 import android.widget.Toast
+import com.example.doctoron.Adapters.History_predict_Adapter
 import com.example.doctoron.Objects.CustomDialog_Predict
 import com.example.doctoron.Objects.PredictionResponse
 import com.example.doctoron.R
 import com.google.android.gms.common.api.Response
+import com.google.firebase.firestore.FirebaseFirestore
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
@@ -25,8 +27,10 @@ import retrofit2.http.POST
 import java.time.Duration
 import retrofit2.Call
 import retrofit2.Callback
+import java.util.Calendar
 
 class Predict_health : AppCompatActivity() {
+    var userID=""
     lateinit var cv_predict_diabete:androidx.cardview.widget.CardView
     lateinit var cv_predict_heart:androidx.cardview.widget.CardView
     lateinit var ll_predict_heart:LinearLayout
@@ -81,6 +85,7 @@ class Predict_health : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_predict_health)
         //------------------------------------------------------------
+        userID=intent.getStringExtra("user_ID").toString()
         val btn_back=findViewById<ImageButton>(R.id.back_btn)
         btn_back.setOnClickListener {
             finish()
@@ -336,6 +341,10 @@ class Predict_health : AppCompatActivity() {
                         val kq:Double = result*1.0/100.0
                         val check= kq > 50
                         CustomDialog_Predict(context_1,"khả năng mắc $loaibenh của bạn khoảng $kq%",check).show()
+
+                        UpdatedatetoPredict(kq,loaibenh)
+
+
                     }
                     catch (e:Exception){
                         Log.d("loii", e.message.toString())
@@ -347,6 +356,48 @@ class Predict_health : AppCompatActivity() {
                 }
             }
         })
+    }
+    fun UpdatedatetoPredict(rate1:Double,type2:String){
+        var type1="1"
+        if(type2=="bệnh tim"){
+            type1="0"
+        }
+        val db=FirebaseFirestore.getInstance()
+        db.collection("Prediction").document(userID).get()
+            .addOnSuccessListener { document ->
+                if (document != null) {
+                    var time=document.get("time") as ArrayList<String>
+                    var type=document.get("type") as ArrayList<String>
+                    var rate=document.get("rate") as ArrayList<String>
+
+                    type.add(type1)
+                    rate.add(rate1.toString())
+                    time.add(getCurrentDateTimeUsingCalendar())
+                    val data= hashMapOf<String, Any>(
+                        "time" to time,
+                        "rate" to rate,
+                        "type" to type
+                    )
+                    //-------------------------đẩy lên firebase lại-----------------------
+                    FirebaseFirestore.getInstance().collection("Prediction")
+                        .document(userID).update(data)
+
+                }
+            }
+    }
+    fun getCurrentDateTimeUsingCalendar(): String{
+        val calendar: Calendar = Calendar.getInstance()
+        // Lấy thông tin thời gian hiện tại
+        val year: Int = calendar.get(Calendar.YEAR)
+        val month: Int = calendar.get(Calendar.MONTH) + 1 // Tháng bắt đầu từ 0
+        val dayOfMonth: Int = calendar.get(Calendar.DAY_OF_MONTH)
+        val hourOfDay: Int = calendar.get(Calendar.HOUR_OF_DAY) // 24-giờ format
+        val minute: Int = calendar.get(Calendar.MINUTE)
+
+        // Định dạng ngày tháng năm và giờ phút
+        val time:String = "$hourOfDay:$minute $dayOfMonth/$month/$year"
+
+        return time
     }
 
 }

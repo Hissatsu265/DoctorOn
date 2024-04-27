@@ -144,15 +144,15 @@
                                 <ImageButton
                                     android:backgroundTint="@color/primary"
                                     android:id="@+id/button4"
-                                    android:layout_width="100dp"
-                                    android:layout_height="100dp"
+                                    android:layout_width="95dp"
+                                    android:layout_height="92dp"
                                     android:scaleType="fitXY"
-                                    android:src="@drawable/img_button1"
+                                    android:src="@drawable/icon_result_pre"
                                     android:gravity="center"/>
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Gọi cho bác sĩ"
+                                    android:text="Kết quả"
                                     android:layout_gravity="center"
                                     android:paddingBottom="8dp"
                                     />

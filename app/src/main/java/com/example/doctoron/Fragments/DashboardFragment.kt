@@ -24,6 +24,7 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.example.doctoron.Activities.Doctor_Profile
 import com.example.doctoron.Activities.Doctor_list
 import com.example.doctoron.Activities.Drug_info
+import com.example.doctoron.Activities.History_predict
 import com.example.doctoron.Activities.Predict_health
 import com.example.doctoron.Activities.Xray_predict
 import com.example.doctoron.Activities.iot
@@ -124,7 +125,14 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
             transaction?.replace(R.id.fragment_container, fragmentB)
             transaction?.addToBackStack(null)
             transaction?.commit()
-
+        }
+        var btn_result=view.findViewById<ImageButton>(R.id.button4)
+        btn_result.setOnClickListener {
+            val bundle = Bundle()
+            bundle.putString("UserID", userId)
+            val intent179= Intent(activity, History_predict::class.java)
+            intent179.putExtras(bundle)
+            startActivity(intent179)
         }
         //----------------------------------Top doctor----------------------------------------
         recyclerView=view.findViewById(R.id.rv_topdoctor)

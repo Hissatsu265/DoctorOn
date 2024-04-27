@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="12dp"
+    android:layout_margin="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_height="match_parent">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Kết quả dự đoán cho bệnh tim mạch"
+                android:textStyle="bold"
+                android:textSize="20dp"/>
+            <TextView
+                android:textSize="18dp"
+                android:id="@+id/rate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Tỉ lệ mắc bệnh: 30%"/>
+            <TextView
+                android:id="@+id/time"
+                android:fontFamily="@font/nunito"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="textEnd"
+                android:text="16:07 27/04/2024"/>
+        </LinearLayout>
+</androidx.cardview.widget.CardView>
+

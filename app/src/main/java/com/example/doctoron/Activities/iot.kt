@@ -12,6 +12,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.doctoron.Objects.CustomDialog_Predict
 import com.example.doctoron.Objects.MQTT
 import com.example.doctoron.R
 import com.github.mikephil.charting.charts.LineChart
@@ -118,6 +119,9 @@ class iot : AppCompatActivity() {
                         tv_nhiptim.setText(data.get("data").toString())
                         heart_race=data.get("hr") as ArrayList<Int>
                         setData(heart_race)
+                        if(data.get("alert")!="0") {
+                            CustomDialog_Predict(this, data.get("alert").toString(), true).show()
+                        }
                         kt_check=-1
                     }
                 }
@@ -147,6 +151,7 @@ class iot : AppCompatActivity() {
                     tv_nhiptim.setText(fieldData.toString())
                     XuliLine(fieldData)
                 }
+
             }
         }
         catch (e:Exception){

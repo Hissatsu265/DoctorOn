@@ -72,11 +72,13 @@
             android:name=".Activities.Signup"
             android:exported="false" />
         <activity
+            android:name=".Activities.test_app"
+            android:exported="false" />
+        <activity
             android:name=".Activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

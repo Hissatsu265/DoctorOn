@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Adapter
+import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView.ScaleType
 import android.widget.LinearLayout
@@ -64,141 +65,147 @@ class DashboardFragment : Fragment() , OnItemClickListener,OnitemDrugClickListen
     ): View? {
         userId = arguments?.getString("user_ID").toString()
         val view = inflater.inflate(R.layout.fragment_dashboard, container, false)
-        //-------------------------------Image slider ------------------------------------------------
-        var slideModels:ArrayList<SlideModel> = ArrayList()
-        var imageSlider:ImageSlider= view.findViewById(R.id.imageSlider)
+        try{
+            var slideModels:ArrayList<SlideModel> = ArrayList()
+            var imageSlider:ImageSlider= view.findViewById(R.id.imageSlider)
 
-        slideModels.add(SlideModel(R.drawable.doctor_splashscreen, ScaleTypes.FIT))
-        slideModels.add(SlideModel(R.drawable.img_drug,ScaleTypes.FIT))
-        slideModels.add(SlideModel(R.drawable.img_lich,ScaleTypes.FIT))
+            slideModels.add(SlideModel(R.drawable.doctor_splashscreen, ScaleTypes.FIT))
+            slideModels.add(SlideModel(R.drawable.img_drug,ScaleTypes.FIT))
+            slideModels.add(SlideModel(R.drawable.img_lich,ScaleTypes.FIT))
 
-        imageSlider.setImageList(slideModels,ScaleTypes.FIT)
-        imageSlider.setItemClickListener(object : ItemClickListener {
-            override fun onItemSelected(position: Int) {
-                when(position){
-                    0 -> {
-                        Log.d("click", "onItemSelected: 1")
-                    }
-                    1 -> {
-                        Log.d("click", "onItemSelected: 2")
-                    }
-                    2 -> {
-                        Log.d("click", "onItemSelected: 3")
+            imageSlider.setImageList(slideModels,ScaleTypes.FIT)
+            imageSlider.setItemClickListener(object : ItemClickListener {
+                override fun onItemSelected(position: Int) {
+                    when(position){
+                        0 -> {
+                            Log.d("click", "onItemSelected: 1")
+                        }
+                        1 -> {
+                            Log.d("click", "onItemSelected: 2")
+                        }
+                        2 -> {
+                            Log.d("click", "onItemSelected: 3")
+                        }
                     }
                 }
-            }
-        })
-        //----------------------------------------------------------------------------------
+            })
+            //----------------------------------------------------------------------------------
 
-        var btn_predict=view.findViewById<ImageButton>(R.id.button6)
-        btn_predict.setOnClickListener {
-            val intent= Intent(activity,Predict_health::class.java)
-            val bundle = Bundle()
-            bundle.putString("user_ID", userId)
-            intent.putExtras(bundle)
-            startActivity(intent)
-        }
-        var btn_xray=view.findViewById<ImageButton>(R.id.button2)
-        btn_xray.setOnClickListener {
-            try{
-                val intent9= Intent(activity,Xray_predict::class.java)
+            var btn_predict=view.findViewById<ImageButton>(R.id.button6)
+            btn_predict.setOnClickListener {
+                val intent= Intent(activity,Predict_health::class.java)
                 val bundle = Bundle()
                 bundle.putString("user_ID", userId)
-                intent9.putExtras(bundle)
-                startActivity(intent9)
+                intent.putExtras(bundle)
+                startActivity(intent)
             }
-            catch (e:Exception) {
-                Log.d("lllllloi", "onCreateView: " + e.message.toString())
-            }
-        }
-        var btn_iot=view.findViewById<ImageButton>(R.id.button3)
-        btn_iot.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("userId", userId)
-
-            val intent79= Intent(activity, iot::class.java)
-            intent79.putExtras(bundle)
-            startActivity(intent79)
-        }
-        var btn_knowmore=view.findViewById<ImageButton>(R.id.knowmore)
-        btn_knowmore.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("userId", userId)
-            val intent72= Intent(activity, iot::class.java)
-            intent72.putExtras(bundle)
-            startActivity(intent72)
-        }
-
-        var btn_chat=view.findViewById<ImageButton>(R.id.button5)
-        btn_chat.setOnClickListener {
-
-            val fragmentB = MessagesFragment()
-            val bundle = Bundle()
-            bundle.putString("user_ID", userId)
-            fragmentB.arguments=bundle
-            val fragmentManager: FragmentManager? = parentFragmentManager
-            val transaction: FragmentTransaction? = fragmentManager?.beginTransaction()
-            transaction?.replace(R.id.fragment_container, fragmentB)
-            transaction?.addToBackStack(null)
-            transaction?.commit()
-        }
-        var btn_result=view.findViewById<ImageButton>(R.id.button4)
-        btn_result.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString("UserID", userId)
-            val intent179= Intent(activity, History_predict::class.java)
-            intent179.putExtras(bundle)
-            startActivity(intent179)
-        }
-        //----------------------------------Top doctor----------------------------------------
-        recyclerView=view.findViewById(R.id.rv_topdoctor)
-        recyclerView.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
-        recyclerView.setHasFixedSize(true)
-        doctors= ArrayList<Doctor>()
-        val db=FirebaseFirestore.getInstance()
-        db.collection("Doctors")
-            .orderBy("star",com.google.firebase.firestore.Query.Direction.DESCENDING)
-            .limit(5)
-            .get().addOnSuccessListener { querySnapshot ->
-                for (doc in querySnapshot.documents) {
-                    val data=doc.data
-                    val doctor1 = Doctor(
-                        data?.get("name").toString(), "", "", 0, "", 0, data?.get("star").toString().toInt(),
-                        data?.get("CN").toString(),doc.id,data?.get("BV").toString())
-                    doctors.add(doctor1)
+            var btn_xray=view.findViewById<ImageButton>(R.id.button2)
+            btn_xray.setOnClickListener {
+                try{
+                    val intent9= Intent(activity,Xray_predict::class.java)
+                    val bundle = Bundle()
+                    bundle.putString("user_ID", userId)
+                    intent9.putExtras(bundle)
+                    startActivity(intent9)
                 }
-                var adapter_topdoctor = Topdoctor(doctors,this)
-                recyclerView.adapter=adapter_topdoctor
-            }
-
-
-        //----------------------------------------------------------
-        val tv_listdoctor=view.findViewById<TextView>(R.id.tv_listdoctor_xt)
-        tv_listdoctor.setOnClickListener {
-            val intent= Intent(activity,Doctor_list::class.java)
-            intent.putExtra("User_ID_user",userId)
-            startActivity(intent)
-        }
-        //---------------------------Drug--------------------------------------------------------
-        val rview_Drug=view.findViewById<RecyclerView>(R.id.rv_drug)
-        rview_Drug.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
-        rview_Drug.setHasFixedSize(true)
-        drugs= ArrayList<Drug>()
-
-        val db1=FirebaseFirestore.getInstance()
-        db1.collection("Drug")
-            .limit(3)
-            .get().addOnSuccessListener { querySnapshot ->
-                for (doc in querySnapshot.documents) {
-                    val data=doc.data
-                    val drug1 = Drug(data?.get("name").toString(),data?.get("dactri").toString(),
-                        data?.get("chongchidinh").toString(),data?.get("tp").toString(),data?.get("price").toString(),
-                        data?.get("use").toString(),data?.get("tdphu").toString(),doc.id,data?.get("imageUrl").toString())
-                    drugs.add(drug1)
+                catch (e:Exception) {
+                    Log.d("lllllloi", "onCreateView: " + e.message.toString())
                 }
-                var adapter_drug = Drug_Adapter(drugs,this)
-                rview_Drug.adapter=adapter_drug
             }
+            var btn_iot=view.findViewById<ImageButton>(R.id.button3)
+            btn_iot.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("userId", userId)
+
+                val intent79= Intent(activity, iot::class.java)
+                intent79.putExtras(bundle)
+                startActivity(intent79)
+            }
+            var btn_knowmore=view.findViewById<Button>(R.id.knowmore)
+            btn_knowmore.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("userId", userId)
+                val intent72= Intent(activity, iot::class.java)
+                intent72.putExtras(bundle)
+                startActivity(intent72)
+            }
+
+            var btn_chat=view.findViewById<ImageButton>(R.id.button5)
+            btn_chat.setOnClickListener {
+
+                val fragmentB = MessagesFragment()
+                val bundle = Bundle()
+                bundle.putString("user_ID", userId)
+                fragmentB.arguments=bundle
+                val fragmentManager: FragmentManager? = parentFragmentManager
+                val transaction: FragmentTransaction? = fragmentManager?.beginTransaction()
+                transaction?.replace(R.id.fragment_container, fragmentB)
+                transaction?.addToBackStack(null)
+                transaction?.commit()
+            }
+            var btn_result=view.findViewById<ImageButton>(R.id.button4)
+            btn_result.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString("UserID", userId)
+                val intent179= Intent(activity, History_predict::class.java)
+                intent179.putExtras(bundle)
+                startActivity(intent179)
+            }
+            //----------------------------------Top doctor----------------------------------------
+            recyclerView=view.findViewById(R.id.rv_topdoctor)
+            recyclerView.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
+            recyclerView.setHasFixedSize(true)
+            doctors= ArrayList<Doctor>()
+            val db=FirebaseFirestore.getInstance()
+            db.collection("Doctors")
+                .orderBy("star",com.google.firebase.firestore.Query.Direction.DESCENDING)
+                .limit(5)
+                .get().addOnSuccessListener { querySnapshot ->
+                    for (doc in querySnapshot.documents) {
+                        val data=doc.data
+                        val doctor1 = Doctor(
+                            data?.get("name").toString(), "", "", 0, "", 0, data?.get("star").toString().toInt(),
+                            data?.get("CN").toString(),doc.id,data?.get("BV").toString())
+                        doctors.add(doctor1)
+                    }
+                    var adapter_topdoctor = Topdoctor(doctors,this)
+                    recyclerView.adapter=adapter_topdoctor
+                }
+
+
+            //----------------------------------------------------------
+            val tv_listdoctor=view.findViewById<TextView>(R.id.tv_listdoctor_xt)
+            tv_listdoctor.setOnClickListener {
+                val intent= Intent(activity,Doctor_list::class.java)
+                intent.putExtra("User_ID_user",userId)
+                startActivity(intent)
+            }
+            //---------------------------Drug--------------------------------------------------------
+            val rview_Drug=view.findViewById<RecyclerView>(R.id.rv_drug)
+            rview_Drug.layoutManager=LinearLayoutManager(activity,LinearLayoutManager.HORIZONTAL, false)
+            rview_Drug.setHasFixedSize(true)
+            drugs= ArrayList<Drug>()
+
+            val db1=FirebaseFirestore.getInstance()
+            db1.collection("Drug")
+                .limit(3)
+                .get().addOnSuccessListener { querySnapshot ->
+                    for (doc in querySnapshot.documents) {
+                        val data=doc.data
+                        val drug1 = Drug(data?.get("name").toString(),data?.get("dactri").toString(),
+                            data?.get("chongchidinh").toString(),data?.get("tp").toString(),data?.get("price").toString(),
+                            data?.get("use").toString(),data?.get("tdphu").toString(),doc.id,data?.get("imageUrl").toString())
+                        drugs.add(drug1)
+                    }
+                    var adapter_drug = Drug_Adapter(drugs,this)
+                    rview_Drug.adapter=adapter_drug
+                }
+        }
+        catch (e:Exception){
+            Log.d("TAGloiiiii", "onCreateView: "+e.message.toString())
+        }
+        //-------------------------------Image slider ------------------------------------------------
+
 
         //------------------------------------------------------------------
         return view

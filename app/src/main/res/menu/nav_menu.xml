@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ShowIn="navigation_view">
     <group
-        android:checkableBehavior="single">
+        android:checkableBehavior="single"
+        >
         <item
             android:id="@+id/nav_prime"
             android:icon="@drawable/img_nav_account"

@@ -14,7 +14,7 @@
         android:enabled="false"/>
     <item
         android:id="@+id/Calender"
-        android:title="Calender"
+        android:title="Calendar"
         android:icon="@drawable/img_calendar_cyan_300"/>
     <item
         android:id="@+id/Account"

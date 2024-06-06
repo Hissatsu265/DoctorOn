@@ -87,6 +87,7 @@
         app:itemIconTint="@color/teal_300"
         app:itemTextColor="@color/black"
         app:headerLayout="@layout/nav_header"
-        app:menu="@menu/nav_menu"/>
+        app:menu="@menu/nav_menu"
+        android:background="@color/white"/>
 
 </androidx.drawerlayout.widget.DrawerLayout>

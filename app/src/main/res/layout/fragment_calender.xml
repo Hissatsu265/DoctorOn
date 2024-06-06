@@ -10,7 +10,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background6"
+        android:background="@color/white"
         android:orientation="vertical">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
@@ -38,6 +38,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:id="@+id/rv_notification"
+            android:background="@drawable/canva_8"
             android:layout_weight="1">
         </androidx.recyclerview.widget.RecyclerView>
 

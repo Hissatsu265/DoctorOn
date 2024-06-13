@@ -36,7 +36,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         try {
 
             //---------------truyen user id ------------------------
-//            user_ID=intent.getStringExtra("user_ID").toString()
+            user_ID=intent.getStringExtra("user_ID").toString()
             //----------------------------------------------------
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_main)

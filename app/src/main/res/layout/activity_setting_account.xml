@@ -32,8 +32,71 @@
                 />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-    <TextView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sau này thêm chữ vào"/>
+        android:layout_marginBottom="50dp">
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:text="Chào mừng bạn đến với DoctorOn!"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:textAlignment="gravity"
+            android:text="DoctorON là ứng dụng theo dõi sức khỏe toàn diện, giúp bạn kiểm soát và cải thiện sức khỏe của mình một cách dễ dàng và hiệu quả. Với App, bạn có thể theo dõi các chỉ số sức khỏe quan trọng như nhịp tim, chỉ số BMI, lượng calo tiêu thụ hàng ngày, và thậm chí có thể trò chuyện trực tiếp với bác sĩ chuyên môn."/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:textSize="25dp"
+            android:layout_marginTop="20dp"
+            android:text="Tính năng nổi bật:"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:textAlignment="gravity"
+            android:text="Theo dõi nhịp tim: Giúp bạn theo dõi nhịp tim theo thời gian thực, cung cấp cảnh báo khi nhịp tim có dấu hiệu bất thường."
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:textAlignment="gravity"
+            android:text="Chỉ số BMI: Tính toán và theo dõi chỉ số BMI của bạn, giúp bạn đánh giá tình trạng cơ thể và điều chỉnh chế độ dinh dưỡng, tập luyện hợp lý."
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:textAlignment="gravity"
+            android:text="Chat với bác sĩ: Cho phép bạn trò chuyện trực tiếp với bác sĩ chuyên môn để nhận tư vấn, giải đáp thắc mắc về sức khỏe một cách nhanh chóng và tiện lợi."
+            />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="25dp"
+            android:layout_gravity="center"
+            android:textStyle="bold"
+            android:text="Hãy bắt đầu hành trình chăm sóc sức khỏe của bạn ngay hôm nay với DoctorOn!"/>
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

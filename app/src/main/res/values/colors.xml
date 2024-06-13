@@ -26,6 +26,6 @@
     <color name="blue_gray_200">#aeb8b7</color>
     <color name="cyan_100">#baede8</color>
     <color name="gray_50_01">#f6fdfc</color>
-    <color name="ic_launcher_background">#FFFFFF</color>
+<!--    <color name="ic_launcher_background">#FFFFFF</color>-->
     <color name="img_sendemail">#0db8a5</color>
 </resources>

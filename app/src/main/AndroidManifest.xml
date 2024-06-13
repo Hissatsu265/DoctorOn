@@ -66,7 +66,7 @@
             android:name=".Activities.Home"
             android:exported="false" />
         <activity
-            android:name=".Activities.Begin"
+            android:name=".Activities.MainActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.Signup"
@@ -75,7 +75,7 @@
             android:name=".Activities.test_app"
             android:exported="false" />
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".Activities.Begin"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

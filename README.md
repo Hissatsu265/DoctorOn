@@ -12,8 +12,7 @@ DoctorOn is part of a comprehensive health monitoring system consisting of 3 mai
 The application is developed in Kotlin, focusing on monitoring and analyzing user health through data collected from IoT devices.
 ## Demo
 
-[![Demo]](https://youtu.be/9TSAju2OHpI)
-[![Demo Video](https://img.youtube.com/vi/9TSAju2OHpI/0.jpg)](https://www.youtube.com/watch?v=9TSAju2OHpI)
+[![Demo Video](https://img.youtube.com/vi/9TSAju2OHpI/1.jpg)](https://www.youtube.com/watch?v=9TSAju2OHpI)
 ## 
 ## ✨ Key Features
 

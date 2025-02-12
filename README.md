@@ -13,7 +13,7 @@ The application is developed in Kotlin, focusing on monitoring and analyzing use
 ## Demo
 
 [![Demo]](https://youtu.be/9TSAju2OHpI)
-
+[![Demo Video](https://img.youtube.com/vi/9TSAju2OHpI/0.jpg)](https://www.youtube.com/watch?v=9TSAju2OHpI)
 ## 
 ## ✨ Key Features
 
